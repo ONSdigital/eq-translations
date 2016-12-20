@@ -25,7 +25,7 @@ def dumb_to_smart_quotes(string):
 
     # Find dumb single quotes coming directly after letters or punctuation,
     # and replace them with right single quotes.
-    string = re.sub(r"([a-zA-Z0-9.,?!;:\"\'])'", r'\1’', string)
+    string = re.sub(r"([\w.,?!;:\"\'])'", r'\1’', string)
     # Find any remaining dumb single quotes and replace them with
     # left single quotes.
     string = string.replace("'", '‘')
