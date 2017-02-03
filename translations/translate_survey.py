@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 # TODO
 """
 - Loop through and replace text in deserialised json instead of replacing values in string.
@@ -8,7 +9,6 @@
 - Add/amend other team/best practice stuff that's been missed out.
 - Will this be run from command line or called from another script for now? Guard against different inputs.
 """
-
 import json
 import sys
 import os
@@ -38,15 +38,7 @@ def dumb_to_smart_quotes(string):
 def translate_container(container, context, translations):
     if isinstance(container, dict):
         for key in ['description', 'label', 'title']:
-            value = container.get(key)
-
-            if value is not None and value != '':
-                source_key = (context, value)
-                if source_key not in translations:
-                    if 'format_household_name' not in value:
-                        print("No translation for text '" + value + "' [" + context + "]")
-                else:
-                    container[key] = dumb_to_smart_quotes(translations[source_key])
+            translate_value(container, context, key, translations)
 
     elif isinstance(container, list):
         for index, value in enumerate(container):
@@ -59,7 +51,20 @@ def translate_container(container, context, translations):
     return container
 
 
+def translate_value(container, context, key, translations):
+    value = container.get(key)
+    if value is not None and value != '':
+        source_key = (context, value)
+        if source_key not in translations:
+            if 'format_household_name' not in value:
+                print("No translation for text '" + value + "' [" + context + "]")
+        else:
+            container[key] = dumb_to_smart_quotes(translations[source_key])
+
+
 def translate_survey(survey_json, translations):
+    translate_value(survey_json, 'schema-title', 'title', translations)
+
     for group in survey_json['groups']:
         translate_container(group, group['id'], translations)
 
@@ -126,7 +131,6 @@ def translate_options_text(container, context, translations):
 
 
 def load_translations(input_file):
-    wb = Workbook()
     wb = load_workbook(input_file)
     sheet = wb.get_sheet_by_name('Sheet')
 
