@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*- 
 # TODO
 """
 - Loop through and replace text in deserialised json instead of replacing values in string.
