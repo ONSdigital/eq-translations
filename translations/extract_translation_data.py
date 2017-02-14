@@ -44,6 +44,8 @@ def get_text_for_container(container, context=None):
 def get_text(data):
     translatable_text = []
 
+    translatable_text.append(('schema-title', data['title']))
+
     # Get header section text
     # translatable_text.extend(get_text_for_container(data))
     # translatable_text.extend(get_conditional_text_for_container(data))

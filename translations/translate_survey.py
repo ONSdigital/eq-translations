@@ -8,7 +8,6 @@
 - Add/amend other team/best practice stuff that's been missed out.
 - Will this be run from command line or called from another script for now? Guard against different inputs.
 """
-
 import json
 import sys
 import os
@@ -38,15 +37,7 @@ def dumb_to_smart_quotes(string):
 def translate_container(container, context, translations):
     if isinstance(container, dict):
         for key in ['description', 'label', 'title']:
-            value = container.get(key)
-
-            if value is not None and value != '':
-                source_key = (context, value)
-                if source_key not in translations:
-                    if 'format_household_name' not in value:
-                        print("No translation for text '" + value + "' [" + context + "]")
-                else:
-                    container[key] = dumb_to_smart_quotes(translations[source_key])
+            translate_value(container, context, key, translations)
 
     elif isinstance(container, list):
         for index, value in enumerate(container):
@@ -59,7 +50,20 @@ def translate_container(container, context, translations):
     return container
 
 
+def translate_value(container, context, key, translations):
+    value = container.get(key)
+    if value is not None and value != '':
+        source_key = (context, value)
+        if source_key not in translations:
+            if 'format_household_name' not in value:
+                print("No translation for text '" + value + "' [" + context + "]")
+        else:
+            container[key] = dumb_to_smart_quotes(translations[source_key])
+
+
 def translate_survey(survey_json, translations):
+    translate_value(survey_json, 'schema-title', 'title', translations)
+
     for group in survey_json['groups']:
         translate_container(group, group['id'], translations)
 
@@ -126,7 +130,6 @@ def translate_options_text(container, context, translations):
 
 
 def load_translations(input_file):
-    wb = Workbook()
     wb = load_workbook(input_file)
     sheet = wb.get_sheet_by_name('Sheet')
 
@@ -161,7 +164,7 @@ def strip_directory_and_extension(file):
 
 def create_output_file_name_with_directory(output_directory, input_file):
     file_name = strip_directory_and_extension(json_file)
-    file_name_with_extension = file_name + '_cy.json'
+    file_name_with_extension = file_name + '.json'
     file_name_with_directory = os.path.join(output_directory, file_name_with_extension)
 
     return file_name_with_directory
