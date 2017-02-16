@@ -20,10 +20,10 @@ function translate_all_schemas {
 }
 
 if [ "$#" -ne 1 ]; then
-    echo ""
-    echo "Usage: $0 <path_to_schemas>"
-    echo ""
-    exit 1
+  echo ""
+  echo "Usage: $0 <path_to_schemas>"
+  echo ""
+  exit 1
 fi
 
 path_to_schemas=$1
