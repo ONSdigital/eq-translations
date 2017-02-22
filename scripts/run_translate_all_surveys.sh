@@ -3,7 +3,7 @@
 function parent_directory {
   current_dir=$(dirname "$1")
   parent_dir="$( cd "${current_dir}" && pwd )"
-  echo $parent_dir
+  echo "${parent_dir}"
 }
 
 function translate_all_schemas {

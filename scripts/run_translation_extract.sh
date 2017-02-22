@@ -9,7 +9,7 @@ fi
 
 JSON_FILE=$1
 
-if [ -z $2 ]; then
+if [ -z "$2" ]; then
     # Use current working directory
     OUTPUT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 else
@@ -18,14 +18,14 @@ else
 fi
 
 
-if [ ! -f ${JSON_FILE} ]; then
+if [ ! -f "${JSON_FILE}" ]; then
     echo "JSON file '${JSON_FILE}' does not exist!"
     exit 2
 fi
 
-if [ ! -d ${OUTPUT_DIR} ]; then
+if [ ! -d "${OUTPUT_DIR}" ]; then
     echo "Directory '${OUTPUT_DIR}' does not exist!"
     exit 2
 fi
 
-python ./translations/extract_translation_data.py ${JSON_FILE} ${OUTPUT_DIR}
+python ./translations/extract_translation_data.py "${JSON_FILE}" "${OUTPUT_DIR}"
