@@ -108,9 +108,6 @@ def get_options_text(container):
         for options in container['options']:
             extracted_text.extend(get_text_for_container(options, container['id']))
 
-            if 'other' in options:
-                extracted_text.extend(get_text_for_container(options['other'], container['id']))
-
     return extracted_text
 
 

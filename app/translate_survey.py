@@ -121,10 +121,7 @@ def translate_guidance_text(container, context, translations):
 def translate_options_text(container, context, translations):
     if 'options' in container:
         for options in container['options']:
-            options = translate_container(options, context, translations)
-
-            if 'other' in options:
-                options['other'] = translate_container(options['other'], context, translations)
+            translate_container(options, context, translations)
 
     return container
 
