@@ -27,7 +27,7 @@ def get_text_for_container(container, context=None):
 
             if value is not None and value != '':
                 if context is not None:
-                    extracted_text.append((context, value))
+                    extracted_text.append((context.format(key), value))
                 else:
                     extracted_text.append(('', value))
 
@@ -52,10 +52,13 @@ def get_text(data):
 
     # Now build up translatable text from the nested dictionaries and lists
     for group in data['groups']:
-        # translatable_text.extend(get_text_for_container(group))
+        translatable_text.extend(get_text_for_container(group, group['id']))
 
         for block in group['blocks']:
-            # translatable_text.extend(get_text_for_container(block))
+
+            if 'sections' not in block:
+                translatable_text.extend(get_text_for_container(block, block['id']))
+                continue
 
             for section in block['sections']:
                 translatable_text.extend(get_text_for_container(section, section['id']))
@@ -93,7 +96,7 @@ def get_guidance_text(container):
         if isinstance(guidance_text, str):
             extracted_text.append((container['id'] + ' [answer guidance]', container['guidance']))
         else:
-            for guidance in container['guidance']:
+            for guidance in container['guidance']['content']:
                 extracted_text.extend(get_text_for_container(guidance, container['id'] + ' [question guidance]'))
 
                 if 'list' in guidance:
