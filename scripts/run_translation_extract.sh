@@ -28,4 +28,4 @@ if [ ! -d "${OUTPUT_DIR}" ]; then
     exit 2
 fi
 
-python ./translations/extract_translation_data.py "${JSON_FILE}" "${OUTPUT_DIR}"
+python ./app/extract_translation_data.py "${JSON_FILE}" "${OUTPUT_DIR}"

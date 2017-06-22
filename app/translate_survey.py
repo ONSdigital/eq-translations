@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # TODO
 """
 - Loop through and replace text in deserialised json instead of replacing values in string.
@@ -37,13 +39,13 @@ def dumb_to_smart_quotes(string):
 def translate_container(container, context, translations):
     if isinstance(container, dict):
         for key in ['description', 'label', 'title']:
-            translate_value(container, context, key, translations)
+            translate_value(container, context.format(key), key, translations)
 
     elif isinstance(container, list):
         for index, value in enumerate(container):
             source_key = (context, value)
             if source_key not in translations:
-                print("No translation for text '" + value + "'")
+                print("No translation for container text '" + value + "'")
             else:
                 container[index] = dumb_to_smart_quotes(translations[source_key])
 
@@ -52,11 +54,13 @@ def translate_container(container, context, translations):
 
 def translate_value(container, context, key, translations):
     value = container.get(key)
+
     if value is not None and value != '':
         source_key = (context, value)
+
         if source_key not in translations:
             if 'format_household_name' not in value:
-                print("No translation for text '" + value + "' [" + context + "]")
+                print("No translation for text value '" + value + "' [" + context + "]")
         else:
             container[key] = dumb_to_smart_quotes(translations[source_key])
 
@@ -68,6 +72,10 @@ def translate_survey(survey_json, translations):
         translate_container(group, group['id'], translations)
 
         for block in group['blocks']:
+
+            if 'sections' not in block:
+                translate_container(block, block['id'], translations)
+                continue
 
             for section in block['sections']:
                 translate_container(section, section['id'], translations)
@@ -109,7 +117,7 @@ def translate_guidance_text(container, context, translations):
             else:
                 container['guidance'] = dumb_to_smart_quotes(translations[source_key])
         else:
-            for guidance in container['guidance']:
+            for guidance in container['guidance']['content']:
                 translate_container(guidance, context + ' [question guidance]', translations)
 
                 if 'list' in guidance:
@@ -131,7 +139,7 @@ def load_translations(input_file):
     sheet = wb.get_sheet_by_name('Sheet')
 
     translations = {}
-    for row in sheet.iter_rows(row_offset=2, min_col=1, max_col=3):
+    for row in sheet.iter_rows(row_offset=1, min_col=1, max_col=3):
         source_key = (row[0].value, row[1].value)
         translated_text = row[2].value
         if source_key is not None:
