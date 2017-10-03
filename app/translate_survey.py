@@ -15,7 +15,7 @@ import sys
 import os
 import re
 from collections import OrderedDict
-from openpyxl import Workbook, load_workbook
+from openpyxl import load_workbook
 
 
 def dumb_to_smart_quotes(string):
@@ -39,7 +39,7 @@ def dumb_to_smart_quotes(string):
 def translate_container(container, context, translations):
     if isinstance(container, dict):
         for key in ['description', 'label', 'title']:
-            translate_value(container, context.format(key), key, translations)
+            translate_value(container, context, key, translations)
 
     elif isinstance(container, list):
         for index, value in enumerate(container):
@@ -72,24 +72,21 @@ def translate_survey(survey_json, translations):
         translate_container(group, group['id'], translations)
 
         for block in group['blocks']:
+            translate_container(block, block['id'], translations)
 
-            if 'sections' not in block:
-                translate_container(block, block['id'], translations)
+            if 'questions' not in block:
                 continue
 
-            for section in block['sections']:
-                translate_container(section, section['id'], translations)
+            for question in block['questions']:
+                translate_container(question, question['id'], translations)
+                translate_validation_text(question, question['id'], translations)
+                translate_guidance_text(question, question['id'], translations)
 
-                for question in section['questions']:
-                    translate_container(question, question['id'], translations)
-                    translate_validation_text(question, question['id'], translations)
-                    translate_guidance_text(question, question['id'], translations)
-
-                    for answer in question['answers']:
-                        translate_container(answer, answer['id'], translations)
-                        translate_guidance_text(answer, answer['id'], translations)
-                        translate_options_text(answer, answer['id'], translations)
-                        translate_validation_text(answer, answer['id'], translations)
+                for answer in question['answers']:
+                    translate_container(answer, answer['id'], translations)
+                    translate_guidance_text(answer, answer['id'], translations)
+                    translate_options_text(answer, answer['id'], translations)
+                    translate_validation_text(answer, answer['id'], translations)
 
     return survey_json
 
@@ -173,6 +170,7 @@ def create_output_file_name_with_directory(output_directory, input_file):
     file_name_with_directory = os.path.join(output_directory, file_name_with_extension)
 
     return file_name_with_directory
+
 
 def save_translated_json(translated_json, output_file_name):
     output = json.dumps(translated_json, indent=4, ensure_ascii=False, separators=(',', ': '))

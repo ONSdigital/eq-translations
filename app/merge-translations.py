@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import argparse
-import os
-from openpyxl import Workbook, load_workbook
+from openpyxl import Workbook
 from translate_survey import load_translations
 
-parser = argparse.ArgumentParser(description = "Merges two spreadsheets of translation strings with the second file provided overriding the values of the first.")
+parser = argparse.ArgumentParser(description="Merges two spreadsheets of translation strings with the second "
+                                 "file provided overriding the values of the first.")
 
 parser.add_argument(
     'FIRST_FILE',
@@ -24,6 +24,7 @@ parser.add_argument(
     type=argparse.FileType('wb'),
     help="The path of the new file of merged translations"
 )
+
 
 def output_translations(translations, aFile):
     wb = Workbook()
