@@ -27,7 +27,7 @@ def get_text_for_container(container, context=None):
 
             if value is not None and value != '':
                 if context is not None:
-                    extracted_text.append((context.format(key), value))
+                    extracted_text.append((context, value))
                 else:
                     extracted_text.append(('', value))
 
@@ -44,35 +44,26 @@ def get_text_for_container(container, context=None):
 def get_text(data):
     translatable_text = []
 
-    translatable_text.append(('schema-title', data['title']))
-
-    # Get header section text
-    # translatable_text.extend(get_text_for_container(data))
-    # translatable_text.extend(get_conditional_text_for_container(data))
-
     # Now build up translatable text from the nested dictionaries and lists
     for group in data['groups']:
         translatable_text.extend(get_text_for_container(group, group['id']))
 
         for block in group['blocks']:
 
-            if 'sections' not in block:
+            if 'questions' not in block:
                 translatable_text.extend(get_text_for_container(block, block['id']))
                 continue
 
-            for section in block['sections']:
-                translatable_text.extend(get_text_for_container(section, section['id']))
+            for question in block['questions']:
+                translatable_text.extend(get_text_for_container(question, question['id']))
+                translatable_text.extend(get_validation_text(question))
+                translatable_text.extend(get_guidance_text(question))
 
-                for question in section['questions']:
-                    translatable_text.extend(get_text_for_container(question, question['id']))
-                    translatable_text.extend(get_validation_text(question))
-                    translatable_text.extend(get_guidance_text(question))
-
-                    for answer in question['answers']:
-                        translatable_text.extend(get_text_for_container(answer, answer['id']))
-                        translatable_text.extend(get_guidance_text(answer))
-                        translatable_text.extend(get_options_text(answer))
-                        translatable_text.extend(get_validation_text(answer))
+                for answer in question['answers']:
+                    translatable_text.extend(get_text_for_container(answer, answer['id']))
+                    translatable_text.extend(get_guidance_text(answer))
+                    translatable_text.extend(get_options_text(answer))
+                    translatable_text.extend(get_validation_text(answer))
 
     return translatable_text
 
@@ -147,10 +138,11 @@ def output_translations_to_file(text_list, file_name):
     ws = wb.active
     ws.append(['Context', 'English Text', 'Welsh Text'])
     for line in text_list:
-        if 'section' in line[0]:
+        if 'questions' in line[0]:
             ws.append(['', '', ''])
         value = line[1]
-        if value == '{{[answers.first_name[group_instance], answers.last_name[group_instance]] | format_household_name }}' or \
+        if value == '{{[answers.first_name[group_instance], answers.last_name[group_instance]] |' \
+                    ' format_household_name }}' or \
                 value == '{{[answers.first_name, answers.last_name] | format_household_name }}':
             value = ''
         ws.append([line[0], value, ' '])
@@ -212,6 +204,5 @@ if __name__ == '__main__':
 
     json_file = sys.argv[1]
     output_directory = sys.argv[2]
-
 
     command_line_handler(json_file, output_directory)

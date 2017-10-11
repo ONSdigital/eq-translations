@@ -2,6 +2,7 @@ import unittest
 
 from translate_survey import dumb_to_smart_quotes
 
+
 class TestDumbToSmartQuotes(unittest.TestCase):
 
     def test_dumb_to_smart_quotes_welsh_single(self):
