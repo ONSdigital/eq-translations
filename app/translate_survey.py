@@ -68,25 +68,28 @@ def translate_value(container, context, key, translations):
 def translate_survey(survey_json, translations):
     translate_value(survey_json, 'schema-title', 'title', translations)
 
-    for group in survey_json['groups']:
-        translate_container(group, group['id'], translations)
+    for section in survey_json['sections']:
+        translate_container(section, section['id'], translations)
 
-        for block in group['blocks']:
-            translate_container(block, block['id'], translations)
+        for group in section['groups']:
+            translate_container(group, group['id'], translations)
 
-            if 'questions' not in block:
-                continue
+            for block in group['blocks']:
+                translate_container(block, block['id'], translations)
 
-            for question in block['questions']:
-                translate_container(question, question['id'], translations)
-                translate_validation_text(question, question['id'], translations)
-                translate_guidance_text(question, question['id'], translations)
+                if 'questions' not in block:
+                    continue
 
-                for answer in question['answers']:
-                    translate_container(answer, answer['id'], translations)
-                    translate_guidance_text(answer, answer['id'], translations)
-                    translate_options_text(answer, answer['id'], translations)
-                    translate_validation_text(answer, answer['id'], translations)
+                for question in block['questions']:
+                    translate_container(question, question['id'], translations)
+                    translate_validation_text(question, question['id'], translations)
+                    translate_guidance_text(question, question['id'], translations)
+
+                    for answer in question['answers']:
+                        translate_container(answer, answer['id'], translations)
+                        translate_guidance_text(answer, answer['id'], translations)
+                        translate_options_text(answer, answer['id'], translations)
+                        translate_validation_text(answer, answer['id'], translations)
 
     return survey_json
 
