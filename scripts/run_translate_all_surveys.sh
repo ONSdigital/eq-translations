@@ -31,17 +31,4 @@ path_to_schemas=$1
 current_dir_path=$(parent_directory "${BASH_SOURCE[0]}")
 parent_dir_path=$(parent_directory "${current_dir_path}")
 
-source "$(which virtualenvwrapper.sh)"
-virtual_envs=$(lsvirtualenv -b)
-
-if [[ "${virtual_envs}" != *"eq-translations"* ]]; then
-  echo "Creating new eq-translations virtual environment"
-  mkvirtualenv --python="$(which python3)" eq-translations
-  workon eq-translations
-  pip install -r "${parent_dir_path}"/requirements.txt
-  translate_all_schemas
-  deactivate
-  rmvirtualenv eq-translations
-else
-  translate_all_schemas
-fi
+translate_all_schemas
