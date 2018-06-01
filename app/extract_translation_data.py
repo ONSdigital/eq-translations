@@ -45,25 +45,26 @@ def get_text(data):
     translatable_text = []
 
     # Now build up translatable text from the nested dictionaries and lists
-    for group in data['groups']:
-        translatable_text.extend(get_text_for_container(group, group['id']))
+    for section in data['sections']:
+        for group in section['groups']:
+            translatable_text.extend(get_text_for_container(group, group['id']))
 
-        for block in group['blocks']:
+            for block in group['blocks']:
 
-            if 'questions' not in block:
-                translatable_text.extend(get_text_for_container(block, block['id']))
-                continue
+                if 'questions' not in block:
+                    translatable_text.extend(get_text_for_container(block, block['id']))
+                    continue
 
-            for question in block['questions']:
-                translatable_text.extend(get_text_for_container(question, question['id']))
-                translatable_text.extend(get_validation_text(question))
-                translatable_text.extend(get_guidance_text(question))
+                for question in block['questions']:
+                    translatable_text.extend(get_text_for_container(question, question['id']))
+                    translatable_text.extend(get_validation_text(question))
+                    translatable_text.extend(get_guidance_text(question))
 
-                for answer in question['answers']:
-                    translatable_text.extend(get_text_for_container(answer, answer['id']))
-                    translatable_text.extend(get_guidance_text(answer))
-                    translatable_text.extend(get_options_text(answer))
-                    translatable_text.extend(get_validation_text(answer))
+                    for answer in question['answers']:
+                        translatable_text.extend(get_text_for_container(answer, answer['id']))
+                        translatable_text.extend(get_guidance_text(answer))
+                        translatable_text.extend(get_options_text(answer))
+                        translatable_text.extend(get_validation_text(answer))
 
     return translatable_text
 
