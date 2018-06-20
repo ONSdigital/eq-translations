@@ -33,12 +33,15 @@ def dumb_to_smart_quotes(string):
     # Reverse: Find any SMART quotes that have been (mistakenly) placed around HTML
     # attributes (following =) and replace them with dumb quotes.
     string = re.sub(r'=‘(.*?)’', r"='\1'", string)
+    # Reverse: Find any SMART quotes that have been (mistakenly) placed around Jinja
+    # attributes (following [) and replace them with dumb quotes.
+    string = re.sub(r'\[‘(.*?)’', r"='\1'", string)
     return string.strip()
 
 
 def translate_container(container, context, translations):
     if isinstance(container, dict):
-        for key in ['description', 'label', 'title']:
+        for key in ['description', 'label', 'title', 'question']:
             translate_value(container, context, key, translations)
 
     elif isinstance(container, list):
@@ -66,7 +69,7 @@ def translate_value(container, context, key, translations):
 
 
 def translate_survey(survey_json, translations):
-    translate_value(survey_json, 'schema-title', 'title', translations)
+    translate_title_data(survey_json, translations)
 
     for section in survey_json['sections']:
         translate_container(section, section['id'], translations)
@@ -75,15 +78,21 @@ def translate_survey(survey_json, translations):
             translate_container(group, group['id'], translations)
 
             for block in group['blocks']:
+                if 'content' in block:
+                    translate_block_content(block, block['id'], translations)
                 translate_container(block, block['id'], translations)
 
                 if 'questions' not in block:
+                    translate_container(block, block['id'], translations)
+                    translate_introduction_content(block, block, translations)
                     continue
 
                 for question in block['questions']:
                     translate_container(question, question['id'], translations)
                     translate_validation_text(question, question['id'], translations)
                     translate_guidance_text(question, question['id'], translations)
+                    translate_titles_text(question, question['id'], translations)
+                    translate_definitions_text(question, question['id'], translations)
 
                     for answer in question['answers']:
                         translate_container(answer, answer['id'], translations)
@@ -92,6 +101,22 @@ def translate_survey(survey_json, translations):
                         translate_validation_text(answer, answer['id'], translations)
 
     return survey_json
+
+
+def translate_title_data(container, translations):
+    translate_value(container, 'title', 'title', translations)
+    translate_value(container, 'description', 'description', translations)
+
+
+def translate_block_content(container, context, translations):
+    if 'content' in container:
+        for content in container['content']:
+            translate_container(content, context, translations)
+
+            if 'list' in content:
+                content['list'] = translate_container(content['list'], context, translations)
+
+    return container
 
 
 def translate_validation_text(container, context, translations):
@@ -108,20 +133,36 @@ def translate_validation_text(container, context, translations):
 
 def translate_guidance_text(container, context, translations):
     if 'guidance' in container:
-        guidance_text = container['guidance']
+        for guide in container['guidance']:
+            translate_container(container['guidance'], context + ' [question guidance]', translations)
 
-        if isinstance(guidance_text, str):
-            source_key = (context + ' [answer guidance]', guidance_text)
-            if source_key not in translations:
-                print("No translation for text '" + guidance_text + "'")
-            else:
-                container['guidance'] = dumb_to_smart_quotes(translations[source_key])
-        else:
-            for guidance in container['guidance']['content']:
-                translate_container(guidance, context + ' [question guidance]', translations)
+            if 'hide_guidance' in guide:
+                translate_show_hide_text(container['guidance'], context + ' [question guidance]', translations)
 
-                if 'list' in guidance:
-                    guidance['list'] = translate_container(guidance['list'], context + ' [question guidance]', translations)
+        for guidance in container['guidance']['content']:
+            translate_container(guidance, context + ' [question guidance]', translations)
+
+            if 'list' in guidance:
+                guidance['list'] = translate_container(guidance['list'], context + ' [question guidance]', translations)
+
+    return container
+
+
+def translate_show_hide_text(container, context, translations):
+    for value in container:
+        if 'show_guidance' in value:
+            translate_value(container, context, value, translations)
+        elif 'hide_guidance' in value:
+            translate_value(container, context, value, translations)
+    return container
+
+
+def translate_titles_text(container, context, translations):
+    if 'titles' in container:
+        for titles in container['titles']:
+            if isinstance(titles, dict):
+                for key in ['description', 'label', 'title', 'question', 'value']:
+                    translate_value(titles, context, key, translations)
 
     return container
 
@@ -130,6 +171,95 @@ def translate_options_text(container, context, translations):
     if 'options' in container:
         for options in container['options']:
             translate_container(options, context, translations)
+
+    return container
+
+
+def translate_primary_content_text(container, context, translations):
+    if 'primary_content' in container:
+        primary_content_text = container['primary_content'][0]
+
+        for primary_content in primary_content_text:
+            if 'content' in primary_content:
+                content = primary_content_text['content']
+
+                for values in content:
+                    if 'list' in values:
+                        values['list'] = translate_container(values['list'], context, translations)
+                    else:
+                        translate_container(values, context, translations)
+
+            else:
+                translate_container(primary_content_text, context, translations)
+
+    return container
+
+
+def translate_preview_content_text(container, context, translations):
+    if 'preview_content' in container:
+        preview_content_text = container['preview_content']
+
+        for preview_content in preview_content_text:
+            if 'content' in preview_content:
+                content = preview_content_text['content']
+
+                for values in content:
+                    if 'list' in values:
+                        values['list'] = translate_container(values['list'], context, translations)
+                    translate_container(values, context, translations)
+
+            elif 'questions' in preview_content:
+                questions = preview_content_text['questions']
+
+                for values in questions:
+                    if 'content' in values:
+                        content = values['content']
+
+                        for value in content:
+                            if 'list' in value:
+                                value['list'] = translate_container(value['list'], context, translations)
+                            translate_container(value, context, translations)
+
+                    translate_container(values, context, translations)
+
+            else:
+                translate_container(preview_content_text, context, translations)
+
+    return container
+
+
+def translate_secondary_content_text(container, context, translations):
+    if 'secondary_content' in container:
+        secondary_content_text = container['secondary_content'][0]
+
+        for secondary_content in secondary_content_text:
+            if 'content' in secondary_content:
+                content = secondary_content_text['content']
+
+                for values in content:
+                    if 'list' in values:
+                        values['list'] = translate_container(values['list'], context, translations)
+                    translate_container(values, context, translations)
+
+            else:
+                translate_container(secondary_content_text, context, translations)
+
+    return container
+
+
+def translate_introduction_content(container, context, translations):
+    if 'primary_content' in context:
+        translate_primary_content_text(container, context['primary_content'][0]['id'], translations)
+    if 'preview_content' in context:
+        translate_preview_content_text(container, context['preview_content']['id'], translations)
+    if 'secondary_content' in context:
+        translate_secondary_content_text(container, context['secondary_content'][0]['id'], translations)
+
+
+def translate_definitions_text(container, context, translations):
+    if 'definitions' in container:
+        for definitions in container['definitions']:
+            translate_container(definitions, context, translations)
 
     return container
 
@@ -205,6 +335,7 @@ def command_line_handler(json_file, input_file, output_directory):
     print(BOLD + GREEN + 'SUCCESS' + END + ' - Translated JSON saved at ' + output_file_name)
     print()
     exit(0)
+
 
 if __name__ == '__main__':
 
