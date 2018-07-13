@@ -1,6 +1,6 @@
 import unittest
 
-from translate_survey import dumb_to_smart_quotes
+from app.translate_survey import dumb_to_smart_quotes
 
 
 class TestDumbToSmartQuotes(unittest.TestCase):
@@ -34,5 +34,3 @@ class TestDumbToSmartQuotes(unittest.TestCase):
         self.assertNotEqual(actual, original_text)
         self.assertEqual(actual, expected)
 
-if __name__ == '__main__':
-    unittest.main()

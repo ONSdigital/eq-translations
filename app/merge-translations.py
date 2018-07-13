@@ -29,11 +29,12 @@ parser.add_argument(
 def output_translations(translations, aFile):
     wb = Workbook()
     ws = wb.active
-    ws.append(['Context', 'English Text', 'Welsh Text'])
+    ws.append(['Context', 'English Text', 'Translated Text'])
     for line in translations:
         ws.append(line)
 
     wb.save(aFile)
+
 
 if __name__ == '__main__':
     args = parser.parse_args()

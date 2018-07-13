@@ -1,0 +1,229 @@
+{
+    "title": "Arolwg Busnes Misol",
+    "survey_id": "009",
+    "mime_type": "application/json/ons/eq",
+    "theme": "default",
+    "schema_version": "0.0.1",
+    "data_version": "0.0.1",
+    "legal_basis": "StatisticsOfTradeAct",
+    "description": "mbs_0106",
+    "navigation": {
+        "visible": true
+    },
+    "view_submitted_response": {
+        "enabled": true,
+        "duration": 900
+    },
+    "metadata": {
+        "user_id": {
+            "validator": "string"
+        },
+        "period_id": {
+            "validator": "string"
+        },
+        "ru_name": {
+            "validator": "string"
+        }
+    },
+    "sections": [
+        {
+            "id": "section",
+            "title": "Teitl Llywio",
+            "groups": [
+                {
+                    "id": "group",
+                    "title": "",
+                    "blocks": [
+                        {
+                            "type": "Introduction",
+                            "id": "introduction",
+                            "primary_content": [
+                                {
+                                    "type": "Basic",
+                                    "id": "use-of-information",
+                                    "content": [
+                                        {
+                                            "list": [
+                                                "Dylai data ymwneud â phob safle yn Lloegr"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "preview_content": {
+                                "id": "preview",
+                                "title": "Gwybodaeth sydd ei hangen arnoch",
+                                "content": [
+                                    {
+                                        "description": "Gallwch ddewis dyddiadau’r cyfnod yr ydych yn adrodd amdano"
+                                    }
+                                ],
+                                "questions": [
+                                    {
+                                        "question": "Cyfanswm Trosiant",
+                                        "content": [
+                                            {
+                                                "description": "Cynnwys:",
+                                                "list": [
+                                                    "allforion",
+                                                    "taliadau am waith ar y gweill"
+                                                ]
+                                            },
+                                            {
+                                                "description": "Eithrio:",
+                                                "list": [
+                                                    "TAW",
+                                                    "dyletswyddau esgyrn"
+                                                ]
+                                            },
+                                            {
+                                                "description": "Arall:",
+                                                "list": [
+                                                    "Buddiannau eraill",
+                                                    "gwyliau"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "secondary_content": [
+                                {
+                                    "id": "how-we-use-your-data",
+                                    "title": "Sut rydym yn defnyddio’ch data",
+                                    "content": [
+                                        {
+                                            "description": "Sut rydym ni’n defnyddio’r data hwn",
+                                            "list": [
+                                                "Ni allwch apelio eich dewis. Dewiswyd eich busnes i roi golwg gynhwysfawr i ni o economi’r DU.",
+                                                "Mae’r wybodaeth a ddarperir gennych yn cyfrannu at darged <a rel='noopener noreferrer ‘target=‘_blank' href='https://www.ons.gov.uk/economy/grossdomesticproductgdp'> Cynnyrch Mewnwladol Crynswth (GDP). </a>"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Interstitial",
+                            "id": "interstitial-block",
+                            "title": "Bloc Interstitial",
+                            "description": "<p> Mae hwn yn bloc rhyngddeliadol. </ p>"
+                        },
+                        {
+                            "type": "Question",
+                            "id": "block-1",
+                            "title": "Bloc 1",
+                            "questions": [
+                                {
+                                    "id": "question-1",
+                                    "titles": [
+                                        {
+                                            "value": "Pwy ydych chi’n ateb amdano ??"
+                                        }
+                                    ],
+                                    "type": "General",
+                                    "answers": [
+                                        {
+                                            "type": "Radio",
+                                            "id": "feeling-answer",
+                                            "label": "Teimlo’n ateb",
+                                            "mandatory": true,
+                                            "options": [
+                                                {
+                                                    "label": "Ateb ar gyfer y person hwn",
+                                                    "value": "good"
+                                                },
+                                                {
+                                                    "label": "Ateb fy hun",
+                                                    "value": "bad"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "block-2",
+                            "type": "Question",
+                            "title": "Bloc 2",
+                            "questions": [
+                                {
+                                    "type": "General",
+                                    "id": "question-2",
+                                    "titles": [
+                                        {
+                                            "value": "Beth yw dyddiad geni ‘yr unigolyn hwn’?",
+                                            "when": [
+                                                {
+                                                    "id": "feeling-answer",
+                                                    "condition": "equals",
+                                                    "value": "good"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "value": "beth yw eich dyddiad geni?"
+                                        }
+                                    ],
+                                    "answers": [
+                                        {
+                                            "id": "confirm-feeling-answer",
+                                            "type": "Radio",
+                                            "label": "cadarnhau",
+                                            "mandatory": true,
+                                            "options": [
+                                                {
+                                                    "value": "Ydw",
+                                                    "label": "Ydw"
+                                                },
+                                                {
+                                                    "value": "Na",
+                                                    "label": "Na"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "guidance": {
+                                        "content": [
+                                            {
+                                                "title": "Cynnwys:",
+                                                "list": [
+                                                    "pob gweithiwr ym Mhrydain Fawr (Lloegr"
+                                                ]
+                                            },
+                                            {
+                                                "title": "Eithrio:",
+                                                "list": [
+                                                    "hyfforddeion ar gynlluniau’r llywodraeth",
+                                                    "gweithwyr sy’n gweithio dramor oni bai eu bod yn cael eu talu’n uniongyrchol o gyflogres y DU hwn",
+                                                    "gweithwyr yng Ngogledd Iwerddon"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "summary-section",
+            "title": "Crynodeb",
+            "groups": [
+                {
+                    "id": "summary-group",
+                    "title": "Crynodeb",
+                    "blocks": [
+                        {
+                            "type": "Summary",
+                            "id": "summary"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
