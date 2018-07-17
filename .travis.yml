@@ -1,0 +1,18 @@
+language: python
+sudo: required
+dist: trusty
+python: '3.6'
+
+cache:
+  - pip
+
+install:
+  - pip install pipenv
+  - pipenv install --dev --deploy
+
+script:
+  - make test
+
+branches:
+  only:
+    - master
