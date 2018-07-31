@@ -80,11 +80,13 @@ def translate_survey(survey_json, translations):
             for block in group['blocks']:
                 if 'content' in block:
                     translate_block_content(block, block['id'], translations)
+
                 translate_container(block, block['id'], translations)
 
                 if 'questions' not in block:
                     translate_container(block, block['id'], translations)
                     translate_introduction_content(block, block, translations)
+                    translate_calculated_summary(block, translations)
                     continue
 
                 for question in block['questions']:
@@ -255,6 +257,11 @@ def translate_introduction_content(container, context, translations):
     if 'secondary_content' in context:
         translate_secondary_content_text(container, context['secondary_content'][0]['id'], translations)
 
+
+def translate_calculated_summary(container, translations):
+    if container['type'] == 'CalculatedSummary':
+        translate_titles_text(container, container['id'], translations)
+        translate_titles_text(container['calculation'], container['id'], translations)
 
 def translate_definitions_text(container, context, translations):
     if 'definitions' in container:
