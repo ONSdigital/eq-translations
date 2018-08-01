@@ -79,7 +79,7 @@ def translate_survey(survey_json, translations):
 
             for block in group['blocks']:
                 if 'content' in block:
-                    translate_block_content(block, block['id'], translations)
+                    translate_content_block(block, block['id'], translations)
 
                 translate_container(block, block['id'], translations)
 
@@ -110,7 +110,7 @@ def translate_title_data(container, translations):
     translate_value(container, 'description', 'description', translations)
 
 
-def translate_block_content(container, context, translations):
+def translate_content_block(container, context, translations):
     if 'content' in container:
         for content in container['content']:
             translate_container(content, context, translations)
@@ -263,10 +263,12 @@ def translate_calculated_summary(container, translations):
         translate_titles_text(container, container['id'], translations)
         translate_titles_text(container['calculation'], container['id'], translations)
 
+
 def translate_definitions_text(container, context, translations):
     if 'definitions' in container:
-        for definitions in container['definitions']:
-            translate_container(definitions, context, translations)
+        for definition in container['definitions']:
+            translate_container(definition, context, translations)
+            translate_content_block(definition, context, translations)
 
     return container
 

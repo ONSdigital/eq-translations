@@ -12,6 +12,7 @@
 import json
 import os
 import sys
+
 from openpyxl import Workbook
 
 OUTPUT_FILE_EXTENSION = "_translate.xlsx"
@@ -236,8 +237,9 @@ def get_show_hide_guidance_text(container, container_id):
 def get_definitions_text(container):
     extracted_text = []
     if 'definitions' in container:
-        for value in container['definitions']:
-            extracted_text.extend(get_text_for_container(value, container['id']))
+        for definition in container['definitions']:
+            extracted_text.extend(get_text_for_container(definition, container['id']))
+            extracted_text.extend(get_content_text(definition['content'], container['id']))
 
     return extracted_text
 
