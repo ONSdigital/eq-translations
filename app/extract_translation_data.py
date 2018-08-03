@@ -79,6 +79,8 @@ def get_non_question_translatable_text(container):
         extracted_text.extend(get_introduction_translatable_text(container))
     elif container['type'] == 'Interstitial':
         extracted_text.extend(get_interstitial_translatable_text(container))
+    elif container['type'] == 'CalculatedSummary':
+        extracted_text.extend(get_calculated_summary_translatable_text(container))
 
     return extracted_text
 
@@ -90,6 +92,14 @@ def get_interstitial_translatable_text(block):
         translatable_text.extend(get_content_text(block.get('content'), block['id']))
         translatable_text.extend(get_text_for_container(block, block['id']))
     translatable_text.extend(get_text_for_container(block, block['id']))
+
+    return translatable_text
+
+def get_calculated_summary_translatable_text(block):
+    translatable_text = []
+
+    translatable_text.extend(get_titles_text(block['titles'], block['id']))
+    translatable_text.extend(get_titles_text(block['calculation']['titles'], block['id']))
 
     return translatable_text
 

@@ -204,6 +204,27 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "type": "CalculatedSummary",
+                            "id": "block-3",
+                            "titles": [
+                                {
+                                    "value": "Crynodeb Cyfrifo Prif Ddeitl Bloc 2"
+                                }
+                            ],
+                            "calculation": {
+                                "calculation_type": "sum",
+                                "answers_to_calculate": [
+                                    "first-number-answer",
+                                    "second-number-answer"
+                                ],
+                                "titles": [
+                                    {
+                                        "value": "Crynodeb Cyfrifo Teitl Bloc 2"
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
