@@ -1,2 +1,22 @@
-# IDE
-.idea
+# Python temp file
+*.py[cod]
+__pycache__
+.pytest_cache
+
+.cache
+
+# intellij
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# VS Code
+.vscode
+
+.DS_Store
+
+## OS X
+._*
+.Spotlight-V100
+.Trashes
