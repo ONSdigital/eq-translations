@@ -108,6 +108,7 @@ def translate_survey(survey_json, translations):
 def translate_title_data(container, translations):
     translate_value(container, 'title', 'title', translations)
     translate_value(container, 'description', 'description', translations)
+    translate_value(container, 'legal_basis', 'legal_basis', translations)
 
 
 def translate_content_block(container, context, translations):
