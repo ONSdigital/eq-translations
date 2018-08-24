@@ -23,7 +23,7 @@ def get_text_for_container(container, context=None):
     extracted_text = []
 
     if isinstance(container, dict):
-        for key in ['description', 'label', 'title', 'question']:
+        for key in ['description', 'label', 'title', 'question', 'legal_basis']:
             value = container.get(key)
 
             if value is not None and value != '':
