@@ -65,7 +65,10 @@ def get_text(data):
                     translatable_text.extend(get_question_translatable_text(question))
                     translatable_text.extend(get_definitions_text(question))
 
-                    for answer in question['answers']:
+                    if question['type'] == 'Content':
+                        translatable_text.extend(get_text_for_container(question, question['id']))
+
+                    for answer in question.get('answers', []):
                         translatable_text.extend(get_text_for_container(answer, answer['id']))
                         translatable_text.extend(get_guidance_text(answer))
                         translatable_text.extend(get_options_text(answer))
@@ -82,6 +85,8 @@ def get_non_question_translatable_text(container):
         extracted_text.extend(get_interstitial_translatable_text(container))
     elif container['type'] == 'CalculatedSummary':
         extracted_text.extend(get_calculated_summary_translatable_text(container))
+    elif container['type'] == 'Content':
+        extracted_text.extend(get_text_for_container(container, container['id']))
 
     return extracted_text
 
@@ -95,6 +100,7 @@ def get_interstitial_translatable_text(block):
     translatable_text.extend(get_text_for_container(block, block['id']))
 
     return translatable_text
+
 
 def get_calculated_summary_translatable_text(block):
     translatable_text = []

@@ -45,13 +45,13 @@ if __name__ == '__main__':
     alpha_keys = set(alpha_translations.keys())
     beta_keys = set(beta_translations.keys())
 
-    for aKey in alpha_keys.difference(alpha_keys):
+    for aKey in alpha_keys.difference(beta_keys):
         print(aKey)
 
     alpha_translations.update(beta_translations)
 
     translations_list = []
-    for k,v in alpha_translations.items():
+    for k, v in alpha_translations.items():
         translations_list.append((k[0], k[1], v))
 
     output_translations(translations_list, args.OUT)
