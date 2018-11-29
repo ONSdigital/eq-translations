@@ -5,7 +5,7 @@
     "theme": "default",
     "schema_version": "0.0.1",
     "data_version": "0.0.1",
-    "legal_basis": "StatisticsOfTradeAct",
+    "legal_basis": "Rhoddir rhybudd o dan adran 1 o Ddeddf Ystadegau Masnach 1947.",
     "description": "mbs_0106",
     "navigation": {
         "visible": true
@@ -133,7 +133,13 @@
                                     },
                                     {
                                         "label": "Ateb fy hun",
-                                        "value": "bad"
+                                        "value": "bad",
+                                        "detail_answer": {
+                                          "id": "feeling-bad-answer",
+                                          "label": "Nodwch pam mae ateb drosti eich hun yn wael",
+                                          "mandatory": true,
+                                          "type": "TextField"
+                                        }
                                     }
                                 ],
                                 "guidance": {
