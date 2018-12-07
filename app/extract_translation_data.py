@@ -222,9 +222,10 @@ def get_guidance_text(container):
 
 def get_options_text(container):
     extracted_text = []
-    if 'options' in container:
-        for options in container['options']:
-            extracted_text.extend(get_text_for_container(options, container['id']))
+    for option in container.get('options', []):
+        extracted_text.extend(get_text_for_container(option, container['id']))
+        if 'detail_answer' in option:
+            extracted_text.extend(get_text_for_container(option['detail_answer'], option['detail_answer']['id']))
 
     return extracted_text
 
@@ -310,13 +311,9 @@ def command_line_handler(json_file, output_directory):
 
     text = get_text(deserialised_json)
 
-    print('Removing duplicate text...')
-    unique_text = remove_duplicates(text)
-    sorted_text = sort_text(unique_text)
-
     print('Outputting text to file...')
     output_file_name = create_output_file_name_with_directory(output_directory, json_file)
-    output_translations_to_file(sorted_text, output_file_name)
+    output_translations_to_file(text, output_file_name)
 
     print('Finished successfully.')
     print()

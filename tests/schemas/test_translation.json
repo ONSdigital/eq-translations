@@ -128,7 +128,13 @@
                                     },
                                     {
                                         "label": "Answering myself",
-                                        "value": "bad"
+                                        "value": "bad",
+                                        "detail_answer": {
+                                          "id": "feeling-bad-answer",
+                                          "label": "Specify why answering for yourself is bad",
+                                          "mandatory": true,
+                                          "type": "TextField"
+                                        }
                                     }
                                 ],
                                 "guidance": {

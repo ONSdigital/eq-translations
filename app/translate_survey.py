@@ -175,9 +175,10 @@ def translate_titles_text(container, context, translations):
 
 
 def translate_options_text(container, context, translations):
-    if 'options' in container:
-        for options in container['options']:
-            translate_container(options, context, translations)
+    for option in container.get('options', []):
+        translate_container(option, context, translations)
+        if 'detail_answer' in option:
+            translate_container(option['detail_answer'], option['detail_answer']['id'], translations)
 
     return container
 
