@@ -16,27 +16,28 @@ pipenv install --dev
 Extract translatable text from an eQ survey with
 
 ```
-pipenv run ./scripts/run_translation_extract.sh <json_file> [output_directory]
+pipenv run python -m cli.template_extractor <schema_file> <output_directory>
 ```
-This will output the translatable text to an Excel (.xlsx) file.
+This will output the translatable text to an POT file.
 
-After the text has been translated, create a new translated survey with
-```
-pipenv run ./scripts/run_translate_survey.sh <json_file> <translations_file> [output_directory]
-```
 
-To translate all surveys in a directory run
+After the text has been translated, create a new translated survey with:
 
 ```
-pipenv run ./scripts/run_translate_all_surveys <top_level_directory_containing_schemas>
+pipenv run python -m cli.translate_survey <schema_file> <translation_path> <output_directory>
+```
+
+To translate all surveys in a directory run:
+
+```
+pipenv run python -m cli.translate_all_surveys <top_level_schema_directory>
 ```
 
 ## Naming conventions
 
 ### Translation files
 
-Should be prefixed with the name of the schema to translate followed by `_translate_` followed by the [country code](https://en.wikipedia.org/wiki/ISO_3166-1) of the translations in a xlsx format e.g.
+Should be prefixed with the name of the schema to translate followed by `_translate_` followed by the [country code](https://en.wikipedia.org/wiki/ISO_3166-1) of the translations in a po format e.g.
 
 ```
-census_household_translate_cy.xlsx
-```
+census_household_translate_cy.po
