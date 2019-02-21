@@ -1,6 +1,6 @@
 import unittest
 
-from app.translate_survey import dumb_to_smart_quotes
+from app.utils import dumb_to_smart_quotes
 
 
 class TestDumbToSmartQuotes(unittest.TestCase):
