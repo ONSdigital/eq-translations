@@ -1,6 +1,6 @@
 import unittest
 
-from app.translate_survey import dumb_to_smart_quotes
+from app.utils import dumb_to_smart_quotes
 
 
 class TestDumbToSmartQuotes(unittest.TestCase):
@@ -26,8 +26,8 @@ class TestDumbToSmartQuotes(unittest.TestCase):
     @unittest.expectedFailure
     def test_dumb_to_smart_quotes_english_double(self):
         # Double quotes not supported yet...
-        original_text = '''here is "a sentance with" double dumb "quotes" in the middle'''
-        expected = '''here is “a sentance with” double dumb “quotes” in the middle'''
+        original_text = '''here is "a sentence with" double dumb "quotes" in the middle'''
+        expected = '''here is “a sentence with” double dumb “quotes” in the middle'''
 
         actual = dumb_to_smart_quotes(original_text)
 
