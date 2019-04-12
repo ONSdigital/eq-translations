@@ -33,6 +33,12 @@ To translate all surveys in a directory run:
 pipenv run python -m cli.translate_all_surveys <top_level_schema_directory>
 ```
 
+To run the tests:
+
+```
+make test
+```
+
 ## Naming conventions
 
 ### Translation files

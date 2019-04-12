@@ -1,4 +1,5 @@
 from babel.messages import pofile
+
 from app.utils import dumb_to_smart_quotes
 
 
