@@ -13,7 +13,6 @@ class SurveySchema:
         'hide_guidance',
         'description',
         'legal_basis',
-        'label',
     ]
 
     @staticmethod
