@@ -176,7 +176,7 @@ class SurveySchema:
         missing_translations = 0
 
         for pointer in self.no_context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
+            pointer_contents = self.resolve(self.schema, pointer)
             translation = schema_translation.translate_message(pointer_contents)
             if translation:
                 translated_schema = set_pointer(translated_schema, pointer, translation)
@@ -187,7 +187,7 @@ class SurveySchema:
                 )
 
         for pointer in self.context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
+            pointer_contents = self.resolve(self.schema, pointer)
             parent_answer_id = self.get_parent_id(pointer)
             translation = schema_translation.translate_message(
                 pointer_contents, parent_answer_id
