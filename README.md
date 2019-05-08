@@ -47,3 +47,10 @@ Should be prefixed with the name of the schema to translate followed by `_transl
 
 ```
 census_household_translate_cy.po
+```
+
+## Managing translations
+
+When `gettext` is installed there are a number of command line utilities that can help with managing translations.
+
+To merge the translations from an already translated survey into another one, you can use `msgmerge`. For example `msgmerge census_household-cy.po census_individual.pot > census_individual-cy.po` will merge matching Welsh translations from the Census household questionnaire into the Census individual questionnaire.
