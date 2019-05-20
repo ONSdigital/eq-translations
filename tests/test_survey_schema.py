@@ -458,5 +458,128 @@ class TestTranslate(unittest.TestCase):
 
         assert "What is ‘this persons’ date of birth?" in actual_items
 
+    def test_find_pointers_ignores_placeholders(self):
+        schema = SurveySchema({
+            "id": "establishment-position-question",
+            "title": {
+                "placeholders": [
+                    {
+                        "placeholder": "person_name_possessive",
+                        "transforms": [
+                            {
+                                "arguments": {
+                                    "delimiter": " ",
+                                    "list_to_concatenate": {
+                                        "identifier": [
+                                            "first-name",
+                                            "last-name"
+                                        ],
+                                        "source": "answers"
+                                    }
+                                },
+                                "transform": "concatenate_list"
+                            },
+                            {
+                                "arguments": {
+                                    "string_to_format": {
+                                        "source": "previous_transform"
+                                    }
+                                },
+                                "transform": "format_possessive"
+                            }
+                        ]
+                    }
+                ],
+                "text": "What is <em>{person_name_possessive}</em> position in this establishment?"
+            },
+            "type": "General"
+        })
+        pointers = schema.get_title_pointers()
 
+        assert '/title' not in pointers
 
+    def test_placeholder_translation(self):
+
+        schema_translation = SchemaTranslation()
+
+        catalog = Catalog()
+
+        catalog.add("What is <em>{person_name_possessive}</em> position in this establishment?",
+                    "WELSH - What is <em>{person_name_possessive}</em> position in this establishment?")
+
+        schema_translation.catalog = catalog
+
+        schema = SurveySchema({
+            "id": "establishment-position-question",
+            "title": {
+                "placeholders": [
+                    {
+                        "placeholder": "person_name_possessive",
+                        "transforms": [
+                            {
+                                "arguments": {
+                                    "delimiter": " ",
+                                    "list_to_concatenate": {
+                                        "identifier": [
+                                            "first-name",
+                                            "last-name"
+                                        ],
+                                        "source": "answers"
+                                    }
+                                },
+                                "transform": "concatenate_list"
+                            },
+                            {
+                                "arguments": {
+                                    "string_to_format": {
+                                        "source": "previous_transform"
+                                    }
+                                },
+                                "transform": "format_possessive"
+                            }
+                        ]
+                    }
+                ],
+                "text": "What is <em>{person_name_possessive}</em> position in this establishment?"
+            },
+            "type": "General"
+        })
+        translated = schema.translate(schema_translation)
+
+        expected = {
+            "id": "establishment-position-question",
+            "title": {
+                "placeholders": [
+                    {
+                        "placeholder": "person_name_possessive",
+                        "transforms": [
+                            {
+                                "arguments": {
+                                    "delimiter": " ",
+                                    "list_to_concatenate": {
+                                        "identifier": [
+                                            "first-name",
+                                            "last-name"
+                                        ],
+                                        "source": "answers"
+                                    }
+                                },
+                                "transform": "concatenate_list"
+                            },
+                            {
+                                "arguments": {
+                                    "string_to_format": {
+                                        "source": "previous_transform"
+                                    }
+                                },
+                                "transform": "format_possessive"
+                            }
+                        ]
+                    }
+                ],
+                "text": "WELSH - What is <em>{person_name_possessive}</em> position in this establishment?"
+            },
+            "type": "General"
+        }
+
+        assert expected == translated.schema
