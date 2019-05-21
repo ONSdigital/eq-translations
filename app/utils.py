@@ -1,6 +1,10 @@
 import re
 
 
+def is_placeholder(input_data):
+    return 'placeholders' in input_data
+
+
 def find_pointers_containing(input_data, search_key, pointer=None):
     """
     Recursive function which lists pointers which contain a search key
@@ -10,10 +14,10 @@ def find_pointers_containing(input_data, search_key, pointer=None):
     :return: generator of the json pointer paths
     """
     if isinstance(input_data, dict):
-        if pointer and search_key in input_data:
+        if pointer and search_key in input_data and not is_placeholder(input_data[search_key]):
             yield pointer
         for k, v in input_data.items():
-            if isinstance(v, dict) and search_key in v:
+            if isinstance(v, dict) and search_key in v and not is_placeholder(v[search_key]):
                 yield pointer + '/' + k if pointer else '/' + k
             else:
                 yield from find_pointers_containing(v, search_key, pointer + '/' + k if pointer else '/' + k)
@@ -29,7 +33,7 @@ def find_pointers_to(input_data, search_key):
     :param search_key: the key to search for
     :return: list of the json pointer paths
     """
-    root_pointers = ['/{}'.format(search_key)] if search_key in input_data else []
+    root_pointers = ['/{}'.format(search_key)] if search_key in input_data and not is_placeholder(input_data[search_key]) else []
     pointer_iterator = find_pointers_containing(input_data, search_key)
     return root_pointers + ['{}/{}'.format(p, search_key) for p in pointer_iterator]
 

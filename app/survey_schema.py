@@ -13,22 +13,8 @@ class SurveySchema:
         'hide_guidance',
         'description',
         'legal_basis',
+        'text',
     ]
-
-    @staticmethod
-    def resolve(schema, message_pointer):
-        """
-        Parse the location of the schema at message pointer.
-
-        If the value at location *message_pointer* is a dict,
-        correctly parse and return the value.
-        """
-        resolved = resolve_pointer(schema, message_pointer)
-
-        try:
-            return resolved['text']
-        except (KeyError, TypeError):
-            return resolved
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
@@ -100,7 +86,7 @@ class SurveySchema:
 
     def get_title_pointers(self):
         """
-        Titles need to be handled seperately as they may require context for translation
+        Titles need to be handled separately as they may require context for translation
         :return:
         """
         return find_pointers_to(self.schema, 'title')
@@ -113,7 +99,7 @@ class SurveySchema:
         return find_pointers_to(self.schema, 'label')
 
     def get_parent_id(self, pointer):
-        resolved_data = self.resolve(self.schema, pointer)
+        resolved_data = resolve_pointer(self.schema, pointer)
 
         if isinstance(resolved_data, dict) and 'id' in resolved_data:
             return resolved_data['id']
@@ -131,7 +117,7 @@ class SurveySchema:
 
     def get_parent_question(self, pointer):
         question_pointer = self.get_parent_question_pointer(pointer)
-        return self.resolve(self.schema, question_pointer + '/title')
+        return resolve_pointer(self.schema, question_pointer + '/title')
 
     def get_catalog(self):
         """
@@ -141,12 +127,12 @@ class SurveySchema:
         total_translations = len(self.no_context_pointers + self.context_pointers)
 
         for pointer in self.no_context_pointers:
-            pointer_contents = self.resolve(self.schema, pointer)
+            pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
                 catalog.add(dumb_to_smart_quotes(pointer_contents))
 
         for pointer in self.context_pointers:
-            pointer_contents = self.resolve(self.schema, pointer)
+            pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
                 parent_answer_id = self.get_parent_id(pointer)
                 question = self.get_parent_question(pointer)
@@ -176,7 +162,7 @@ class SurveySchema:
         missing_translations = 0
 
         for pointer in self.no_context_pointers:
-            pointer_contents = self.resolve(self.schema, pointer)
+            pointer_contents = resolve_pointer(self.schema, pointer)
             translation = schema_translation.translate_message(pointer_contents)
             if translation:
                 translated_schema = set_pointer(translated_schema, pointer, translation)
@@ -187,7 +173,7 @@ class SurveySchema:
                 )
 
         for pointer in self.context_pointers:
-            pointer_contents = self.resolve(self.schema, pointer)
+            pointer_contents = resolve_pointer(self.schema, pointer)
             parent_answer_id = self.get_parent_id(pointer)
             translation = schema_translation.translate_message(
                 pointer_contents, parent_answer_id
