@@ -53,4 +53,6 @@ census_household_translate_cy.po
 
 When `gettext` is installed there are a number of command line utilities that can help with managing translations.
 
-To merge the translations from an already translated survey into another one, you can use `msgmerge`. For example `msgmerge census_household-cy.po census_individual.pot > census_individual-cy.po` will merge matching Welsh translations from the Census household questionnaire into the Census individual questionnaire.
+To merge the translations from an already translated survey into another one, you can use `msgmerge`. For example `msgmerge census_household-cy.po census_individual.pot -o census_individual-cy.po` will merge matching Welsh translations from the Census household questionnaire into the Census individual questionnaire.
+
+To add the content of translation files together, you can use `msgcat`. For example `msgcat census_individual-wls.pot census_individual-gb.pot -o census_individual.pot` will add unique messages from each input template file to create an output Census individual template for both versions.
