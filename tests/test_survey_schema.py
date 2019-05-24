@@ -7,13 +7,60 @@ from app.survey_schema import SurveySchema
 
 
 class TestSurveySchema(unittest.TestCase):
-    def test_variant(self):
-        schema = SurveySchema({
-            "question_variants": [{
+    schema = SurveySchema({
+        "question_variants": [{
+            "question": {
+                "type": "General",
+                "id": "question-2",
+                "title": "What is 'this persons' date of birth?",
+                "answers": [
+                    {
+                        "id": "confirm-feeling-answer",
+                        "type": "Radio",
+                        "label": "confirm",
+                        "mandatory": True,
+                        "options": [
+                            {
+                                "value": "Yes",
+                                "label": "Yes"
+                            },
+                            {
+                                "value": "No",
+                                "label": "No"
+                            }
+                        ]
+                    }
+                ],
+                "guidance": {
+                    "content": [
+                        {
+                            "title": "Include:",
+                            "list": [
+                                "all employees in Great Britain (England, Scotland and Wales), both full and part-time, who received pay in the relevant period"
+                            ]
+                        },
+                        {
+                            "title": "Exclude:",
+                            "list": [
+                                "trainees on government schemes",
+                                "employees working abroad unless paid directly from this business’s GB payroll",
+                                "employees in Northern Ireland"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "when": {
+                "id": "feeling-answer",
+                "condition": "equals",
+                "value": "good"
+            }
+        },
+            {
                 "question": {
                     "type": "General",
                     "id": "question-2",
-                    "title": "What is 'this persons' date of birth?",
+                    "title": "What is your date of birth?",
                     "answers": [
                         {
                             "id": "confirm-feeling-answer",
@@ -54,65 +101,19 @@ class TestSurveySchema(unittest.TestCase):
                 "when": {
                     "id": "feeling-answer",
                     "condition": "equals",
-                    "value": "good"
-                }
-            },
-            {
-                "question": {
-                    "type": "General",
-                    "id": "question-2",
-                    "title": "What is your date of birth?"
-                },
-                "answers": [
-                    {
-                        "id": "confirm-feeling-answer",
-                        "type": "Radio",
-                        "label": "confirm",
-                        "mandatory": True,
-                        "options": [
-                            {
-                                "value": "Yes",
-                                "label": "Yes"
-                            },
-                            {
-                                "value": "No",
-                                "label": "No"
-                            }
-                        ]
-                    }
-                ],
-                "guidance": {
-                    "content": [
-                        {
-                            "title": "Include:",
-                            "list": [
-                                "all employees in Great Britain (England, Scotland and Wales), both full and part-time, who received pay in the relevant period"
-                            ]
-                        },
-                        {
-                            "title": "Exclude:",
-                            "list": [
-                                "trainees on government schemes",
-                                "employees working abroad unless paid directly from this business’s GB payroll",
-                                "employees in Northern Ireland"
-                            ]
-                        }
-                    ]
-                },
-                "when": {
-                     "id": "feeling-answer",
-                     "condition": "equals",
-                     "value": "bad"
+                    "value": "bad"
                 }
             }]
-        })
+    })
 
-        pointers = schema.get_title_pointers()
+    pointers = schema.get_title_pointers()
 
-        assert '/question_variants/0/question/title' in pointers
-        assert '/question_variants/1/question/title' in pointers
-        assert '/question_variants/1/guidance/content/0/title' in pointers
-        assert '/question_variants/1/guidance/content/1/title' in pointers
+    assert '/question_variants/0/question/title' in pointers
+    assert '/question_variants/1/question/title' in pointers
+    assert '/question_variants/0/question/guidance/content/0/title' in pointers
+    assert '/question_variants/0/question/guidance/content/1/title' in pointers
+    assert '/question_variants/1/question/guidance/content/0/title' in pointers
+    assert '/question_variants/1/question/guidance/content/1/title' in pointers
 
     def test_get_messages(self):
         schema = SurveySchema()
@@ -125,7 +126,10 @@ class TestSurveySchema(unittest.TestCase):
             "sections": [{
                 "type": "CalculatedSummary",
                 "id": "block-3",
-                "title": "Calculated Summary Main Title Block 2", "calculation": { "calculation_type": "sum", "answers_to_calculate": [
+                "title": "Calculated Summary Main Title Block 2",
+                "calculation": {
+                    "calculation_type": "sum",
+                    "answers_to_calculate": [
                         "first-number-answer",
                         "second-number-answer"
                     ],
