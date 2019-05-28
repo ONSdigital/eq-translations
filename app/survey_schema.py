@@ -1,6 +1,7 @@
 from babel.messages import Catalog
 
 import json
+import copy
 
 from app.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
 from jsonpointer import resolve_pointer, set_pointer
@@ -162,11 +163,11 @@ class SurveySchema:
                 parent_answer_id = self.get_parent_id(pointer)
                 question = self.get_parent_question(pointer)
 
-                user_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
+                message_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
 
                 catalog.add(
                     dumb_to_smart_quotes(pointer_contents),
-                    context=user_context,
+                    context=message_context,
                     auto_comments=["answer-id: {}".format(parent_answer_id)],
                 )
 
@@ -182,7 +183,7 @@ class SurveySchema:
         :param schema_translation:
         :return:
         """
-        translated_schema = self.schema.copy()
+        translated_schema = copy.deepcopy(self.schema)
         total_translations = len(self.no_context_pointers + self.context_pointers)
         missing_translations = 0
 
@@ -200,8 +201,10 @@ class SurveySchema:
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             parent_answer_id = self.get_parent_id(pointer)
+            question = self.get_parent_question(pointer)
+            message_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
             translation = schema_translation.translate_message(
-                pointer_contents, parent_answer_id
+                pointer_contents, parent_answer_id, message_context
             )
             if translation:
                 translated_schema = set_pointer(translated_schema, pointer, translation)

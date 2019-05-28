@@ -18,7 +18,7 @@ class SchemaTranslation:
         with open(translation_file_path, 'w+b') as translation_file:
             pofile.write_po(translation_file, self.catalog)
 
-    def translate_message(self, message_to_translate, answer_id=None):
+    def translate_message(self, message_to_translate, answer_id=None, message_context=None):
         for message in self.catalog:
             if message.id and dumb_to_smart_quotes(message.id) == dumb_to_smart_quotes(message_to_translate):
                 found = True
@@ -30,7 +30,10 @@ class SchemaTranslation:
                             comment_answer_id = comment.split(":")[1].strip()
 
                 if answer_id or comment_answer_id:
-                    found = comment_answer_id == answer_id
+                    if message_context:
+                        found = comment_answer_id == answer_id and message.context == message_context
+                    else:
+                        found = comment_answer_id == answer_id
 
                 if found:
                     return dumb_to_smart_quotes(message.string)
