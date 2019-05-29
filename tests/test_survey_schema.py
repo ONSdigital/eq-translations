@@ -498,6 +498,148 @@ class TestTranslate(unittest.TestCase):
 
         assert '/title' not in pointers
 
+    def test_get_placeholder_pointers(self):
+        schema = SurveySchema({
+           "question": {
+              "answers": [
+                 {
+                    "id": "term-time-location-answer",
+                    "mandatory": True,
+                    "options": [
+                       {
+                          "label": {
+                             "placeholders": [
+                                {
+                                   "placeholder": "address",
+                                   "value": {
+                                      "identifier": "display_address",
+                                      "source": "metadata"
+                                   }
+                                }
+                             ],
+                             "text": "{address}"
+                          },
+                          "value": "household-address"
+                       },
+                       {
+                          "label": {
+                             "placeholders": [
+                                {
+                                   "placeholder": "country",
+                                   "value": {
+                                      "identifier": "another-address-answer-other-country",
+                                      "source": "answers"
+                                   }
+                                }
+                             ],
+                             "text": "The address in {country}"
+                          },
+                          "value": "30-day-address"
+                       },
+                       {
+                          "label": "Another address",
+                          "value": "Another address"
+                       }
+                    ],
+                    "type": "Radio"
+                 }
+              ],
+              "id": "term-time-location-question",
+              "title": {
+                 "placeholders": [
+                    {
+                       "placeholder": "person_name",
+                       "transforms": [
+                          {
+                             "arguments": {
+                                "delimiter": " ",
+                                "list_to_concatenate": {
+                                   "identifier": [
+                                      "first-name",
+                                      "last-name"
+                                   ],
+                                   "source": "answers"
+                                }
+                             },
+                             "transform": "concatenate_list"
+                          }
+                       ]
+                    }
+                 ],
+                 "text": "During term time, where does <em>{person_name}</em> usually live?"
+              },
+              "type": "General"
+            }
+        })
+
+        assert '/question/answers/0/options/0/label/text' in schema.context_placeholder_pointers
+        assert '/question/answers/0/options/1/label/text' in schema.context_placeholder_pointers
+        assert '/question/title/text' in schema.no_context_placeholder_pointers
+
+    def test_placeholder_catalog_context(self):
+        schema = SurveySchema({
+           "question": {
+              "answers": [
+                 {
+                    "id": "term-time-location-answer",
+                    "mandatory": True,
+                    "options": [
+                       {
+                          "label": {
+                             "placeholders": [
+                                {
+                                   "placeholder": "address",
+                                   "value": {
+                                      "identifier": "display_address",
+                                      "source": "metadata"
+                                   }
+                                }
+                             ],
+                             "text": "{address}"
+                          },
+                          "value": "household-address"
+                       },
+                       {
+                          "label": "Another address",
+                          "value": "Another address"
+                       }
+                    ],
+                    "type": "Radio"
+                 }
+              ],
+              "id": "term-time-location-question",
+              "title": {
+                 "placeholders": [
+                    {
+                       "placeholder": "person_name",
+                       "transforms": [
+                          {
+                             "arguments": {
+                                "delimiter": " ",
+                                "list_to_concatenate": {
+                                   "identifier": [
+                                      "first-name",
+                                      "last-name"
+                                   ],
+                                   "source": "answers"
+                                }
+                             },
+                             "transform": "concatenate_list"
+                          }
+                       ]
+                    }
+                 ],
+                 "text": "During term time, where does <em>{person_name}</em> usually live?"
+              },
+              "type": "General"
+            }
+        })
+
+        message = schema.get_catalog().get(
+            '{address}', 'Answer for: During term time, where does <em>{person_name}</em> usually live?'
+        )
+        assert message.auto_comments == ['answer-id: term-time-location-answer']
+
     def test_placeholder_translation(self):
 
         schema_translation = SchemaTranslation()

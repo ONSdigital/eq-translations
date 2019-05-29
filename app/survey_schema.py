@@ -2,7 +2,7 @@ from babel.messages import Catalog
 
 import json
 
-from app.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes
+from app.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
 from jsonpointer import resolve_pointer, set_pointer
 
 
@@ -13,15 +13,22 @@ class SurveySchema:
         'hide_guidance',
         'description',
         'legal_basis',
-        'text',
     ]
+    context_placeholder_pointers = []
+    no_context_placeholder_pointers = []
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
+        self.load_placeholders()
 
     def load(self, schema_path):
         with open(schema_path, encoding='utf8') as schema_file:
             self.schema = json.load(schema_file)
+            self.load_placeholders()
+
+    def load_placeholders(self):
+        if self.schema:
+            self.context_placeholder_pointers, self.no_context_placeholder_pointers = self.get_placeholder_pointers()
 
     def save(self, schema_path):
         with open(schema_path, 'w', encoding='utf8') as schema_file:
@@ -38,11 +45,12 @@ class SurveySchema:
             + self.get_title_pointers()
             + self.get_message_pointers()
             + self.get_list_pointers()
+            + self.no_context_placeholder_pointers
         )
 
     @property
     def context_pointers(self):
-        return self.get_answer_pointers()
+        return self.get_answer_pointers() + self.context_placeholder_pointers
 
     def get_core_pointers(self):
         """
@@ -54,6 +62,23 @@ class SurveySchema:
             key_pointers = find_pointers_to(self.schema, key)
             pointers.extend(key_pointers)
         return pointers
+
+    def get_placeholder_pointers(self):
+        """
+        Placeholder pointers may have context or may not
+        :return:
+        """
+        found_pointers = find_pointers_to(self.schema, 'text')
+        context_placeholder_pointers = []
+        no_context_placeholder_pointers = []
+
+        for pointer in found_pointers:
+            if '/answers/' in pointer:
+                context_placeholder_pointers.append(pointer)
+            else:
+                no_context_placeholder_pointers.append(pointer)
+
+        return context_placeholder_pointers, no_context_placeholder_pointers
 
     def get_message_pointers(self):
         """
@@ -137,7 +162,7 @@ class SurveySchema:
                 parent_answer_id = self.get_parent_id(pointer)
                 question = self.get_parent_question(pointer)
 
-                user_context = 'Answer for: {}'.format(question)
+                user_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
 
                 catalog.add(
                     dumb_to_smart_quotes(pointer_contents),
