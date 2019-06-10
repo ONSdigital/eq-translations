@@ -7,113 +7,70 @@ from app.survey_schema import SurveySchema
 
 
 class TestSurveySchema(unittest.TestCase):
-    schema = SurveySchema({
+
+    VARIANT_SCHEMA = {
+        "id": "name",
         "question_variants": [{
-            "question": {
-                "type": "General",
-                "id": "question-2",
-                "title": "What is 'this persons' date of birth?",
-                "answers": [
-                    {
-                        "id": "confirm-feeling-answer",
-                        "type": "Radio",
-                        "label": "confirm",
-                        "mandatory": True,
-                        "options": [
-                            {
-                                "value": "Yes",
-                                "label": "Yes"
-                            },
-                            {
-                                "value": "No",
-                                "label": "No"
-                            }
-                        ]
+           "question": {
+              "answers": [
+                 {
+                    "id": "first-name",
+                    "label": "First name",
+                    "mandatory": True,
+                    "type": "TextField",
+                    "validation": {
+                       "messages": {
+                          "MANDATORY_TEXTFIELD": "Please enter a name or remove the person to continue"
+                       }
                     }
-                ],
-                "guidance": {
-                    "content": [
-                        {
-                            "title": "Include:",
-                            "list": [
-                                "all employees in Great Britain (England, Scotland and Wales), both full and part-time, who received pay in the relevant period"
-                            ]
-                        },
-                        {
-                            "title": "Exclude:",
-                            "list": [
-                                "trainees on government schemes",
-                                "employees working abroad unless paid directly from this business’s GB payroll",
-                                "employees in Northern Ireland"
-                            ]
-                        }
-                    ]
-                }
-            },
-            "when": {
-                "id": "feeling-answer",
-                "condition": "equals",
-                "value": "good"
-            }
-        },
-            {
-                "question": {
-                    "type": "General",
-                    "id": "question-2",
-                    "title": "What is your date of birth?",
-                    "answers": [
-                        {
-                            "id": "confirm-feeling-answer",
-                            "type": "Radio",
-                            "label": "confirm",
-                            "mandatory": True,
-                            "options": [
-                                {
-                                    "value": "Yes",
-                                    "label": "Yes"
-                                },
-                                {
-                                    "value": "No",
-                                    "label": "No"
-                                }
-                            ]
-                        }
-                    ],
-                    "guidance": {
-                        "content": [
-                            {
-                                "title": "Include:",
-                                "list": [
-                                    "all employees in Great Britain (England, Scotland and Wales), both full and part-time, who received pay in the relevant period"
-                                ]
-                            },
-                            {
-                                "title": "Exclude:",
-                                "list": [
-                                    "trainees on government schemes",
-                                    "employees working abroad unless paid directly from this business’s GB payroll",
-                                    "employees in Northern Ireland"
-                                ]
-                            }
-                        ]
+                 },
+                 {
+                    "id": "last-name",
+                    "label": "Last name",
+                    "mandatory": False,
+                    "type": "TextField"
+                 }
+              ],
+              "id": "name-question",
+              "title": "What is your name?",
+              "type": "General"
+           }
+        }, {
+           "question": {
+              "answers": [
+                 {
+                    "id": "first-name",
+                    "label": "First name",
+                    "mandatory": True,
+                    "type": "TextField",
+                    "validation": {
+                       "messages": {
+                          "MANDATORY_TEXTFIELD": "Please enter a name or remove the person to continue"
+                       }
                     }
-                },
-                "when": {
-                    "id": "feeling-answer",
-                    "condition": "equals",
-                    "value": "bad"
-                }
-            }]
-    })
+                 },
+                 {
+                    "id": "last-name",
+                    "label": "Last name",
+                    "mandatory": False,
+                    "type": "TextField"
+                 }
+              ],
+              "id": "name-question",
+              "title": "What is their name?",
+              "type": "General"
+           }
+        }],
+        "type": "Question"
+    }
 
-    pointers = schema.get_title_pointers()
+    def test_find_variant_pointers(self):
+        schema = SurveySchema(TestSurveySchema.VARIANT_SCHEMA)
 
-    assert '/question_variants/0/question/title' in pointers
-    assert '/question_variants/1/question/title' in pointers
-    assert '/question_variants/0/question/guidance/content/0/title' in pointers
-    assert '/question_variants/0/question/guidance/content/1/title' in pointers
-    assert '/question_variants/1/question/guidance/content/0/title' in pointers
-    assert '/question_variants/1/question/guidance/content/1/title' in pointers
+        pointers = schema.get_title_pointers()
+
+        assert '/question_variants/0/question/title' in pointers
+        assert '/question_variants/1/question/title' in pointers
 
     def test_get_messages(self):
         schema = SurveySchema()
@@ -235,7 +192,7 @@ class TestSurveySchema(unittest.TestCase):
     def test_get_parent_id(self):
         schema = SurveySchema({
             "sections": [{
-                "question": [{
+                "question": {
                     "answers": [{
                         "id": "confirm-feeling-answer",
                         "type": "Radio",
@@ -252,12 +209,12 @@ class TestSurveySchema(unittest.TestCase):
                             }
                         ]
                     }]
-                }]
+                }
             }]
         })
 
-        option_parent_id = schema.get_parent_id('/sections/0/question/0/answers/0/options/0/label')
-        answer_parent_id = schema.get_parent_id('/sections/0/question/0/answers/0/label')
+        option_parent_id = schema.get_parent_id('/sections/0/question/answers/0/options/0/label')
+        answer_parent_id = schema.get_parent_id('/sections/0/question/answers/0/label')
 
         assert option_parent_id == 'confirm-feeling-answer'
         assert answer_parent_id == 'confirm-feeling-answer'
@@ -309,18 +266,19 @@ class TestTranslate(unittest.TestCase):
         catalog.add("Answering for this person",
                     "WELSH - Answering for this person",
                     auto_comments=["answer-id: feeling-answer"],
-                    user_comments=["Answer for: Who are you answering for??"])
+                    context="Answer for: Who are you answering for??")
 
         catalog.add("Answering myself",
                     "WELSH - Answering myself",
                     auto_comments=["answer-id: feeling-answer"],
-                    user_comments=["Answer for: Who are you answering for??"])
+                    context="Answer for: Who are you answering for??")
 
         schema_translation.catalog = catalog
 
         schema = SurveySchema({
             "sections": [{
-                "question": [{
+                "question": {
+                    "title": "Who are you answering for??",
                     "answers": [{
                         "type": "Radio",
                         "id": "feeling-answer",
@@ -334,10 +292,10 @@ class TestTranslate(unittest.TestCase):
                                 "label": "Answering myself",
                                 "value": "bad",
                                 "detail_answer": {
-                                "id": "feeling-bad-answer",
-                                "label": "Specify why answering for yourself is bad",
-                                "mandatory": True,
-                                "type": "TextField"
+                                    "id": "feeling-bad-answer",
+                                    "label": "Specify why answering for yourself is bad",
+                                    "mandatory": True,
+                                    "type": "TextField"
                                 }
                             }
                         ],
@@ -350,14 +308,15 @@ class TestTranslate(unittest.TestCase):
                             }]
                         }
                     }]
-                }]
+                }
             }]
         })
         translated = schema.translate(schema_translation)
 
         expected = {
             "sections": [{
-                "question": [{
+                "question": {
+                    "title": "Who are you answering for??",
                     "answers": [{
                         "type": "Radio",
                         "id": "feeling-answer",
@@ -371,10 +330,10 @@ class TestTranslate(unittest.TestCase):
                                 "label": "WELSH - Answering myself",
                                 "value": "bad",
                                 "detail_answer": {
-                                "id": "feeling-bad-answer",
-                                "label": "Specify why answering for yourself is bad",
-                                "mandatory": True,
-                                "type": "TextField"
+                                    "id": "feeling-bad-answer",
+                                    "label": "Specify why answering for yourself is bad",
+                                    "mandatory": True,
+                                    "type": "TextField"
                                 }
                             }
                         ],
@@ -387,7 +346,7 @@ class TestTranslate(unittest.TestCase):
                             }]
                         }
                     }]
-                }]
+                }
             }]
         }
 
@@ -729,3 +688,27 @@ class TestTranslate(unittest.TestCase):
         }
 
         assert expected == translated.schema
+
+    def test_variant_translation(self):
+        schema_translation = SchemaTranslation()
+
+        catalog = Catalog()
+
+        catalog.add("First name",
+                    "WELSH - First name",
+                    auto_comments=["answer-id: first-name"],
+                    context="Answer for: What is your name?")
+
+        catalog.add("First name",
+                    "WELSH - First name - Proxy",
+                    auto_comments=["answer-id: first-name"],
+                    context="Answer for: What is their name?")
+
+        schema_translation.catalog = catalog
+
+        variant_schema = SurveySchema(TestSurveySchema.VARIANT_SCHEMA)
+
+        translated = variant_schema.translate(schema_translation)
+
+        assert translated.schema['question_variants'][0]['question']['answers'][0]['label'] == "WELSH - First name"
+        assert translated.schema['question_variants'][1]['question']['answers'][0]['label'] == "WELSH - First name - Proxy"
