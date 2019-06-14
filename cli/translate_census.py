@@ -32,7 +32,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not os.path.isdir(args.OUTPUT_DIRECTORY):
-        print("Not a valid output directory")
+        print("Output directory does not exist")
         exit(1)
 
     file_prefix = 'individual' if 'individual' in args.SCHEMA_PATH else 'household'
