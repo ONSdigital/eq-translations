@@ -33,10 +33,32 @@ To translate all surveys in a directory run:
 pipenv run python -m cli.translate_all_surveys <top_level_schema_directory>
 ```
 
+To compare two schemas for differences in structure:
+
+```
+pipenv run python -m cli.compare_schemas <path_to_source_schema> <path_to_target_schema>
+```
+
 To run the tests:
 
 ```
 make test
+```
+
+### Census Commands
+
+To extract the census individual schema from Survey Runner to a pot template
+
+```
+pipenv run python -m cli.extract_census_template <runner_schema_directory> <output_directory>
+pipenv run python -m cli.extract_census_template ../eq-survey-runner/data/en out
+```
+
+To translate the census individual using current translations in crowdin
+
+```
+pipenv run python -m cli.extract_census_template <census_schema> <output_directory>
+pipenv run python -m cli.translate_census ../eq-survey-runner/data/en/census_individual_gb_eng.json out
 ```
 
 ## Naming conventions

@@ -15,7 +15,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not os.path.isdir(args.SCHEMA_DIRECTORY_PATH):
-        print("Not a valid schema directory")
+        print("Schema directory does not exist")
         exit(2)
 
     available_translations = os.listdir("./translations")
