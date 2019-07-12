@@ -14,7 +14,12 @@ install:
 script:
   - pipenv check ./app ./tests
   - pipenv run pytest ./tests
+  - export TAG=`if [ "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
+  - docker build -t onsdigital/eq-translations:$TAG -f Dockerfile .
+  - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+  - echo "Pushing image to DockerHub with tag [$TAG]"
+  - docker push onsdigital/eq-translations:$TAG
 
 branches:
   only:
-    - master
+    - v3
