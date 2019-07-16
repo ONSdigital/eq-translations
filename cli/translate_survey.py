@@ -1,6 +1,7 @@
 import argparse
 import os
 
+from app.utils import compare_schemas
 from app.survey_schema import SurveySchema
 from app.schema_translation import SchemaTranslation
 
@@ -27,13 +28,15 @@ if __name__ == '__main__':
         print("Not a valid output directory")
         exit(2)
 
-    schema = SurveySchema()
-    schema.load(args.SCHEMA_PATH)
+    survey_schema = SurveySchema()
+    survey_schema.load(args.SCHEMA_PATH)
 
     schema_name = os.path.basename(args.SCHEMA_PATH)
 
     translation = SchemaTranslation()
     translation.load(args.TRANSLATION_PATH)
 
-    translated_schema = schema.translate(translation)
+    translated_schema = survey_schema.translate(translation)
     translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
+
+    compare_schemas(survey_schema.schema, translated_schema.schema)

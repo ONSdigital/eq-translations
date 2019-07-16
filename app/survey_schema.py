@@ -1,24 +1,35 @@
 from babel.messages import Catalog
 
 import json
+import copy
 
-from app.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes
+from app.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
 from jsonpointer import resolve_pointer, set_pointer
 
 
 class SurveySchema:
     schema = {}
     no_context_keys = [
-        'title', 'show_guidance', 'hide_guidance', 'description',
-        'question', 'legal_basis'
+        'show_guidance',
+        'hide_guidance',
+        'description',
+        'legal_basis',
     ]
+    context_placeholder_pointers = []
+    no_context_placeholder_pointers = []
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
+        self.load_placeholders()
 
     def load(self, schema_path):
         with open(schema_path, encoding='utf8') as schema_file:
             self.schema = json.load(schema_file)
+            self.load_placeholders()
+
+    def load_placeholders(self):
+        if self.schema:
+            self.context_placeholder_pointers, self.no_context_placeholder_pointers = self.get_placeholder_pointers()
 
     def save(self, schema_path):
         with open(schema_path, 'w', encoding='utf8') as schema_file:
@@ -30,14 +41,17 @@ class SurveySchema:
 
     @property
     def no_context_pointers(self):
-        return self.get_core_pointers() + \
-               self.get_titles_pointers() + \
-               self.get_message_pointers() + \
-               self.get_list_pointers()
+        return (
+            self.get_core_pointers()
+            + self.get_title_pointers()
+            + self.get_message_pointers()
+            + self.get_list_pointers()
+            + self.no_context_placeholder_pointers
+        )
 
     @property
     def context_pointers(self):
-        return self.get_answer_pointers()
+        return self.get_answer_pointers() + self.context_placeholder_pointers
 
     def get_core_pointers(self):
         """
@@ -49,6 +63,23 @@ class SurveySchema:
             key_pointers = find_pointers_to(self.schema, key)
             pointers.extend(key_pointers)
         return pointers
+
+    def get_placeholder_pointers(self):
+        """
+        Placeholder pointers may have context or may not
+        :return:
+        """
+        found_pointers = find_pointers_to(self.schema, 'text')
+        context_placeholder_pointers = []
+        no_context_placeholder_pointers = []
+
+        for pointer in found_pointers:
+            if '/answers/' in pointer:
+                context_placeholder_pointers.append(pointer)
+            else:
+                no_context_placeholder_pointers.append(pointer)
+
+        return context_placeholder_pointers, no_context_placeholder_pointers
 
     def get_message_pointers(self):
         """
@@ -74,30 +105,23 @@ class SurveySchema:
         list_pointers = find_pointers_to(self.schema, 'list')
         for list_pointer in list_pointers:
             schema_element = resolve_pointer(self.schema, list_pointer)
-            pointers.extend(["{}/{}".format(list_pointer, i) for i, p in enumerate(schema_element)])
+            pointers.extend(
+                ["{}/{}".format(list_pointer, i) for i, p in enumerate(schema_element)]
+            )
         return pointers
 
-    def get_titles_pointers(self):
+    def get_title_pointers(self):
         """
-        'Titles' pointers identify list of elements with a value attribute
+        Titles need to be handled separately as they may require context for translation
         :return:
         """
-        pointers = []
-
-        for pointer in find_pointers_to(self.schema, 'titles'):
-            schema_element = resolve_pointer(self.schema, pointer)
-
-            for i, title in enumerate(schema_element):
-                pointers.append("{}/{}/{}".format(pointer, i, 'value'))
-
-        return pointers
+        return find_pointers_to(self.schema, 'title')
 
     def get_answer_pointers(self):
         """
         Labels for options/answers need to be handled separately as they require context
         :return:
         """
-
         return find_pointers_to(self.schema, 'label')
 
     def get_parent_id(self, pointer):
@@ -113,13 +137,13 @@ class SurveySchema:
     def get_parent_question_pointer(pointer):
         pointer_parts = pointer.split('/')
 
-        if 'questions' in pointer_parts and len(pointer_parts) > pointer_parts.index('questions') + 1:
-            pointer_index = pointer_parts.index('questions') + 2
-            return '/'.join(pointer_parts[:pointer_index])
+        if 'question' in pointer_parts:
+            pointer_index = pointer_parts.index('question')
+            return '/'.join(pointer_parts[:pointer_index + 1])
 
     def get_parent_question(self, pointer):
         question_pointer = self.get_parent_question_pointer(pointer)
-        return resolve_pointer(self.schema, question_pointer)
+        return resolve_pointer(self.schema, question_pointer + '/title')
 
     def get_catalog(self):
         """
@@ -139,11 +163,13 @@ class SurveySchema:
                 parent_answer_id = self.get_parent_id(pointer)
                 question = self.get_parent_question(pointer)
 
-                question_text = question['titles'][0]['value'] if 'titles' in question else question['title']
-                user_context = 'Answer for: {}'.format(question_text)
+                message_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
 
-                catalog.add(dumb_to_smart_quotes(pointer_contents), context=user_context,
-                            auto_comments=["answer-id: {}".format(parent_answer_id)])
+                catalog.add(
+                    dumb_to_smart_quotes(pointer_contents),
+                    context=message_context,
+                    auto_comments=["answer-id: {}".format(parent_answer_id)],
+                )
 
         print("Total Messages: {}".format(total_translations))
 
@@ -157,7 +183,7 @@ class SurveySchema:
         :param schema_translation:
         :return:
         """
-        translated_schema = self.schema.copy()
+        translated_schema = copy.deepcopy(self.schema)
         total_translations = len(self.no_context_pointers + self.context_pointers)
         missing_translations = 0
 
@@ -168,17 +194,25 @@ class SurveySchema:
                 translated_schema = set_pointer(translated_schema, pointer, translation)
             else:
                 missing_translations += 1
-                print("Missing translation at {}: '{}'".format(pointer, pointer_contents))
+                print(
+                    "Missing translation at {}: '{}'".format(pointer, pointer_contents)
+                )
 
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             parent_answer_id = self.get_parent_id(pointer)
-            translation = schema_translation.translate_message(pointer_contents,parent_answer_id)
+            question = self.get_parent_question(pointer)
+            message_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
+            translation = schema_translation.translate_message(
+                pointer_contents, parent_answer_id, message_context
+            )
             if translation:
                 translated_schema = set_pointer(translated_schema, pointer, translation)
             else:
                 missing_translations += 1
-                print("Missing translation at {}: '{}'".format(pointer, pointer_contents))
+                print(
+                    "Missing translation at {}: '{}'".format(pointer, pointer_contents)
+                )
 
         print("\nTotal Messages: {}".format(total_translations))
 
