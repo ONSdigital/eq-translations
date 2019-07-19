@@ -47,13 +47,6 @@ make test
 
 ### Census Commands
 
-To extract the census individual schema from Survey Runner to a pot template
-
-```
-pipenv run python -m cli.extract_census_template <runner_schema_directory> <output_directory>
-pipenv run python -m cli.extract_census_template ../eq-survey-runner/data/en out
-```
-
 To translate the census individual using current translations in crowdin
 
 ```
