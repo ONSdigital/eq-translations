@@ -1,8 +1,7 @@
 import argparse
 import os
 
-from eq_translations.survey_schema import SurveySchema
-from eq_translations.schema_translation import SchemaTranslation
+from eq_translations.entrypoints import extract_template
 
 def main():
     parser = argparse.ArgumentParser(description='Extract translation template from json schema')
@@ -24,17 +23,6 @@ def main():
         exit(2)
 
     extract_template(args.SCHEMA_PATH, args.OUTPUT_DIRECTORY)
-
-def extract_template(schema_path, output_directory):
-
-    schema = SurveySchema()
-    schema.load(schema_path)
-    catalog = schema.get_catalog()
-
-    schema_name, _ = os.path.splitext(os.path.basename(schema_path))
-
-    translation = SchemaTranslation(catalog)
-    translation.save(os.path.join(output_directory, '{}.pot'.format(schema_name)))
 
 
 if __name__ == '__main__':

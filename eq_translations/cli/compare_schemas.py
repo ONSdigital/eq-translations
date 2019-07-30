@@ -1,8 +1,7 @@
 import argparse
 import os
 
-from eq_translations.utils import compare_schemas
-from eq_translations.survey_schema import SurveySchema
+from eq_translations.entrypoints import handle_compare_schemas
 
 def main():
     parser = argparse.ArgumentParser(description='Compare two schemas for structure differences')
@@ -27,14 +26,6 @@ def main():
         exit(2)
 
     handle_compare_schemas(args.SOURCE_SCHEMA, args.TARGET_SCHEMA)
-
-def handle_compare_schemas(source_schema, target_schema):
-    source_survey = SurveySchema()
-    source_survey.load(source_schema)
-    target_survey = SurveySchema()
-    target_survey.load(target_schema)
-
-    compare_schemas(source_survey.schema, target_survey.schema)
 
 
 if __name__ == '__main__':
