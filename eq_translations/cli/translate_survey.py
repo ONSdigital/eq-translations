@@ -28,19 +28,21 @@ def main():
         print('Not a valid output directory')
         exit(2)
 
-    survey_schema = SurveySchema()
-    survey_schema.load(args.SCHEMA_PATH)
+    translate_schema(args.SCHEMA_PATH, args.TRANSLATION_PATH, args.OUTPUT_DIRECTORY)
 
-    schema_name = os.path.basename(args.SCHEMA_PATH)
+def translate_schema(schema_path, translation_path, output_directory):
+    survey_schema = SurveySchema()
+    survey_schema.load(schema_path)
+
+    schema_name = os.path.basename(schema_path)
 
     translation = SchemaTranslation()
-    translation.load(args.TRANSLATION_PATH)
+    translation.load(translation_path)
 
     translated_schema = survey_schema.translate(translation)
-    translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
+    translated_schema.save(os.path.join(output_directory, schema_name))
 
     compare_schemas(survey_schema.schema, translated_schema.schema)
-
 
 if __name__ == '__main__':
     main()
