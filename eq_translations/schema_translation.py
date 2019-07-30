@@ -27,7 +27,7 @@ class SchemaTranslation:
                 if message.auto_comments:
                     for comment in message.auto_comments:
                         if 'answer-id' in comment:
-                            comment_answer_id = comment.split(":")[1].strip()
+                            comment_answer_id = comment.split(':')[1].strip()
 
                 if answer_id or comment_answer_id:
                     if message_context:

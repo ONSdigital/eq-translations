@@ -34,11 +34,11 @@ def compare_schemas(source_schema, target_schema):
     missing_pointers = missing_target_pointers | missing_source_pointers
 
     for list_pointer in missing_pointers:
-        print("Missing Pointer: {}".format(list_pointer))
+        print('Missing Pointer: {}'.format(list_pointer))
 
-    print("\nTotal attributes in source schema: {}".format(len(source_survey_pointers)))
-    print("Total attributes in target schema: {}".format(len(target_survey_pointers)))
-    print("Differences between source/target schema attributes: {} ".format(len(missing_pointers)))
+    print('\nTotal attributes in source schema: {}'.format(len(source_survey_pointers)))
+    print('Total attributes in target schema: {}'.format(len(target_survey_pointers)))
+    print('Differences between source/target schema attributes: {} '.format(len(missing_pointers)))
 
     return missing_pointers
 
@@ -92,7 +92,7 @@ def dumb_to_smart_quotes(string):
 
     # Find dumb single quotes coming directly after letters or punctuation,
     # and replace them with right single quotes.
-    string = re.sub(r"([\w.,?!;:\"\'])'", r'\1’', string)
+    string = re.sub(r'([\w.,?!;:\"\'])\'', r'\1’', string)
     # Find any remaining dumb single quotes and replace them with
     # left single quotes.
     string = string.replace("'", '‘')

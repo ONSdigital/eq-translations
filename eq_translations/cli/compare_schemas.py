@@ -1,29 +1,29 @@
 import argparse
 import os
 
-from app.utils import compare_schemas
-from app.survey_schema import SurveySchema
+from eq_translations.utils import compare_schemas
+from eq_translations.survey_schema import SurveySchema
 
 def main():
-    parser = argparse.ArgumentParser(description="Compare two schemas for structure differences")
+    parser = argparse.ArgumentParser(description='Compare two schemas for structure differences')
 
     parser.add_argument(
         'SOURCE_SCHEMA',
-        help="The path to the source schema"
+        help='The path to the source schema'
     )
 
     parser.add_argument(
         'TARGET_SCHEMA',
-        help="The path to the target schema to compare against"
+        help='The path to the target schema to compare against'
     )
 
     args = parser.parse_args()
 
     if not os.path.exists(args.SOURCE_SCHEMA):
-        print("{} does not exist".format(args.SOURCE_SCHEMA))
+        print(f'{args.SOURCE_SCHEMA} does not exist')
         exit(2)
     if not os.path.exists(args.TARGET_SCHEMA):
-        print("{} does not exist".format(args.TARGET_SCHEMA))
+        print(f'{args.TARGET_SCHEMA} does not exist')
         exit(2)
 
     source_survey = SurveySchema()

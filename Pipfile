@@ -4,13 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pytest = "*"
 babel = "*"
 jsonpointer = "*"
 tqdm = "*"
 requests = "*"
 
 [dev-packages]
+pylint = "*"
+pytest = "*"
+pylint-quotes = "*"
 
 [requires]
 python_version = "3.7"

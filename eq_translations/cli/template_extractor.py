@@ -1,26 +1,26 @@
 import argparse
 import os
 
-from app.survey_schema import SurveySchema
-from app.schema_translation import SchemaTranslation
+from eq_translations.survey_schema import SurveySchema
+from eq_translations.schema_translation import SchemaTranslation
 
 def main():
-    parser = argparse.ArgumentParser(description="Extract translation template from json schema")
+    parser = argparse.ArgumentParser(description='Extract translation template from json schema')
 
     parser.add_argument(
         'SCHEMA_PATH',
-        help="The path to the source schema from which data will be extracted"
+        help='The path to the source schema from which data will be extracted'
     )
 
     parser.add_argument(
         'OUTPUT_DIRECTORY',
-        help="The destination directory for the translation template"
+        help='The destination directory for the translation template'
     )
 
     args = parser.parse_args()
 
     if not os.path.isdir(args.OUTPUT_DIRECTORY):
-        print("Output directory does not exist")
+        print('Output directory does not exist')
         exit(2)
 
     schema = SurveySchema()
@@ -30,7 +30,7 @@ def main():
     schema_name, _ = os.path.splitext(os.path.basename(args.SCHEMA_PATH))
 
     translation = SchemaTranslation(catalog)
-    translation.save(os.path.join(args.OUTPUT_DIRECTORY, "{}.pot".format(schema_name)))
+    translation.save(os.path.join(args.OUTPUT_DIRECTORY, '{}.pot'.format(schema_name)))
 
 
 if __name__ == '__main__':
