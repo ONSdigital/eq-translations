@@ -12,8 +12,9 @@ install:
   - pipenv install --dev --deploy
 
 script:
-  - pipenv check ./app ./tests
+  - pipenv check ./eq_translations ./tests
   - pipenv run pytest ./tests
+  - pipenv run pylint eq_translations
   - export TAG=`if [ "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
   - docker build -t onsdigital/eq-translations:$TAG -f Dockerfile .
   - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
