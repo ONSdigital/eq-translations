@@ -26,10 +26,13 @@ def main():
         print(f'{args.TARGET_SCHEMA} does not exist')
         exit(2)
 
+    handle_compare_schemas(args.SOURCE_SCHEMA, args.TARGET_SCHEMA)
+
+def handle_compare_schemas(source_schema, target_schema):
     source_survey = SurveySchema()
-    source_survey.load(args.SOURCE_SCHEMA)
+    source_survey.load(source_schema)
     target_survey = SurveySchema()
-    target_survey.load(args.TARGET_SCHEMA)
+    target_survey.load(target_schema)
 
     compare_schemas(source_survey.schema, target_survey.schema)
 

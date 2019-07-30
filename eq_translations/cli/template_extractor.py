@@ -23,14 +23,18 @@ def main():
         print('Output directory does not exist')
         exit(2)
 
+    extract_template(args.SCHEMA_PATH, args.OUTPUT_DIRECTORY)
+
+def extract_template(schema_path, output_directory):
+
     schema = SurveySchema()
-    schema.load(args.SCHEMA_PATH)
+    schema.load(schema_path)
     catalog = schema.get_catalog()
 
-    schema_name, _ = os.path.splitext(os.path.basename(args.SCHEMA_PATH))
+    schema_name, _ = os.path.splitext(os.path.basename(schema_path))
 
     translation = SchemaTranslation(catalog)
-    translation.save(os.path.join(args.OUTPUT_DIRECTORY, '{}.pot'.format(schema_name)))
+    translation.save(os.path.join(output_directory, '{}.pot'.format(schema_name)))
 
 
 if __name__ == '__main__':
