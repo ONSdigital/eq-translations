@@ -4,7 +4,7 @@ import os
 from app.utils import compare_schemas
 from app.survey_schema import SurveySchema
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description="Compare two schemas for structure differences")
 
     parser.add_argument(
@@ -32,3 +32,7 @@ if __name__ == '__main__':
     target_survey.load(args.TARGET_SCHEMA)
 
     compare_schemas(source_survey.schema, target_survey.schema)
+
+
+if __name__ == '__main__':
+    main()

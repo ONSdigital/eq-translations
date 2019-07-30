@@ -3,7 +3,7 @@ from babel.messages import Catalog
 import json
 import copy
 
-from app.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
+from eq_translations.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
 from jsonpointer import resolve_pointer, set_pointer
 
 

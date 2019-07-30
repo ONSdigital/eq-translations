@@ -10,7 +10,7 @@ from app.schema_translation import SchemaTranslation
 
 project_id = 'eq-census'
 
-if __name__ == '__main__':
+def main():
     try:
         os.environ["CROWDIN_PROJECT_API_KEY"]
     except KeyError:
@@ -71,3 +71,5 @@ if __name__ == '__main__':
     translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
 
 
+if __name__ == '__main__':
+    main()

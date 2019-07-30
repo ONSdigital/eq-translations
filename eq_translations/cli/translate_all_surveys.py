@@ -4,7 +4,7 @@ import os
 from app.survey_schema import SurveySchema
 from app.schema_translation import SchemaTranslation
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description="Translate all surveys in a directory")
 
     parser.add_argument(
@@ -46,3 +46,7 @@ if __name__ == '__main__':
             translated_schema = schema.translate(translation)
             translated_schema.save(target_path)
             print("Created schema: {}\n".format(target_path))
+
+
+if __name__ == '__main__':
+    main()

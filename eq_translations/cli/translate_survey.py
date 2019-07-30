@@ -1,11 +1,11 @@
 import argparse
 import os
 
-from app.utils import compare_schemas
-from app.survey_schema import SurveySchema
-from app.schema_translation import SchemaTranslation
+from eq_translations.utils import compare_schemas
+from eq_translations.survey_schema import SurveySchema
+from eq_translations.schema_translation import SchemaTranslation
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description="Translate a survey using a po file")
 
     parser.add_argument(
@@ -40,3 +40,7 @@ if __name__ == '__main__':
     translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
 
     compare_schemas(survey_schema.schema, translated_schema.schema)
+
+
+if __name__ == '__main__':
+    main()

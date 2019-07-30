@@ -4,7 +4,7 @@ import os
 from app.survey_schema import SurveySchema
 from app.schema_translation import SchemaTranslation
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description="Extract translation template from json schema")
 
     parser.add_argument(
@@ -31,3 +31,7 @@ if __name__ == '__main__':
 
     translation = SchemaTranslation(catalog)
     translation.save(os.path.join(args.OUTPUT_DIRECTORY, "{}.pot".format(schema_name)))
+
+
+if __name__ == '__main__':
+    main()
