@@ -38,7 +38,12 @@ The library exports a `eq_translations.SurveySchema` class and `eq_translations.
 
 `handle_compare_schemas(source_schema, target_schema)`
 
-## Usage
+The following scripts will also be available on your path once the package is installed: `template_extractor`, `translate_census`, `translate_survey`, `compare_schemas`
+
+## Usage without library
+
+To use this package without installing it as a python package, the following commands can be run: 
+
 Extract translatable text from an eQ survey with
 
 ```
