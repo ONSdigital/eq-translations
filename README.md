@@ -1,4 +1,5 @@
 # eq-translations
+
 Scripts for translating eq-survey-runner surveys
 
 ## Setup
@@ -12,11 +13,36 @@ pip install --upgrade pip setuptools pipenv
 pipenv install --dev
 ```
 
+## Python Package Usage
+
+`eq_translations` is packaged as a python package, though it is not currently published on pypi. 
+
+To install, replace `BRANCHNAME` with an appropriate tag or branch (or master) and run#:
+
+```
+pipenv install -e git+https://github.com/ONSDigital/eq-translations.git@BRANCHNAME#egg=eq_translations
+```
+
+You can also install it locally running the following from the root directory:
+
+```
+pip install .
+```
+
+### Basic library Usage
+The library exports a `eq_translations.SurveySchema` class and `eq_translations.SchemaTranslation` class. These classes can be used directly to perform translations, or there are some helper methods available in `eq_translations.entrypoints`:
+
+`extract_template(schema_path, output_directory)`
+
+`translate_schema(schema_path, translation_path, output_directory)`
+
+`handle_compare_schemas(source_schema, target_schema)`
+
 ## Usage
 Extract translatable text from an eQ survey with
 
 ```
-pipenv run python -m cli.template_extractor <schema_file> <output_directory>
+pipenv run python -m eq_translations.cli.template_extractor <schema_file> <output_directory>
 ```
 This will output the translatable text to an POT file.
 
@@ -24,19 +50,13 @@ This will output the translatable text to an POT file.
 After the text has been translated, create a new translated survey with:
 
 ```
-pipenv run python -m cli.translate_survey <schema_file> <translation_path> <output_directory>
-```
-
-To translate all surveys in a directory run:
-
-```
-pipenv run python -m cli.translate_all_surveys <top_level_schema_directory>
+pipenv run python -m eq_translations.cli.translate_survey <schema_file> <translation_path> <output_directory>
 ```
 
 To compare two schemas for differences in structure:
 
 ```
-pipenv run python -m cli.compare_schemas <path_to_source_schema> <path_to_target_schema>
+pipenv run python -m eq_translations.cli.compare_schemas <path_to_source_schema> <path_to_target_schema>
 ```
 
 To run the tests:
@@ -50,8 +70,8 @@ make test
 To translate the census individual using current translations in crowdin
 
 ```
-pipenv run python -m cli.extract_census_template <census_schema> <output_directory>
-pipenv run python -m cli.translate_census ../eq-survey-runner/data/en/census_individual_gb_eng.json out
+pipenv run python -m eq_translations.cli.extract_census_template <census_schema> <output_directory>
+pipenv run python -m eq_translations.cli.translate_census ../eq-survey-runner/data/en/census_individual_gb_eng.json out
 ```
 
 ## Naming conventions
