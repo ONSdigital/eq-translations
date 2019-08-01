@@ -3,7 +3,7 @@ import os
 from eq_translations import SurveySchema, SchemaTranslation
 from eq_translations.utils import compare_schemas
 
-def extract_template(schema_path, output_directory):
+def handle_extract_template(schema_path, output_directory):
     schema = SurveySchema()
     schema.load(schema_path)
     catalog = schema.get_catalog()
@@ -13,7 +13,7 @@ def extract_template(schema_path, output_directory):
     translation = SchemaTranslation(catalog)
     translation.save(os.path.join(output_directory, '{}.pot'.format(schema_name)))
 
-def translate_schema(schema_path, translation_path, output_directory):
+def handle_translate_schema(schema_path, translation_path, output_directory):
     survey_schema = SurveySchema()
     survey_schema.load(schema_path)
 

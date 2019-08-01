@@ -1,10 +1,10 @@
 import argparse
 import os
 
-from eq_translations.entrypoints import translate_schema
+from eq_translations.entrypoints import handle_translate_schema
 
 def main():
-    parser = argparse.ArgumentParser(description='Translate a survey using a po file')
+    parser = argparse.ArgumentParser(description='Translate a schema using a po file')
 
     parser.add_argument(
         'SCHEMA_PATH',
@@ -26,7 +26,7 @@ def main():
         print('Not a valid output directory')
         exit(2)
 
-    translate_schema(args.SCHEMA_PATH, args.TRANSLATION_PATH, args.OUTPUT_DIRECTORY)
+    handle_translate_schema(args.SCHEMA_PATH, args.TRANSLATION_PATH, args.OUTPUT_DIRECTORY)
 
 if __name__ == '__main__':
     main()

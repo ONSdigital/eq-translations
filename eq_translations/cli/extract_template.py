@@ -1,7 +1,7 @@
 import argparse
 import os
 
-from eq_translations.entrypoints import extract_template
+from eq_translations.entrypoints import handle_extract_template
 
 def main():
     parser = argparse.ArgumentParser(description='Extract translation template from json schema')
@@ -22,7 +22,7 @@ def main():
         print('Output directory does not exist')
         exit(2)
 
-    extract_template(args.SCHEMA_PATH, args.OUTPUT_DIRECTORY)
+    handle_extract_template(args.SCHEMA_PATH, args.OUTPUT_DIRECTORY)
 
 
 if __name__ == '__main__':
