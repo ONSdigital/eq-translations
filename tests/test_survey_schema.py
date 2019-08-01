@@ -2,8 +2,8 @@ import unittest
 
 from babel.messages import Catalog
 
-from app.schema_translation import SchemaTranslation
-from app.survey_schema import SurveySchema
+from eq_translations.schema_translation import SchemaTranslation
+from eq_translations.survey_schema import SurveySchema
 
 
 class TestSurveySchema(unittest.TestCase):

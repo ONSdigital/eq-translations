@@ -1,6 +1,6 @@
 import unittest
 
-from app.utils import get_parent_pointer, find_pointers_containing, find_pointers_to, list_pointers, compare_schemas
+from eq_translations.utils import get_parent_pointer, find_pointers_containing, find_pointers_to, list_pointers, compare_schemas
 
 
 class TestPointers(unittest.TestCase):

@@ -1,10 +1,10 @@
-from babel.messages import Catalog
-
 import json
 import copy
 
-from app.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
+from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
+
+from eq_translations.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
 
 
 class SurveySchema:
@@ -91,8 +91,8 @@ class SurveySchema:
         message_pointers = find_pointers_to(self.schema, 'messages')
         for message_pointer in message_pointers:
             schema_element = resolve_pointer(self.schema, message_pointer)
-            for k, v in schema_element.items():
-                pointers.append("{}/{}".format(message_pointer, k))
+            for element in schema_element:
+                pointers.append(f'{message_pointer}/{element}')
         return pointers
 
     def get_list_pointers(self):
@@ -106,7 +106,7 @@ class SurveySchema:
         for list_pointer in list_pointers:
             schema_element = resolve_pointer(self.schema, list_pointer)
             pointers.extend(
-                ["{}/{}".format(list_pointer, i) for i, p in enumerate(schema_element)]
+                [f'{list_pointer}/{i}' for i, p in enumerate(schema_element)]
             )
         return pointers
 
@@ -168,10 +168,10 @@ class SurveySchema:
                 catalog.add(
                     dumb_to_smart_quotes(pointer_contents),
                     context=message_context,
-                    auto_comments=["answer-id: {}".format(parent_answer_id)],
+                    auto_comments=[f'answer-id: {parent_answer_id}'],
                 )
 
-        print("Total Messages: {}".format(total_translations))
+        print(f'Total Messages: {total_translations}')
 
         return catalog
 
@@ -211,12 +211,12 @@ class SurveySchema:
             else:
                 missing_translations += 1
                 print(
-                    "Missing translation at {}: '{}'".format(pointer, pointer_contents)
+                    f"Missing translation at {pointer}: \'{pointer_contents}\'"
                 )
 
-        print("\nTotal Messages: {}".format(total_translations))
+        print(f'\nTotal Messages: {total_translations}')
 
         if missing_translations:
-            print("Total Missing: {}".format(missing_translations))
+            print(f'Total Missing: {missing_translations}')
 
         return SurveySchema(translated_schema)

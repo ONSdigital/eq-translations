@@ -1,6 +1,6 @@
 from babel.messages import pofile
 
-from app.utils import dumb_to_smart_quotes
+from eq_translations.utils import dumb_to_smart_quotes
 
 
 class SchemaTranslation:
@@ -27,7 +27,7 @@ class SchemaTranslation:
                 if message.auto_comments:
                     for comment in message.auto_comments:
                         if 'answer-id' in comment:
-                            comment_answer_id = comment.split(":")[1].strip()
+                            comment_answer_id = comment.split(':')[1].strip()
 
                 if answer_id or comment_answer_id:
                     if message_context:

@@ -1,6 +1,6 @@
 import unittest
 
-from app.utils import dumb_to_smart_quotes
+from eq_translations.utils import dumb_to_smart_quotes
 
 
 class TestDumbToSmartQuotes(unittest.TestCase):
