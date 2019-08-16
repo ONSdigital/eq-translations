@@ -255,6 +255,87 @@ class TestSurveySchema(unittest.TestCase):
         parent_question = schema.get_parent_question('/question/0/answers/0/options/0/label')
         assert parent_question == original_question["title"]
 
+    def test_relationship_playback_extraction(self):
+        relationships_question = {
+            "question": {
+                "id": "relationship-question",
+                "type": "General",
+                "title": "Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
+                "answers": [
+                    {
+                        "id": "relationship-answer",
+                        "mandatory": True,
+                        "type": "Relationship",
+                        "playback": "{second_person_name} is {first_person_name_possessive} <em>…</em>",
+                        "options": [
+                            {
+                                "label": "Husband or Wife",
+                                "value": "Husband or Wife",
+                                "title": "Thinking of {first_person_name}, {second_person_name} is their <em>husband or wife</em>",
+                                "playback": "{second_person_name} is {first_person_name_possessive} <em>husband or wife</em>"
+                            },
+                            {
+                                "label": "Legally registered civil partner",
+                                "value": "Legally registered civil partner",
+                                "title": "Thinking of {first_person_name}, {second_person_name} is their <em>legally registered civil partner</em>",
+                                "playback": "{second_person_name} is {first_person_name_possessive} <em>legally registered civil partner</em>"
+                            },
+                            {
+                                "label": "Son or daughter",
+                                "value": "Son or daughter",
+                                "title": "Thinking of {first_person_name}, {second_person_name} is their <em>son or daughter</em>",
+                                "playback": "{second_person_name} is {first_person_name_possessive} <em>son or daughter</em>"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+
+        schema = SurveySchema(relationships_question)
+
+        assert "/question/answers/0/playback" in schema.pointers
+
+
+    def test_summary_item_title_with_placeholder_extraction(self):
+        summary_placeholder = {
+            "summary": {
+                "item_title": {
+                    "text": "{person_name}",
+                    "placeholders": [
+                        {
+                            "placeholder": "person_name",
+                            "transforms": [
+                                {
+                                    "arguments": {
+                                        "delimiter": " ",
+                                        "list_to_concatenate": {
+                                            "identifier": ["first-name", "last-name"],
+                                            "source": "answers"
+                                        }
+                                    },
+                                    "transform": "concatenate_list"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+
+        schema = SurveySchema(summary_placeholder)
+        assert "/summary/item_title/text" in schema.pointers
+
+    def test_summary_item_title_without_placeholder_extraction(self):
+        summary_placeholder = {
+            "summary": {
+                "item_title": "A list item"
+            }
+        }
+
+        schema = SurveySchema(summary_placeholder)
+        assert "/summary/item_title" in schema.pointers
+
 
 class TestTranslate(unittest.TestCase):
 

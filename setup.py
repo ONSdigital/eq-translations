@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='eq_translations',
-      version='0.1',
+      version='0.2',
       description='Translations infrastructure for EQ Questionnaire Runner',
       url='http://github.com/ONSDigital/eq-translations',
       author='ONSDigital',
@@ -10,10 +10,9 @@ setup(name='eq_translations',
       packages=['eq_translations', 'eq_translations.cli'],
       entry_points = {
           'console_scripts': [
-              'template_extractor=eq_translations.cli.template_extractor:main',
-              'translate_all_surveys=eq_translations.cli.translate_all_surveys:main',
+              'extract_template=eq_translations.cli.extract_template:main',
               'translate_census=eq_translations.cli.translate_census:main',
-              'translate_survey=eq_translations.cli.translate_survey:main',
+              'translate_schema=eq_translations.cli.translate_schema:main',
               'compare_schemas=eq_translations.cli.compare_schemas:main',
           ]
       },
