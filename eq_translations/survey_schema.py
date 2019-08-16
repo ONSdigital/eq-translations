@@ -14,6 +14,8 @@ class SurveySchema:
         'hide_guidance',
         'description',
         'legal_basis',
+        'playback',
+        'item_title'
     ]
     context_placeholder_pointers = []
     no_context_placeholder_pointers = []
@@ -113,14 +115,12 @@ class SurveySchema:
     def get_title_pointers(self):
         """
         Titles need to be handled separately as they may require context for translation
-        :return:
         """
         return find_pointers_to(self.schema, 'title')
 
     def get_answer_pointers(self):
         """
         Labels for options/answers need to be handled separately as they require context
-        :return:
         """
         return find_pointers_to(self.schema, 'label')
 

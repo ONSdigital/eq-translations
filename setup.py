@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='eq_translations',
-      version='0.1',
+      version='0.2',
       description='Translations infrastructure for EQ Questionnaire Runner',
       url='http://github.com/ONSDigital/eq-translations',
       author='ONSDigital',
