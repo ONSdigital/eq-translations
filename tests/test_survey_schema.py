@@ -296,10 +296,29 @@ class TestSurveySchema(unittest.TestCase):
 
         assert "/question/answers/0/playback" in schema.pointers
 
-
-    def test_summary_item_title_with_placeholder_extraction(self):
+    def test_summary_with_placeholder_extraction(self):
         summary_placeholder = {
             "summary": {
+                "title": {
+                    "text": "Answers for {person_name}",
+                    "placeholders": [
+                        {
+                            "placeholder": "person_name",
+                            "transforms": [
+                                {
+                                    "arguments": {
+                                        "delimiter": " ",
+                                        "list_to_concatenate": {
+                                            "identifier": ["first-name", "last-name"],
+                                            "source": "answers"
+                                        }
+                                    },
+                                    "transform": "concatenate_list"
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "item_title": {
                     "text": "{person_name}",
                     "placeholders": [
@@ -319,21 +338,32 @@ class TestSurveySchema(unittest.TestCase):
                             ]
                         }
                     ]
-                }
+                },
+                "empty_list_text": "A list item",
+                "add_link_text": "A list item",
             }
         }
 
         schema = SurveySchema(summary_placeholder)
-        assert "/summary/item_title/text" in schema.pointers
 
-    def test_summary_item_title_without_placeholder_extraction(self):
+        assert "/summary/item_title/text" in schema.pointers
+        assert "/summary/title/text" in schema.pointers
+        assert "/summary/empty_list_text" in schema.pointers
+        assert "/summary/add_link_text" in schema.pointers
+
+    def test_summary_without_placeholder_extraction(self):
         summary_placeholder = {
             "summary": {
-                "item_title": "A list item"
+                "title": "A title for the summary",
+                "item_title": "A list item",
+                "empty_list_text": "A list item",
+                "add_link_text": "A list item",
             }
         }
 
         schema = SurveySchema(summary_placeholder)
+
+        assert "/summary/title" in schema.pointers
         assert "/summary/item_title" in schema.pointers
 
 
