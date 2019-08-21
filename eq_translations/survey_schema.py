@@ -15,7 +15,9 @@ class SurveySchema:
         'description',
         'legal_basis',
         'playback',
-        'item_title'
+        'item_title',
+        'add_link_text',
+        'empty_list_text'
     ]
     context_placeholder_pointers = []
     no_context_placeholder_pointers = []
