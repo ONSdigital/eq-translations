@@ -19,7 +19,7 @@ class SchemaTranslation:
             pofile.write_po(translation_file, self.catalog)
 
     @staticmethod
-    def messages_equal(message_a, message_b):
+    def dumb_strings_equal(message_a, message_b):
         return dumb_to_smart_quotes(message_a) == dumb_to_smart_quotes(message_b)
 
     @staticmethod
@@ -28,7 +28,7 @@ class SchemaTranslation:
 
     def translate_message(self, message_to_translate, answer_id=None, message_context=None):
         for message in self.catalog:
-            if message.id and SchemaTranslation.messages_equal(message.id, message_to_translate):
+            if message.id and SchemaTranslation.dumb_strings_equal(message.id, message_to_translate):
                 found = True
                 comment_answer_ids = []
 
