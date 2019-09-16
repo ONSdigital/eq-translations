@@ -192,30 +192,32 @@ class SurveySchema:
 
         for pointer in self.no_context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
-            translation = schema_translation.translate_message(pointer_contents)
-            if translation:
-                translated_schema = set_pointer(translated_schema, pointer, translation)
-            else:
-                missing_translations += 1
-                print(
-                    "Missing translation at {}: '{}'".format(pointer, pointer_contents)
-                )
+            if pointer_contents:
+                translation = schema_translation.translate_message(pointer_contents)
+                if translation:
+                    translated_schema = set_pointer(translated_schema, pointer, translation)
+                else:
+                    missing_translations += 1
+                    print(
+                        "Missing translation at {}: '{}'".format(pointer, pointer_contents)
+                    )
 
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
-            parent_answer_id = self.get_parent_id(pointer)
-            question = self.get_parent_question(pointer)
-            message_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
-            translation = schema_translation.translate_message(
-                pointer_contents, parent_answer_id, message_context
-            )
-            if translation:
-                translated_schema = set_pointer(translated_schema, pointer, translation)
-            else:
-                missing_translations += 1
-                print(
-                    f"Missing translation at {pointer}: \'{pointer_contents}\'"
+            if pointer_contents:
+                parent_answer_id = self.get_parent_id(pointer)
+                question = self.get_parent_question(pointer)
+                message_context = 'Answer for: {}'.format(question['text'] if is_placeholder(question) else question)
+                translation = schema_translation.translate_message(
+                    pointer_contents, parent_answer_id, message_context
                 )
+                if translation:
+                    translated_schema = set_pointer(translated_schema, pointer, translation)
+                else:
+                    missing_translations += 1
+                    print(
+                        f"Missing translation at {pointer}: \'{pointer_contents}\'"
+                    )
 
         print(f'\nTotal Messages: {total_translations}')
 
