@@ -18,22 +18,28 @@ class SchemaTranslation:
         with open(translation_file_path, 'w+b') as translation_file:
             pofile.write_po(translation_file, self.catalog)
 
+    @staticmethod
+    def messages_equal(message_a, message_b):
+        return dumb_to_smart_quotes(message_a) == dumb_to_smart_quotes(message_b)
+
+    @staticmethod
+    def get_comment_answer_ids(comments):
+        return [comment.split(':')[1].strip() for comment in comments if 'answer-id' in comment]
+
     def translate_message(self, message_to_translate, answer_id=None, message_context=None):
         for message in self.catalog:
-            if message.id and dumb_to_smart_quotes(message.id) == dumb_to_smart_quotes(message_to_translate):
+            if message.id and SchemaTranslation.messages_equal(message.id, message_to_translate):
                 found = True
-                comment_answer_id = None
+                comment_answer_ids = []
 
                 if message.auto_comments:
-                    for comment in message.auto_comments:
-                        if 'answer-id' in comment:
-                            comment_answer_id = comment.split(':')[1].strip()
+                    comment_answer_ids = SchemaTranslation.get_comment_answer_ids(message.auto_comments)
 
-                if answer_id or comment_answer_id:
+                if answer_id or comment_answer_ids:
+                    found = answer_id in comment_answer_ids
+
                     if message_context:
-                        found = comment_answer_id == answer_id and message.context == message_context
-                    else:
-                        found = comment_answer_id == answer_id
+                        found &= message.context == message_context
 
                 if found:
                     return dumb_to_smart_quotes(message.string)

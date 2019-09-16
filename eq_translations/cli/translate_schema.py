@@ -3,6 +3,7 @@ import os
 
 from eq_translations.entrypoints import handle_translate_schema
 
+
 def main():
     parser = argparse.ArgumentParser(description='Translate a schema using a po file')
 
@@ -27,6 +28,7 @@ def main():
         exit(2)
 
     handle_translate_schema(args.SCHEMA_PATH, args.TRANSLATION_PATH, args.OUTPUT_DIRECTORY)
+
 
 if __name__ == '__main__':
     main()

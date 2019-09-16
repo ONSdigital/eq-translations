@@ -10,6 +10,7 @@ from eq_translations.schema_translation import SchemaTranslation
 
 project_id = 'eq-census'
 
+
 def main():
     try:
         os.environ['CROWDIN_PROJECT_API_KEY']

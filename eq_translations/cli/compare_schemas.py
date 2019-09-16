@@ -3,6 +3,7 @@ import os
 
 from eq_translations.entrypoints import handle_compare_schemas
 
+
 def main():
     parser = argparse.ArgumentParser(description='Compare two schemas for structure differences')
 

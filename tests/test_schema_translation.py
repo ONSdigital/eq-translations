@@ -76,3 +76,20 @@ class TestSchemaTranslation(unittest.TestCase):
         translated = translator.translate_message("What is 'this persons' date of birth?")
 
         assert translated == "Beth yw dyddiad geni ‘pobl hyn’?"
+
+    def test_multiple_answer_ids(self):
+
+        catalog = Catalog()
+
+        catalog.add("Answering for this person",
+                    "WELSH - Answering for this person",
+                    auto_comments=["answer-id: feeling-answer", "answer-id: feeling-answer-proxy"],
+                    context="Answer for: Who are you answering for??")
+
+        translator = SchemaTranslation(catalog)
+
+        translation_a = translator.translate_message("Answering for this person", answer_id='feeling-answer')
+        translation_b = translator.translate_message("Answering for this person", answer_id='feeling-answer-proxy')
+
+        assert translation_a == "WELSH - Answering for this person"
+        assert translation_b == "WELSH - Answering for this person"
