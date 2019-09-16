@@ -21,3 +21,4 @@ tests/output/
 .Spotlight-V100
 .Trashes
 .env
+.po/

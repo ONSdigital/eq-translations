@@ -3,6 +3,7 @@ import os
 
 from eq_translations.entrypoints import handle_extract_template
 
+
 def main():
     parser = argparse.ArgumentParser(description='Extract translation template from json schema')
 
