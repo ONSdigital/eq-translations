@@ -109,9 +109,10 @@ class SurveySchema:
         list_pointers = find_pointers_to(self.schema, 'list')
         for list_pointer in list_pointers:
             schema_element = resolve_pointer(self.schema, list_pointer)
-            pointers.extend(
-                [f'{list_pointer}/{i}' for i, p in enumerate(schema_element)]
-            )
+            if isinstance(schema_element, list):
+                pointers.extend(
+                    [f'{list_pointer}/{i}' for i, p in enumerate(schema_element)]
+                )
         return pointers
 
     def get_title_pointers(self):

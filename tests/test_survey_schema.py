@@ -130,6 +130,16 @@ class TestSurveySchema(unittest.TestCase):
 
         assert len(pointers) == 4
 
+    def test_no_pointers_when_list_property_isnt_a_list(self):
+        schema = SurveySchema({
+            'list': 'abc',
+        })
+        pointers = schema.get_list_pointers()
+        assert '/list' not in pointers
+        assert '/list/0' not in pointers
+        assert '/list/1' not in pointers
+        assert '/list/2' not in pointers
+
     def test_get_answer_messages(self):
         schema = SurveySchema({
             "sections": [{
