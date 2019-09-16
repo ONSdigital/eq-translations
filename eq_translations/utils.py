@@ -107,3 +107,7 @@ def dumb_to_smart_quotes(string):
     string = re.sub(r'‘(MO|TU|WE|TH|FR|SA|SU|EEEE d MMMM YYYY|EEEE dd MMMM|EEEE d MMMM|weeks)’', r"'\1'", string)
 
     return string.strip()
+
+
+def are_dumb_strings_equal(message_a, message_b):
+    return dumb_to_smart_quotes(message_a) == dumb_to_smart_quotes(message_b)

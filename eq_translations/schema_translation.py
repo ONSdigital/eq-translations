@@ -1,6 +1,6 @@
 from babel.messages import pofile
 
-from eq_translations.utils import dumb_to_smart_quotes
+from eq_translations.utils import dumb_to_smart_quotes, are_dumb_strings_equal
 
 
 class SchemaTranslation:
@@ -19,16 +19,12 @@ class SchemaTranslation:
             pofile.write_po(translation_file, self.catalog)
 
     @staticmethod
-    def dumb_strings_equal(message_a, message_b):
-        return dumb_to_smart_quotes(message_a) == dumb_to_smart_quotes(message_b)
-
-    @staticmethod
     def get_comment_answer_ids(comments):
         return [comment.split(':')[1].strip() for comment in comments if 'answer-id' in comment]
 
     def translate_message(self, message_to_translate, answer_id=None, message_context=None):
         for message in self.catalog:
-            if message.id and SchemaTranslation.dumb_strings_equal(message.id, message_to_translate):
+            if message.id and are_dumb_strings_equal(message.id, message_to_translate):
                 found = True
                 comment_answer_ids = []
 
