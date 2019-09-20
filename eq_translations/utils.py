@@ -109,8 +109,8 @@ def dumb_to_smart_quotes(string):
     return string.strip()
 
 
-L_SQUOTE = '\u2018'
 APOSTROPHE = '\u0027'
+L_SQUOTE = '\u2018'
 R_SQUOTE = '\u2019'
 L_DQUOTE = '\u201C'
 R_DQUOTE = '\u201D'
