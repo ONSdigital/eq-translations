@@ -109,5 +109,17 @@ def dumb_to_smart_quotes(string):
     return string.strip()
 
 
+L_SQUOTE = '\u2018'
+R_SQUOTE = '\u2019'
+L_DQUOTE = '\u201C'
+R_DQUOTE = '\u201D'
+
+
+def remove_quotes(message):
+    message = re.sub(fr'[{L_DQUOTE}|{R_DQUOTE}|{L_SQUOTE}|{R_DQUOTE}]', '', message)
+
+    return message.strip()
+
+
 def are_dumb_strings_equal(message_a, message_b):
-    return dumb_to_smart_quotes(message_a) == dumb_to_smart_quotes(message_b)
+    return remove_quotes(message_a) == remove_quotes(message_b)
