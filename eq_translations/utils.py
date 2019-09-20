@@ -110,13 +110,14 @@ def dumb_to_smart_quotes(string):
 
 
 L_SQUOTE = '\u2018'
+APOSTROPHE = '\u0027'
 R_SQUOTE = '\u2019'
 L_DQUOTE = '\u201C'
 R_DQUOTE = '\u201D'
 
 
 def remove_quotes(message):
-    message = re.sub(fr'[{L_SQUOTE}|{R_SQUOTE}|{L_DQUOTE}|{R_DQUOTE}]', '', message)
+    message = re.sub(fr'[{APOSTROPHE}|{L_SQUOTE}|{R_SQUOTE}|{L_DQUOTE}|{R_DQUOTE}]', '', message)
 
     return message.strip()
 

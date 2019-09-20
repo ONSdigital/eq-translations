@@ -1,6 +1,6 @@
 import unittest
 
-from eq_translations.utils import dumb_to_smart_quotes
+from eq_translations.utils import dumb_to_smart_quotes, remove_quotes
 
 
 class TestDumbToSmartQuotes(unittest.TestCase):
@@ -34,3 +34,6 @@ class TestDumbToSmartQuotes(unittest.TestCase):
         self.assertNotEqual(actual, original_text)
         self.assertEqual(actual, expected)
 
+
+def test_remove_quotes():
+    assert remove_quotes("'‘’") == ''
