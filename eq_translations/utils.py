@@ -116,7 +116,7 @@ R_DQUOTE = '\u201D'
 
 
 def remove_quotes(message):
-    message = re.sub(fr'[{L_DQUOTE}|{R_DQUOTE}|{L_SQUOTE}|{R_DQUOTE}]', '', message)
+    message = re.sub(fr'[{L_SQUOTE}|{R_SQUOTE}|{L_DQUOTE}|{R_DQUOTE}]', '', message)
 
     return message.strip()
 
