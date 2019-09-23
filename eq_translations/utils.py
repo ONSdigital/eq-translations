@@ -109,5 +109,19 @@ def dumb_to_smart_quotes(string):
     return string.strip()
 
 
+def remove_quotes(message):
+    quotation_marks = [
+        '\N{APOSTROPHE}',
+        '\N{LEFT SINGLE QUOTATION MARK}',
+        '\N{RIGHT SINGLE QUOTATION MARK}',
+        '\N{LEFT DOUBLE QUOTATION MARK}',
+        '\N{RIGHT DOUBLE QUOTATION MARK}'
+    ]
+    for char in quotation_marks:
+        message = message.replace(char, '')
+
+    return message.strip()
+
+
 def are_dumb_strings_equal(message_a, message_b):
-    return dumb_to_smart_quotes(message_a) == dumb_to_smart_quotes(message_b)
+    return remove_quotes(message_a) == remove_quotes(message_b)
