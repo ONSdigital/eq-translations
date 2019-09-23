@@ -117,9 +117,7 @@ R_DQUOTE = '\u201D'
 
 
 def remove_quotes(message):
-    message = re.sub(fr'[{APOSTROPHE}|{L_SQUOTE}|{R_SQUOTE}|{L_DQUOTE}|{R_DQUOTE}]', '', message)
-
-    return message.strip()
+    return message.strip(f'{APOSTROPHE}{L_SQUOTE}{R_SQUOTE}{L_DQUOTE}{R_DQUOTE} ')
 
 
 def are_dumb_strings_equal(message_a, message_b):
