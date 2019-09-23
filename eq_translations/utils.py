@@ -109,15 +109,15 @@ def dumb_to_smart_quotes(string):
     return string.strip()
 
 
-APOSTROPHE = '\u0027'
-LEFT_SINGLE_QUOTE = '\u2018'
-RIGHT_SINGLE_QUOTE = '\u2019'
-LEFT_DOUBLE_QUOTE = '\u201C'
-RIGHT_DOUBLE_QUOTE = '\u201D'
-
-
 def remove_quotes(message):
-    for char in [APOSTROPHE, LEFT_SINGLE_QUOTE, RIGHT_SINGLE_QUOTE, LEFT_DOUBLE_QUOTE, RIGHT_DOUBLE_QUOTE]:
+    quotation_marks = [
+        '\N{APOSTROPHE}',
+        '\N{LEFT SINGLE QUOTATION MARK}',
+        '\N{RIGHT SINGLE QUOTATION MARK}',
+        '\N{LEFT DOUBLE QUOTATION MARK}',
+        '\N{RIGHT DOUBLE QUOTATION MARK}'
+    ]
+    for char in quotation_marks:
         message = message.replace(char, '')
 
     return message.strip()
