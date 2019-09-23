@@ -117,9 +117,9 @@ RIGHT_DOUBLE_QUOTE = '\u201D'
 
 
 def remove_quotes(message):
-    message = re.sub(
-        rf'[{APOSTROPHE}|{LEFT_SINGLE_QUOTE}|{RIGHT_SINGLE_QUOTE}|{LEFT_DOUBLE_QUOTE}|{RIGHT_DOUBLE_QUOTE}]', '', message
-    )
+    for char in [APOSTROPHE, LEFT_SINGLE_QUOTE, RIGHT_SINGLE_QUOTE, LEFT_DOUBLE_QUOTE, RIGHT_DOUBLE_QUOTE]:
+        message = message.replace(char, '')
+
     return message.strip()
 
 
