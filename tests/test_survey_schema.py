@@ -427,7 +427,8 @@ class TestTranslate(unittest.TestCase):
                                 "title": "Feeling answer",
                                 "description": "This should be answered to see if you are answering on behalf of someone else"
                             }]
-                        }
+                        },
+                        "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>"
                     }]
                 }
             }]
@@ -465,7 +466,8 @@ class TestTranslate(unittest.TestCase):
                                 "title": "Feeling answer",
                                 "description": "This should be answered to see if you are answering on behalf of someone else"
                             }]
-                        }
+                        },
+                        "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>"
                     }]
                 }
             }]
