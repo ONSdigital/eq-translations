@@ -427,7 +427,8 @@ class TestTranslate(unittest.TestCase):
                                 "title": "Feeling answer",
                                 "description": "This should be answered to see if you are answering on behalf of someone else"
                             }]
-                        }
+                        },
+                        "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>"
                     }]
                 }
             }]
@@ -465,7 +466,8 @@ class TestTranslate(unittest.TestCase):
                                 "title": "Feeling answer",
                                 "description": "This should be answered to see if you are answering on behalf of someone else"
                             }]
-                        }
+                        },
+                        "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>"
                     }]
                 }
             }]
@@ -505,7 +507,8 @@ class TestTranslate(unittest.TestCase):
                                 "title": "Feeling answer",
                                 "description": "This should be answered to see if you are answering on behalf of someone else"
                             }]
-                        }
+                        },
+                        "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>"
                     }]
                 }
             }]
@@ -524,6 +527,8 @@ class TestTranslate(unittest.TestCase):
         assert schema_data['sections'][0]['question']['answers'][0]['guidance']['show_guidance'] in actual_items
         assert schema_data['sections'][0]['question']['answers'][0]['guidance']['content'][0]['title'] in actual_items
         assert schema_data['sections'][0]['question']['answers'][0]['guidance']['content'][0]['description'] in actual_items
+        assert schema_data['sections'][0]['question']['answers'][0]['instruction'] in actual_items
+
 
     def test_get_catalog_uses_smart_quotes(self):
         schema_data = {
