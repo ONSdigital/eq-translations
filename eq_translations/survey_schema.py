@@ -4,7 +4,7 @@ import copy
 from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
 
-from eq_translations.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder
+from eq_translations.utils import find_pointers_to, get_parent_pointer, dumb_to_smart_quotes, is_placeholder, get_list_pointers
 
 
 class SurveySchema:
@@ -50,7 +50,7 @@ class SurveySchema:
             self.get_core_pointers()
             + self.get_title_pointers()
             + self.get_message_pointers()
-            + self.get_list_pointers(self.schema)
+            + get_list_pointers(self.schema)
             + self.no_context_placeholder_pointers
         )
 
