@@ -89,7 +89,7 @@ def get_list_pointers(input_data):
     for list_pointer in pointers:
         schema_element = resolve_pointer(input_data, list_pointer)
         if isinstance(schema_element, list):
-            pointers.extend(
+            list_of_pointers.extend(
                 [f'{list_pointer}/{i}' for i, p in enumerate(schema_element)]
             )
     return list_of_pointers
