@@ -1,4 +1,5 @@
 import re
+from jsonpointer import resolve_pointer
 
 
 def list_pointers(input_data, pointer=None):
@@ -75,6 +76,23 @@ def find_pointers_to(input_data, search_key):
     root_pointers = ['/{}'.format(search_key)] if search_key in input_data and not is_placeholder(input_data[search_key]) else []
     pointer_iterator = find_pointers_containing(input_data, search_key)
     return root_pointers + ['{}/{}'.format(p, search_key) for p in pointer_iterator]
+
+
+def get_list_pointers(input_data):
+    """
+    List pointers need to be iterated and each element added individually
+    :return:
+    """
+    list_of_pointers = []
+
+    pointers = find_pointers_to(input_data, 'list')
+    for list_pointer in pointers:
+        schema_element = resolve_pointer(input_data, list_pointer)
+        if isinstance(schema_element, list):
+            pointers.extend(
+                [f'{list_pointer}/{i}' for i, p in enumerate(schema_element)]
+            )
+    return list_of_pointers
 
 
 def get_parent_pointer(pointer):

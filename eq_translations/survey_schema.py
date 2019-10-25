@@ -50,7 +50,7 @@ class SurveySchema:
             self.get_core_pointers()
             + self.get_title_pointers()
             + self.get_message_pointers()
-            + self.get_list_pointers()
+            + self.get_list_pointers(self.schema)
             + self.no_context_placeholder_pointers
         )
 
@@ -98,22 +98,6 @@ class SurveySchema:
             schema_element = resolve_pointer(self.schema, message_pointer)
             for element in schema_element:
                 pointers.append(f'{message_pointer}/{element}')
-        return pointers
-
-    def get_list_pointers(self):
-        """
-        List pointers need to be iterated and each element added individually
-        :return:
-        """
-        pointers = []
-
-        list_pointers = find_pointers_to(self.schema, 'list')
-        for list_pointer in list_pointers:
-            schema_element = resolve_pointer(self.schema, list_pointer)
-            if isinstance(schema_element, list):
-                pointers.extend(
-                    [f'{list_pointer}/{i}' for i, p in enumerate(schema_element)]
-                )
         return pointers
 
     def get_title_pointers(self):
