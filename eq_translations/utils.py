@@ -112,7 +112,7 @@ def dumb_to_smart_quotes(string):
     # left single quotes.
     string = string.replace("\"", '“')
 
-    return string.strip()
+    return string
 
 
 def remove_quotes(message):
