@@ -107,7 +107,7 @@ def dumb_to_smart_quotes(string):
     string = re.sub(r'‘(MO|TU|WE|TH|FR|SA|SU|EEEE d MMMM YYYY|EEEE dd MMMM|EEEE d MMMM|weeks)’', r"'\1'", string)
     # Find dumb double quotes coming directly after letters or punctuation
     # and replace them with right smart double quotes
-    string = re.sub(r'([\w.,?!;:\\"\'])\"+(!? )', r'\1”', string)
+    string = re.sub(r'([\w.,?!;:\\"\'])\"+(!? )', r'\1” ', string)
     # Find any remaining dumb double quotes and replace them with
     # left single quotes.
     string = string.replace("\"", '“')
