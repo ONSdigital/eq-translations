@@ -110,6 +110,7 @@ def dumb_to_smart_quotes(string):
     string = re.sub(r'([\w.,?!;:\\"\'])\"+(!? )', r'\1” ', string)
     # Find any remaining dumb double quotes and replace them with
     # left single quotes.
+    # pylint: disable=invalid-string-quote
     string = string.replace("\"", '“')
 
     return string
