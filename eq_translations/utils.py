@@ -105,6 +105,12 @@ def dumb_to_smart_quotes(string):
     # Reverse: Find any SMART quotes that have been (mistakenly) placed around date
     # parameters passed to Jinja filters and replace them with dumb quotes.
     string = re.sub(r'‘(MO|TU|WE|TH|FR|SA|SU|EEEE d MMMM YYYY|EEEE dd MMMM|EEEE d MMMM|weeks)’', r"'\1'", string)
+    # Find dumb double quotes coming directly after letters or punctuation
+    # and replace them with right smart double quotes
+    string = re.sub(r'([\w.,?!;:\\"\'])\"+(!? )', r'\1u201D', string)
+    # Find any remaining dumb double quotes and replace them with
+    # left single quotes.
+    string = string.replace("\"", '\u201C')
 
     return string.strip()
 
