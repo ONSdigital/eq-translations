@@ -23,9 +23,8 @@ class TestDumbToSmartQuotes(unittest.TestCase):
         self.assertNotEqual(actual, original_text)
         self.assertEqual(actual, expected)
 
-    @unittest.expectedFailure
+
     def test_dumb_to_smart_quotes_english_double(self):
-        # Double quotes not supported yet...
         original_text = '''here is "a sentence with" double dumb "quotes" in the middle'''
         expected = '''here is “a sentence with” double dumb “quotes” in the middle'''
 
