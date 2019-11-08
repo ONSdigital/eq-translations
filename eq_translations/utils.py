@@ -99,14 +99,14 @@ def dumb_to_smart_quotes(string):
     # Reverse: Find any SMART quotes that have been (mistakenly) placed around HTML
     # attributes (following =) and replace them with dumb quotes.
     string = re.sub(r'=‘(.*?)’', r"='\1'", string)
-    # Reverse: Find any SMART quotes that have been (mistakenly) placed around Jinja
-    # attributes (following [) and replace them with dumb quotes.
-    string = re.sub(r'\[‘(.*?)’', r"['\1'", string)
-    # Reverse: Find any SMART quotes that have been (mistakenly) placed around date
-    # parameters passed to Jinja filters and replace them with dumb quotes.
-    string = re.sub(r'‘(MO|TU|WE|TH|FR|SA|SU|EEEE d MMMM YYYY|EEEE dd MMMM|EEEE d MMMM|weeks)’', r"'\1'", string)
 
-    return string.strip()
+    # Now repeat the steps above for double quotes
+    string = re.sub(r'([\w.,?!;:\\"\'])\"', r'\1”', string)
+    # pylint: disable=invalid-string-quote
+    string = string.replace("\"", '“')
+    string = re.sub(r'=“(.*?)”', r"='\1'", string)
+
+    return string
 
 
 def remove_quotes(message):
