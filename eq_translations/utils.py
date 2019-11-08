@@ -101,11 +101,10 @@ def dumb_to_smart_quotes(string):
     string = re.sub(r'=‘(.*?)’', r"='\1'", string)
 
     # Now repeat the steps above for double quotes
-    string = re.sub(r'([\w.,?!;:\\"\'])\"', r'\1” ', string)
+    string = re.sub(r'([\w.,?!;:\\"\'])\"', r'\1”', string)
     # pylint: disable=invalid-string-quote
     string = string.replace("\"", '“')
     string = re.sub(r'=“(.*?)”', r"='\1'", string)
-
 
     return string
 
