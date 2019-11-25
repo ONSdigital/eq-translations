@@ -12,7 +12,6 @@ class SurveySchema:
     no_context_keys = [
         'show_guidance',
         'hide_guidance',
-        'description',
         'legal_basis',
         'playback',
         'item_title',
@@ -56,7 +55,7 @@ class SurveySchema:
 
     @property
     def context_pointers(self):
-        return self.get_answer_pointers() + self.context_placeholder_pointers
+        return self.get_answer_pointers() + self.get_description_pointers() + self.context_placeholder_pointers
 
     def get_core_pointers(self):
         """
@@ -127,6 +126,10 @@ class SurveySchema:
         Labels for options/answers need to be handled separately as they require context
         """
         return find_pointers_to(self.schema, 'label')
+
+    def get_description_pointers(self):
+
+        return find_pointers_to(self.schema, 'description')
 
     def get_parent_id(self, pointer):
         resolved_data = resolve_pointer(self.schema, pointer)
