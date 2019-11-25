@@ -129,7 +129,7 @@ class SurveySchema:
 
     def get_description_pointers(self):
 
-        return find_pointers_to(self.schema, 'description')
+        return find_pointers_to(self.schema, 'description')[1:]
 
     def get_parent_id(self, pointer):
         resolved_data = resolve_pointer(self.schema, pointer)
@@ -150,6 +150,8 @@ class SurveySchema:
 
     def get_parent_question(self, pointer):
         question_pointer = self.get_parent_question_pointer(pointer)
+        if question_pointer is None:
+            question_pointer = ''
         return resolve_pointer(self.schema, question_pointer + '/title')
 
     def get_catalog(self):
