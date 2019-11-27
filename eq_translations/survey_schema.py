@@ -73,7 +73,8 @@ class SurveySchema:
     def get_schema_description_pointer(self):
         pointers = []
         key_pointer = find_pointers_to(self.schema, 'description')
-        pointers.append(key_pointer[0])
+        if key_pointer:
+            pointers.append(key_pointer[0])
         return pointers
 
     def get_placeholder_pointers(self):
