@@ -71,7 +71,7 @@ class SurveySchema:
         return pointers
 
     def get_schema_description_pointer(self):
-        return [find_pointers_to(self.schema, 'description')[0]]
+        return [[key_pointer for key_pointer in find_pointers_to(self.schema, 'description')][0]]
 
     def get_placeholder_pointers(self):
         """
