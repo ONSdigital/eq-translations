@@ -50,7 +50,7 @@ class SurveySchema:
             + self.get_title_pointers()
             + self.get_message_pointers()
             + self.get_list_pointers()
-            + self.get_schema_description_pointer()
+            + self.get_first_description_pointer()
             + self.no_context_placeholder_pointers
 
         )
@@ -70,8 +70,11 @@ class SurveySchema:
             pointers.extend(key_pointers)
         return pointers
 
-    def get_schema_description_pointer(self):
-        return [[key_pointer for key_pointer in find_pointers_to(self.schema, 'description')][0]]
+    def get_first_description_pointer(self):
+        try:
+            return [[key_pointer for key_pointer in find_pointers_to(self.schema, 'description')][0]]
+        except IndexError:
+            return []
 
     def get_placeholder_pointers(self):
         """
