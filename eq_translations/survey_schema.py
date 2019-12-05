@@ -71,11 +71,7 @@ class SurveySchema:
         return pointers
 
     def get_schema_description_pointer(self):
-        pointers = []
-        key_pointer = find_pointers_to(self.schema, 'description')
-        if key_pointer:
-            pointers.append(key_pointer[0])
-        return pointers
+        return [find_pointers_to(self.schema, 'description')[0]]
 
     def get_placeholder_pointers(self):
         """
@@ -137,7 +133,6 @@ class SurveySchema:
         return find_pointers_to(self.schema, 'label')
 
     def get_description_pointers(self):
-
         return find_pointers_to(self.schema, 'description')[1:]
 
     def get_parent_id(self, pointer):
@@ -158,7 +153,7 @@ class SurveySchema:
             return '/'.join(pointer_parts[:pointer_index + 1])
 
     def get_parent_question(self, pointer):
-        question_pointer = self.get_parent_question_pointer(pointer)
+        question_pointer = self.get_parent_question_pointer(pointer) or ''
         if question_pointer is None:
             question_pointer = ''
         return resolve_pointer(self.schema, question_pointer + '/title')
