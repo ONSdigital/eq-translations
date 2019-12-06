@@ -157,8 +157,6 @@ class SurveySchema:
 
     def get_parent_question(self, pointer):
         question_pointer = self.get_parent_question_pointer(pointer) or ''
-        if question_pointer is None:
-            question_pointer = ''
         return resolve_pointer(self.schema, question_pointer + '/title')
 
     def get_catalog(self):
