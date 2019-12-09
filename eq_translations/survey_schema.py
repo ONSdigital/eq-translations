@@ -19,7 +19,7 @@ class SurveySchema:
         'add_link_text',
         'empty_list_text',
         'instruction',
-        'action_text',
+        'cancel_text',
     ]
     context_placeholder_pointers = []
     no_context_placeholder_pointers = []
