@@ -34,9 +34,9 @@ The library exports a `eq_translations.SurveySchema` class and `eq_translations.
 
 `extract_template(schema_path, output_directory)`
 
-`translate_schema(schema_path, translation_path, output_directory)`
+`translate_schema(schema_path, translation_path, output_directory, target_language_code)`
 
-`handle_compare_schemas(source_schema, target_schema)`
+`handle_compare_schemas(source_schema, target_schema, target_language_code)`
 
 The following scripts will also be available on your path once the package is installed: `extract_template`, `translate_census`, `translate_schema`, `compare_schemas`
 
@@ -55,13 +55,13 @@ This will output the translatable text to an POT file.
 After the text has been translated, create a new translated schema with:
 
 ```
-pipenv run python -m eq_translations.cli.translate_schema <schema_file> <translation_path> <output_directory>
+pipenv run python -m eq_translations.cli.translate_schema <schema_file> <translation_path> <output_directory> <target_language_code>
 ```
 
 To compare two schemas for differences in structure:
 
 ```
-pipenv run python -m eq_translations.cli.compare_schemas <path_to_source_schema> <path_to_target_schema>
+pipenv run python -m eq_translations.cli.compare_schemas <path_to_source_schema> <path_to_target_schema> <target_language_code>
 ```
 
 To run the tests:
@@ -72,7 +72,7 @@ make test
 
 ### Census Commands
 
-To translate the census individual using current translations in crowdin
+To translate the census individual using current translations in Crowdin
 
 ```
 pipenv run python -m eq_translations.cli.translate_census ../eq-survey-runner/data/en/census_individual_gb_eng.json out

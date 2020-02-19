@@ -7,6 +7,7 @@ from eq_translations.survey_schema import SurveySchema
 
 
 class TestSurveySchema(unittest.TestCase):
+    LANGUAGE_CODE = "cy"
 
     VARIANT_SCHEMA = {
         "id": "name",
@@ -67,6 +68,70 @@ class TestSurveySchema(unittest.TestCase):
         "type": "Question",
     }
 
+    PLURAL_FORMS_SCHEMA = {
+        "id": "name",
+        "type": "Question",
+        "question": {
+            "type": "General",
+            "id": "total-people-question",
+            "title": {
+                "text_plural": {
+                    "forms": {
+                        "one": "{number_of_people} person lives here, is this correct?",
+                        "other": "{number_of_people} people live here, is this correct?",
+                    },
+                    "count": {
+                        "source": "answers",
+                        "identifier": "number-of-people-answer",
+                    },
+                },
+                "placeholders": [
+                    {
+                        "placeholder": "number_of_people",
+                        "value": {
+                            "source": "answers",
+                            "identifier": "number-of-people-answer",
+                        },
+                    }
+                ],
+            },
+            "answers": [
+                {
+                    "id": "confirm-count",
+                    "mandatory": True,
+                    "type": "Radio",
+                    "options": [
+                        {
+                            "label": {
+                                "text_plural": {
+                                    "forms": {
+                                        "one": "Yes, {number_of_people} person lives here",
+                                        "other": "Yes, {number_of_people} people live here",
+                                    },
+                                    "count": {
+                                        "source": "answers",
+                                        "identifier": "number-of-people-answer",
+                                    },
+                                },
+                                "placeholders": [
+                                    {
+                                        "placeholder": "number_of_people",
+                                        "value": {
+                                            "source": "answers",
+                                            "identifier": "number-of-people-answer",
+                                        },
+                                    }
+                                ],
+                            },
+                            "value": "Yes",
+                        },
+                        {"label": "No", "value": "No"},
+                    ],
+                }
+            ],
+        },
+    }
+
     def test_find_variant_pointers(self):
         schema = SurveySchema(TestSurveySchema.VARIANT_SCHEMA)
 
@@ -77,7 +142,7 @@ class TestSurveySchema(unittest.TestCase):
 
     def test_get_messages(self):
         schema = SurveySchema()
-        schema.load("./tests/schemas/test_translation.json")
+        schema.load("./tests/schemas/en/test_translation.json")
 
         assert schema.pointers is not None
 
@@ -142,7 +207,7 @@ class TestSurveySchema(unittest.TestCase):
 
         assert len(pointers) == 4
 
-    def test_no_pointers_when_list_property_isnt_a_list(self):
+    def test_no_pointers_when_list_property_is_not_a_list(self):
         schema = SurveySchema({"list": "abc"})
         pointers = schema.get_list_pointers()
         assert "/list" not in pointers
@@ -249,7 +314,6 @@ class TestSurveySchema(unittest.TestCase):
         assert answer_parent_id == "confirm-feeling-answer"
 
     def test_get_parent_question_pointer(self):
-
         schema = SurveySchema()
         parent_question_pointer = schema.get_parent_question_pointer(
             "/question/0/answers/0/options/0/label"
@@ -395,6 +459,104 @@ class TestSurveySchema(unittest.TestCase):
 
 
 class TestTranslate(unittest.TestCase):
+    SCHEMA_WITH_SINGLE_PLACEHOLDER = {
+        "id": "establishment-position-question",
+        "title": {
+            "placeholders": [
+                {
+                    "placeholder": "person_name_possessive",
+                    "transforms": [
+                        {
+                            "arguments": {
+                                "delimiter": " ",
+                                "list_to_concatenate": {
+                                    "identifier": ["first-name", "last-name"],
+                                    "source": "answers",
+                                },
+                            },
+                            "transform": "concatenate_list",
+                        },
+                        {
+                            "arguments": {
+                                "string_to_format": {"source": "previous_transform"}
+                            },
+                            "transform": "format_possessive",
+                        },
+                    ],
+                }
+            ],
+            "text": "What is <em>{person_name_possessive}</em> position in this establishment?",
+        },
+        "type": "General",
+    }
+
+    SCHEMA_WITH_MULTIPLE_PLACEHOLDERS = {
+        "question": {
+            "answers": [
+                {
+                    "id": "term-time-location-answer",
+                    "mandatory": True,
+                    "options": [
+                        {
+                            "label": {
+                                "placeholders": [
+                                    {
+                                        "placeholder": "address",
+                                        "value": {
+                                            "identifier": "display_address",
+                                            "source": "metadata",
+                                        },
+                                    }
+                                ],
+                                "text": "{address}",
+                            },
+                            "value": "household-address",
+                        },
+                        {
+                            "label": {
+                                "placeholders": [
+                                    {
+                                        "placeholder": "country",
+                                        "value": {
+                                            "identifier": "another-address-answer-other-country",
+                                            "source": "answers",
+                                        },
+                                    }
+                                ],
+                                "text": "The address in {country}",
+                            },
+                            "value": "30-day-address",
+                        },
+                        {"label": "Another address", "value": "Another address",},
+                    ],
+                    "type": "Radio",
+                }
+            ],
+            "id": "term-time-location-question",
+            "title": {
+                "placeholders": [
+                    {
+                        "placeholder": "person_name",
+                        "transforms": [
+                            {
+                                "arguments": {
+                                    "delimiter": " ",
+                                    "list_to_concatenate": {
+                                        "identifier": ["first-name", "last-name",],
+                                        "source": "answers",
+                                    },
+                                },
+                                "transform": "concatenate_list",
+                            }
+                        ],
+                    }
+                ],
+                "text": "During term time, where does <em>{person_name}</em> usually live?",
+            },
+            "type": "General",
+        }
+    }
+
     def test_translate(self):
         schema_translation = SchemaTranslation()
 
@@ -462,7 +624,9 @@ class TestTranslate(unittest.TestCase):
                 ]
             }
         )
-        translated = schema.translate(schema_translation)
+        translated = schema.translate(
+            schema_translation, TestSurveySchema.LANGUAGE_CODE
+        )
 
         expected = {
             "sections": [
@@ -516,24 +680,43 @@ class TestTranslate(unittest.TestCase):
             "sections": [
                 {
                     "question": {
-                        "title": "Who are you answering for??",
+                        "title": "Please confirm the number of people who live at this household",
                         "answers": [
                             {
                                 "type": "Radio",
-                                "id": "feeling-answer",
-                                "label": "Feeling answer",
+                                "id": "live-here-answer",
+                                "label": "Live here answer",
                                 "mandatory": True,
                                 "options": [
                                     {
-                                        "label": "Answering for this person",
-                                        "value": "good",
+                                        "label": {
+                                            "text_plural": {
+                                                "forms": {
+                                                    "one": "{number_of_people} person lives here",
+                                                    "other": "{number_of_people} people live here",
+                                                },
+                                                "count": {
+                                                    "source": "answers",
+                                                    "identifier": "number-of-people-answer",
+                                                },
+                                            },
+                                            "placeholders": [
+                                                {
+                                                    "placeholder": "number_of_people",
+                                                    "value": {
+                                                        "source": "answers",
+                                                        "identifier": "number-of-people-answer",
+                                                    },
+                                                }
+                                            ],
+                                        }
                                     },
                                     {
-                                        "label": "Answering myself",
-                                        "value": "bad",
+                                        "label": "No, I need to change my answer",
+                                        "value": "No, I need to change my answer",
                                         "detail_answer": {
                                             "id": "feeling-bad-answer",
-                                            "label": "Specify why answering for yourself is bad",
+                                            "label": "Enter a reason why",
                                             "mandatory": True,
                                             "type": "TextField",
                                         },
@@ -558,16 +741,13 @@ class TestTranslate(unittest.TestCase):
         }
 
         schema = SurveySchema(schema_data)
-        catalog = schema.get_catalog()
+        catalog = schema.get_catalog
 
         actual_items = [message.id for message in catalog]
+
         assert schema_data["sections"][0]["question"]["title"] in actual_items
         assert (
             schema_data["sections"][0]["question"]["answers"][0]["label"]
-            in actual_items
-        )
-        assert (
-            schema_data["sections"][0]["question"]["answers"][0]["options"][0]["label"]
             in actual_items
         )
         assert (
@@ -609,6 +789,15 @@ class TestTranslate(unittest.TestCase):
             in actual_items
         )
 
+        singluar_label = schema_data["sections"][0]["question"]["answers"][0][
+            "options"
+        ][0]["label"]["text_plural"]["forms"]["one"]
+        plural_label = schema_data["sections"][0]["question"]["answers"][0]["options"][
+            0
+        ]["label"]["text_plural"]["forms"]["other"]
+
+        assert (singluar_label, plural_label) in actual_items
+
     def test_get_catalog_uses_smart_quotes(self):
         schema_data = {
             "sections": [
@@ -618,126 +807,20 @@ class TestTranslate(unittest.TestCase):
 
         schema = SurveySchema(schema_data)
 
-        catalog = schema.get_catalog()
+        catalog = schema.get_catalog
 
         actual_items = [message.id for message in catalog]
 
         assert "What is ‘this persons’ date of birth?" in actual_items
 
     def test_find_pointers_ignores_placeholders(self):
-        schema = SurveySchema(
-            {
-                "id": "establishment-position-question",
-                "title": {
-                    "placeholders": [
-                        {
-                            "placeholder": "person_name_possessive",
-                            "transforms": [
-                                {
-                                    "arguments": {
-                                        "delimiter": " ",
-                                        "list_to_concatenate": {
-                                            "identifier": ["first-name", "last-name"],
-                                            "source": "answers",
-                                        },
-                                    },
-                                    "transform": "concatenate_list",
-                                },
-                                {
-                                    "arguments": {
-                                        "string_to_format": {
-                                            "source": "previous_transform"
-                                        }
-                                    },
-                                    "transform": "format_possessive",
-                                },
-                            ],
-                        }
-                    ],
-                    "text": "What is <em>{person_name_possessive}</em> position in this establishment?",
-                },
-                "type": "General",
-            }
-        )
+        schema = SurveySchema(self.SCHEMA_WITH_SINGLE_PLACEHOLDER)
         pointers = schema.get_title_pointers()
 
         assert "/title" not in pointers
 
     def test_get_placeholder_pointers(self):
-        schema = SurveySchema(
-            {
-                "question": {
-                    "answers": [
-                        {
-                            "id": "term-time-location-answer",
-                            "mandatory": True,
-                            "options": [
-                                {
-                                    "label": {
-                                        "placeholders": [
-                                            {
-                                                "placeholder": "address",
-                                                "value": {
-                                                    "identifier": "display_address",
-                                                    "source": "metadata",
-                                                },
-                                            }
-                                        ],
-                                        "text": "{address}",
-                                    },
-                                    "value": "household-address",
-                                },
-                                {
-                                    "label": {
-                                        "placeholders": [
-                                            {
-                                                "placeholder": "country",
-                                                "value": {
-                                                    "identifier": "another-address-answer-other-country",
-                                                    "source": "answers",
-                                                },
-                                            }
-                                        ],
-                                        "text": "The address in {country}",
-                                    },
-                                    "value": "30-day-address",
-                                },
-                                {
-                                    "label": "Another address",
-                                    "value": "Another address",
-                                },
-                            ],
-                            "type": "Radio",
-                        }
-                    ],
-                    "id": "term-time-location-question",
-                    "title": {
-                        "placeholders": [
-                            {
-                                "placeholder": "person_name",
-                                "transforms": [
-                                    {
-                                        "arguments": {
-                                            "delimiter": " ",
-                                            "list_to_concatenate": {
-                                                "identifier": [
-                                                    "first-name",
-                                                    "last-name",
-                                                ],
-                                                "source": "answers",
-                                            },
-                                        },
-                                        "transform": "concatenate_list",
-                                    }
-                                ],
-                            }
-                        ],
-                        "text": "During term time, where does <em>{person_name}</em> usually live?",
-                    },
-                    "type": "General",
-                }
-            }
-        )
+        schema = SurveySchema(self.SCHEMA_WITH_MULTIPLE_PLACEHOLDERS)
 
         assert (
             "/question/answers/0/options/0/label/text"
@@ -750,74 +833,25 @@ class TestTranslate(unittest.TestCase):
         assert "/question/title/text" in schema.no_context_placeholder_pointers
 
     def test_placeholder_catalog_context(self):
-        schema = SurveySchema(
-            {
-                "question": {
-                    "answers": [
-                        {
-                            "id": "term-time-location-answer",
-                            "mandatory": True,
-                            "options": [
-                                {
-                                    "label": {
-                                        "placeholders": [
-                                            {
-                                                "placeholder": "address",
-                                                "value": {
-                                                    "identifier": "display_address",
-                                                    "source": "metadata",
-                                                },
-                                            }
-                                        ],
-                                        "text": "{address}",
-                                    },
-                                    "value": "household-address",
-                                },
-                                {
-                                    "label": "Another address",
-                                    "value": "Another address",
-                                },
-                            ],
-                            "type": "Radio",
-                        }
-                    ],
-                    "id": "term-time-location-question",
-                    "title": {
-                        "placeholders": [
-                            {
-                                "placeholder": "person_name",
-                                "transforms": [
-                                    {
-                                        "arguments": {
-                                            "delimiter": " ",
-                                            "list_to_concatenate": {
-                                                "identifier": [
-                                                    "first-name",
-                                                    "last-name",
-                                                ],
-                                                "source": "answers",
-                                            },
-                                        },
-                                        "transform": "concatenate_list",
-                                    }
-                                ],
-                            }
-                        ],
-                        "text": "During term time, where does <em>{person_name}</em> usually live?",
-                    },
-                    "type": "General",
-                }
-            }
-        )
+        schema = SurveySchema(self.SCHEMA_WITH_MULTIPLE_PLACEHOLDERS)
 
-        message = schema.get_catalog().get(
+        message = schema.get_catalog.get(
             "{address}",
             "Answer for: During term time, where does <em>{person_name}</em> usually live?",
         )
         assert message.auto_comments == ["answer-id: term-time-location-answer"]
 
-    def test_placeholder_translation(self):
+    def test_get_text_plural_pointers(self):
+        schema = SurveySchema(TestSurveySchema.PLURAL_FORMS_SCHEMA)
 
+        assert (
+            "/question/answers/0/options/0/label/text_plural"
+            in schema.context_text_plural_pointers
+        )
+
+        assert "/question/title/text_plural" in schema.no_context_text_plural_pointer
+
+    def test_placeholder_translation(self):
         schema_translation = SchemaTranslation()
 
         catalog = Catalog()
@@ -829,41 +863,10 @@ class TestTranslate(unittest.TestCase):
 
         schema_translation.catalog = catalog
 
-        schema = SurveySchema(
-            {
-                "id": "establishment-position-question",
-                "title": {
-                    "placeholders": [
-                        {
-                            "placeholder": "person_name_possessive",
-                            "transforms": [
-                                {
-                                    "arguments": {
-                                        "delimiter": " ",
-                                        "list_to_concatenate": {
-                                            "identifier": ["first-name", "last-name"],
-                                            "source": "answers",
-                                        },
-                                    },
-                                    "transform": "concatenate_list",
-                                },
-                                {
-                                    "arguments": {
-                                        "string_to_format": {
-                                            "source": "previous_transform"
-                                        }
-                                    },
-                                    "transform": "format_possessive",
-                                },
-                            ],
-                        }
-                    ],
-                    "text": "What is <em>{person_name_possessive}</em> position in this establishment?",
-                },
-                "type": "General",
-            }
+        schema = SurveySchema(self.SCHEMA_WITH_SINGLE_PLACEHOLDER)
+        translated = schema.translate(
+            schema_translation, TestSurveySchema.LANGUAGE_CODE
         )
-        translated = schema.translate(schema_translation)
 
         expected = {
             "id": "establishment-position-question",
@@ -921,7 +924,9 @@ class TestTranslate(unittest.TestCase):
 
         variant_schema = SurveySchema(TestSurveySchema.VARIANT_SCHEMA)
 
-        translated = variant_schema.translate(schema_translation)
+        translated = variant_schema.translate(
+            schema_translation, TestSurveySchema.LANGUAGE_CODE
+        )
 
         assert (
             translated.schema["question_variants"][0]["question"]["answers"][0]["label"]
@@ -931,3 +936,68 @@ class TestTranslate(unittest.TestCase):
             translated.schema["question_variants"][1]["question"]["answers"][0]["label"]
             == "WELSH - First name - Proxy"
         )
+
+    def test_text_plural_translation(self):
+        schema_translation = SchemaTranslation()
+
+        catalog = Catalog()
+
+        catalog.add(
+            id=(
+                "{number_of_people} person lives here, is this correct?",
+                "{number_of_people} people live here, is this correct?",
+            ),
+            string=(
+                "WELSH - zero",
+                "WELSH - one",
+                "WELSH - two",
+                "WELSH - few",
+                "WELSH - many",
+                "WELSH - other",
+            ),
+        )
+
+        catalog.add(
+            id=(
+                "Yes, {number_of_people} person lives here",
+                "Yes, {number_of_people} people live here",
+            ),
+            string=(
+                "WELSH - zero",
+                "WELSH - one",
+                "WELSH - two",
+                "WELSH - few",
+                "WELSH - many",
+                "WELSH - other",
+            ),
+            auto_comments=["answer-id: confirm-count"],
+            context="Answer for: {number_of_people} people live here, is this correct?",
+        )
+
+        schema_translation.catalog = catalog
+
+        plural_forms_schema = SurveySchema(TestSurveySchema.PLURAL_FORMS_SCHEMA)
+
+        translated = plural_forms_schema.translate(
+            schema_translation, TestSurveySchema.LANGUAGE_CODE
+        )
+
+        forms_for_title = translated.schema["question"]["title"]["text_plural"]["forms"]
+
+        assert forms_for_title["zero"] == "WELSH - zero"
+        assert forms_for_title["one"] == "WELSH - one"
+        assert forms_for_title["two"] == "WELSH - two"
+        assert forms_for_title["few"] == "WELSH - few"
+        assert forms_for_title["many"] == "WELSH - many"
+        assert forms_for_title["other"] == "WELSH - other"
+
+        forms_for_answer_label = translated.schema["question"]["answers"][0]["options"][
+            0
+        ]["label"]["text_plural"]["forms"]
+
+        assert forms_for_answer_label["zero"] == "WELSH - zero"
+        assert forms_for_answer_label["one"] == "WELSH - one"
+        assert forms_for_answer_label["two"] == "WELSH - two"
+        assert forms_for_answer_label["few"] == "WELSH - few"
+        assert forms_for_answer_label["many"] == "WELSH - many"
+        assert forms_for_answer_label["other"] == "WELSH - other"

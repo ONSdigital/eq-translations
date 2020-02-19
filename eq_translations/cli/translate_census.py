@@ -19,7 +19,7 @@ def main():
         sys.exit(1)
 
     parser = argparse.ArgumentParser(
-        description="Translate the census survey using crowdin"
+        description="Translate the census survey using Crowdin"
     )
 
     parser.add_argument(
@@ -48,12 +48,12 @@ def main():
         language="cy",
     )
 
-    print("Fetching translation file from crowdin")
+    print("Fetching translation file from Crowdin")
 
     response = requests.get(download_url, stream=True)
 
     if not response:
-        print("Empty response from crowdin")
+        print("Empty response from Crowdin")
         sys.exit(1)
 
     output_path = os.path.join(args.OUTPUT_DIRECTORY, output_file)
@@ -69,7 +69,7 @@ def main():
     translation = SchemaTranslation()
     translation.load(output_path)
 
-    translated_schema = schema.translate(translation)
+    translated_schema = schema.translate(translation, language_code="cy")
     translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
 
 

@@ -1,0 +1,495 @@
+{
+    "data_version": "0.0.3",
+    "description": "Cyfieithiadau prawf",
+    "legal_basis": "Rhoddir rhybudd o dan adran 1 o Ddeddf Ystadegau Masnach 1947.",
+    "view_submitted_response": {
+        "enabled": true,
+        "duration": 901
+    },
+    "metadata": [
+        {
+            "name": "user_id",
+            "type": "string"
+        },
+        {
+            "name": "period_id",
+            "type": "string"
+        },
+        {
+            "name": "ru_name",
+            "type": "string"
+        }
+    ],
+    "mime_type": "application/json/ons/eq",
+    "schema_version": "0.0.1",
+    "sections": [
+        {
+            "groups": [
+                {
+                    "blocks": [
+                        {
+                            "id": "introduction",
+                            "type": "Introduction",
+                            "title": "Cyflwyniad",
+                            "primary_content": [
+                                {
+                                    "id": "use-of-information",
+                                    "title": "Beth sydd angen i chi ei wneud nesaf",
+                                    "contents": [
+                                        {
+                                            "list": [
+                                                "Dylai data ymwneud \u00e2 phob safle yng Nghymru, Lloegr a\u2019r Alban oni nodir yn wahanol.",
+                                                "Gallwch ddarparu amcangyfrifon gwybodus os nad yw\u2019r ffigurau go iawn ar gael.",
+                                                "Byddwn yn trin eich data yn ddiogel ac yn gyfrinachol."
+                                            ]
+                                        },
+                                        {
+                                            "description": "I gymryd rhan, y cyfan sy\u2019n rhaid i chi ei wneud yw gwirio bod gennych chi\u2019r wybodaeth sydd ei hangen arnoch i ateb cwestiynau\u2019r arolwg."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "preview_content": {
+                                "id": "preview",
+                                "title": "Gwybodaeth sydd ei hangen arnoch chi",
+                                "contents": [
+                                    {
+                                        "description": "Gallwch ddewis dyddiadau\u2019r cyfnod rydych chi\u2019n adrodd amdano, os nad yw\u2019r dyddiadau a roddir yn briodol."
+                                    },
+                                    {
+                                        "description": "<a rel='noopener noreferrer' target='_blank' href='https://www.ons.gov.uk/surveys/informationforbusinesses/aboutonsbusinesssurveys/detailedguidancetohelpcompletethequarterlyacquisitionsanddisposalsofcapitalassetssurvey'>Darllenwch y canllawiau manwl ar gyfer cwblhau\u2019r arolwg hwn</a>"
+                                    }
+                                ],
+                                "questions": [
+                                    {
+                                        "id": "employee-pay-frequency",
+                                        "question": "Employee pay frequency",
+                                        "contents": [
+                                            {
+                                                "list": [
+                                                    "Bydd angen i chi nodi pa mor aml y mae gweithwyr yn cael eu talu hy wythnosol, bob pythefnos, calendr bob mis, pedair wythnos neu bum wythnos.",
+                                                    "Gofynnir i chi ateb y cwestiynau isod ar gyfer eich holl batrymau cyflog a ddewiswyd."
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "what-you-need-to-know",
+                                        "question": "What you need to know",
+                                        "contents": [
+                                            {
+                                                "list": [
+                                                    "Gallwch ddarparu amcangyfrifon gwybodus os nad yw\u2019r ffigurau gwirioneddol ar gael",
+                                                    "Mae\u2019r holl wybodaeth a roddwch yn gwbl gyfrinachol"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "definition-of-innovation",
+                                        "question": "Definition of innovation",
+                                        "contents": [
+                                            {
+                                                "description": {
+                                                    "text": "Diffinnir arloesi, at ddibenion yr arolwg hwn, fel <strong> newydd </strong> neu <strong> nwyddau neu wasanaethau sydd wedi\u2019u gwella\u2019n sylweddol </strong> yn ogystal \u00e2 <strong> phrosesau </strong> a ddefnyddir i gynhyrchu neu gyflenwi\u2019r cyfan nwyddau neu wasanaethau y mae {ru_name} wedi\u2019u cyflwyno, waeth beth yw eu tarddiad.",
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "ru_name",
+                                                            "value": {
+                                                                "source": "metadata",
+                                                                "identifier": "ru_name"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "description": {
+                                                    "text": "Gall y datblygiadau arloesol hyn fod yn newydd i {ru_name} neu\u2019n newydd i\u2019r farchnad",
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "ru_name",
+                                                            "value": {
+                                                                "source": "metadata",
+                                                                "identifier": "ru_name"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "description": {
+                                                    "text": "Mae buddsoddiadau ar gyfer arloesi yn y dyfodol a newidiadau y mae {ru_name} wedi\u2019u cyflwyno ar lefel <strong> strategol </strong> (mewn trefniadaeth ac arferion) hefyd yn cael sylw",
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "ru_name",
+                                                            "value": {
+                                                                "source": "metadata",
+                                                                "identifier": "ru_name"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "secondary_content": [
+                                {
+                                    "id": "how-we-use-your-data",
+                                    "contents": [
+                                        {
+                                            "title": "Sut rydyn ni\u2019n defnyddio\u2019ch data",
+                                            "list": [
+                                                "Ni allwch apelio yn erbyn eich dewis. Dewiswyd eich busnes i roi golwg gynhwysfawr inni o economi\u2019r DU",
+                                                "Mae\u2019r data o\u2019ch busnes yn hanfodol yw ei fod yn ein helpu i gyfrifo CMC y DU",
+                                                "Mae ein harolygon yn llywio penderfyniadau\u2019r llywodraeth. Er enghraifft, arweiniodd ystadegau blaenorol o\u2019n harolygon at gyflwyno grantiau busnes"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "interstitial-block",
+                            "type": "Interstitial",
+                            "content": {
+                                "title": "Bydd cwestiynau yn dilyn.",
+                                "contents": [
+                                    {
+                                        "description": "Disgrifiad yw hwn"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "block-1",
+                            "question": {
+                                "id": "question-1",
+                                "title": "Ar gyfer pwy ydych chi\u2019n ateb?",
+                                "type": "General",
+                                "definitions": [
+                                    {
+                                        "title": "Pam defnyddio batris LiFePO4?",
+                                        "contents": [
+                                            {
+                                                "description": "Mae system ffotofolt\u00e4ig nodweddiadol yn cyflogi paneli solar, pob un yn cynnwys nifer o gelloedd solar, sy\u2019n cynhyrchu p\u0175er trydanol. Gall gosodiadau PV fod wedi\u2019u gosod ar y ddaear, eu gosod ar do neu eu gosod ar wal. Efallai bod y mownt yn sefydlog, neu ddefnyddio traciwr solar i ddilyn yr haul ar draws yr awyr."
+                                            },
+                                            {
+                                                "title": "3 Budd batris LifePO4."
+                                            },
+                                            {
+                                                "list": [
+                                                    "Mae gan fatris LifePO4 hyd oes 10 gwaith yn hirach na batris asid plwm traddodiadol. Mae hyn yn lleihau\u2019r angen am newidiadau batri yn ddramatig.",
+                                                    "Mae batris ffosffad haearn lithiwm yn gweithredu ag ymwrthedd llawer is ac o ganlyniad yn ailwefru\u2019n gyflymach.",
+                                                    "Mae batris ysgafn LifeP04 yn ysgafnach na batris asid plwm, fel arfer yn pwyso tua 1/4 yn llai."
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "answers": [
+                                    {
+                                        "type": "Radio",
+                                        "id": "feeling-answer",
+                                        "label": "Teimlo ateb",
+                                        "mandatory": true,
+                                        "options": [
+                                            {
+                                                "label": "Ateb ar gyfer y person hwn",
+                                                "value": "Answering for this person"
+                                            },
+                                            {
+                                                "label": "Ateb fy hun",
+                                                "value": "Answering myself",
+                                                "detail_answer": {
+                                                    "id": "feeling-bad-answer",
+                                                    "label": "Nodwch pam mae ateb drosoch eich hun yn ddrwg",
+                                                    "mandatory": true,
+                                                    "type": "TextField"
+                                                }
+                                            }
+                                        ],
+                                        "guidance": {
+                                            "hide_guidance": "Dangos help ateb teimlad",
+                                            "show_guidance": "Dangos help ateb teimlad",
+                                            "contents": [
+                                                {
+                                                    "title": "Teimlo ateb",
+                                                    "description": "Dylid ateb hyn i weld a ydych chi\u2019n ateb ar ran rhywun arall"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": "block-2",
+                            "type": "Question",
+                            "question_variants": [
+                                {
+                                    "question": {
+                                        "type": "General",
+                                        "id": "question-2",
+                                        "title": "Beth yw dyddiad geni\u2019r \u2018person\u2019 hwn?",
+                                        "answers": [
+                                            {
+                                                "id": "confirm-feeling-answer",
+                                                "type": "Radio",
+                                                "label": "cadarnhau",
+                                                "mandatory": true,
+                                                "options": [
+                                                    {
+                                                        "value": "Yes",
+                                                        "label": "Ydw"
+                                                    },
+                                                    {
+                                                        "value": "No",
+                                                        "label": "Na"
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "guidance": {
+                                            "contents": [
+                                                {
+                                                    "title": "Cynhwyswch:",
+                                                    "list": [
+                                                        "yr holl weithwyr ym Mhrydain Fawr (Lloegr, yr Alban a Chymru), yn llawn amser ac yn rhan-amser, a dderbyniodd d\u00e2l yn y cyfnod perthnasol"
+                                                    ]
+                                                },
+                                                {
+                                                    "title": "Peidiwch \u00e2 chynnwys:",
+                                                    "list": [
+                                                        "hyfforddeion ar gynlluniau\u2019r llywodraeth",
+                                                        "gweithwyr sy\u2019n gweithio dramor oni bai eu bod yn cael eu talu\u2019n uniongyrchol o gyflogres Prydain Fawr y busnes hwn",
+                                                        "gweithwyr yng Ngogledd Iwerddon"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "when": [
+                                        {
+                                            "id": "feeling-answer",
+                                            "condition": "equals",
+                                            "value": "Answering for this person"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "question": {
+                                        "type": "General",
+                                        "id": "question-2",
+                                        "title": "Beth yw eich dyddiad geni?",
+                                        "answers": [
+                                            {
+                                                "id": "confirm-feeling-answer",
+                                                "type": "Radio",
+                                                "label": "cadarnhau",
+                                                "mandatory": true,
+                                                "options": [
+                                                    {
+                                                        "value": "Yes",
+                                                        "label": "Ydw"
+                                                    },
+                                                    {
+                                                        "value": "No",
+                                                        "label": "Na"
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "guidance": {
+                                            "contents": [
+                                                {
+                                                    "title": "Cynhwyswch:",
+                                                    "list": [
+                                                        "yr holl weithwyr ym Mhrydain Fawr (Lloegr, yr Alban a Chymru), yn llawn amser ac yn rhan-amser, a dderbyniodd d\u00e2l yn y cyfnod perthnasol"
+                                                    ]
+                                                },
+                                                {
+                                                    "title": "Peidiwch \u00e2 chynnwys:",
+                                                    "list": [
+                                                        "hyfforddeion ar gynlluniau\u2019r llywodraeth",
+                                                        "gweithwyr sy\u2019n gweithio dramor oni bai eu bod yn cael eu talu\u2019n uniongyrchol o gyflogres Prydain Fawr y busnes hwn",
+                                                        "gweithwyr yng Ngogledd Iwerddon"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "when": [
+                                        {
+                                            "id": "feeling-answer",
+                                            "condition": "equals",
+                                            "value": "Answering myself"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Question",
+                            "id": "number-of-people-block",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "number-of-people-answer",
+                                        "label": "Faint o bobl sy\u2019n byw yma?",
+                                        "mandatory": true,
+                                        "type": "Number",
+                                        "min_value": {
+                                            "value": 0
+                                        },
+                                        "max_value": {
+                                            "value": 100
+                                        }
+                                    }
+                                ],
+                                "title": "Faint o bobl sy\u2019n byw yma?",
+                                "description": "",
+                                "id": "number-of-people-question",
+                                "type": "General"
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "confirm-number-of-people",
+                            "question": {
+                                "type": "General",
+                                "id": "total-people-question",
+                                "title": {
+                                    "text_plural": {
+                                        "forms": {
+                                            "one": "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir?",
+                                            "other": "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir?",
+                                            "zero": "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir?",
+                                            "two": "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir?",
+                                            "few": "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir?",
+                                            "many": "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir?"
+                                        },
+                                        "count": {
+                                            "source": "answers",
+                                            "identifier": "number-of-people-answer"
+                                        }
+                                    },
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "number_of_people",
+                                            "value": {
+                                                "source": "answers",
+                                                "identifier": "number-of-people-answer"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "answers": [
+                                    {
+                                        "id": "confirm-count",
+                                        "mandatory": true,
+                                        "type": "Radio",
+                                        "options": [
+                                            {
+                                                "label": {
+                                                    "text_plural": {
+                                                        "forms": {
+                                                            "one": "Ydy, mae {number_of_people} person yn byw yma",
+                                                            "other": "Ydy, mae {number_of_people} o bobl yn byw yma",
+                                                            "zero": "Ydy, mae {number_of_people} o bobl zero yn byw yma",
+                                                            "two": "Ydy, mae {number_of_people} o bobl two yn byw yma",
+                                                            "few": "Ydy, mae {number_of_people} o bobl few yn byw yma",
+                                                            "many": "Ydy, mae {number_of_people} o bobl many yn byw yma"
+                                                        },
+                                                        "count": {
+                                                            "source": "answers",
+                                                            "identifier": "number-of-people-answer"
+                                                        }
+                                                    },
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "number_of_people",
+                                                            "value": {
+                                                                "source": "answers",
+                                                                "identifier": "number-of-people-answer"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                "value": "Yes"
+                                            },
+                                            {
+                                                "label": "Na",
+                                                "value": "No"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "number-of-visitors-block",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "number-of-visitors-answer",
+                                        "label": "Faint o ymwelwyr sydd wedi byw yma?",
+                                        "mandatory": true,
+                                        "type": "Number",
+                                        "min_value": {
+                                            "value": 0
+                                        },
+                                        "max_value": {
+                                            "value": 100
+                                        }
+                                    }
+                                ],
+                                "title": "Faint o ymwelwyr sydd wedi byw yma?",
+                                "description": "",
+                                "id": "number-of-visitors-question",
+                                "type": "General"
+                            }
+                        },
+                        {
+                            "type": "CalculatedSummary",
+                            "id": "block-3",
+                            "title": "Teitl Crynodeb Cyfrifedig",
+                            "calculation": {
+                                "calculation_type": "sum",
+                                "answers_to_calculate": ["number-of-people-answer", "number-of-visitors-answer"],
+                                "title": "Crynodeb Teitl Cyfrifo Teitl Cyfrifo Bloc 2"
+                            }
+                        }
+                    ],
+                    "id": "group",
+                    "title": ""
+                }
+            ],
+            "id": "section",
+            "title": "Teitl Llywio"
+        },
+        {
+            "id": "summary-section",
+            "title": "Crynodeb",
+            "groups": [
+                {
+                    "id": "summary-group",
+                    "title": "Crynodeb",
+                    "blocks": [
+                        {
+                            "type": "Summary",
+                            "id": "summary"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "survey_id": "0",
+    "theme": "default",
+    "title": "Cyfieithu prawf"
+}

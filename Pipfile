@@ -14,6 +14,7 @@ pylint = "*"
 pytest = "*"
 pylint-quotes = "*"
 black = "==19.10b0"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.7"

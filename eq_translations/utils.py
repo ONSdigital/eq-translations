@@ -18,35 +18,6 @@ def list_pointers(input_data, pointer=None):
             yield from list_pointers(item, "{}/{}".format(pointer, index))
 
 
-def compare_schemas(source_schema, target_schema):
-    """
-    Compare the pointers in two json structures and return differences
-    :param source_schema: Structure to identify differences against
-    :param target_schema: Target structure to compare against
-    :return:
-    """
-    source_survey_pointers = set(list_pointers(source_schema))
-    target_survey_pointers = set(list_pointers(target_schema))
-
-    missing_target_pointers = source_survey_pointers.difference(target_survey_pointers)
-    missing_source_pointers = target_survey_pointers.difference(source_survey_pointers)
-
-    missing_pointers = missing_target_pointers | missing_source_pointers
-
-    for list_pointer in missing_pointers:
-        print("Missing Pointer: {}".format(list_pointer))
-
-    print("\nTotal attributes in source schema: {}".format(len(source_survey_pointers)))
-    print("Total attributes in target schema: {}".format(len(target_survey_pointers)))
-    print(
-        "Differences between source/target schema attributes: {} ".format(
-            len(missing_pointers)
-        )
-    )
-
-    return missing_pointers
-
-
 def is_placeholder(input_data):
     return "placeholders" in input_data
 
@@ -140,5 +111,40 @@ def remove_quotes(message):
     return message.strip()
 
 
-def are_dumb_strings_equal(message_a, message_b):
+def are_dumb_strings_equal(message_a, message_b, pluralizable=False):
+    if pluralizable:
+        return {remove_quotes(msg) for msg in message_a} == {
+            remove_quotes(msg) for msg in message_b
+        }
+
     return remove_quotes(message_a) == remove_quotes(message_b)
+
+
+def get_message_id_for_plural_forms(forms, convert_to_smart_quote):
+    singular = forms["one"]
+    plural = forms["other"]
+
+    if convert_to_smart_quote:
+        return dumb_to_smart_quotes(singular), dumb_to_smart_quotes(plural)
+
+    return singular, plural
+
+
+def get_message_id(content, use_smart_quotes=True):
+    if "forms" in content:
+        return get_message_id_for_plural_forms(
+            content["forms"], convert_to_smart_quote=use_smart_quotes
+        )
+
+    return dumb_to_smart_quotes(content) if use_smart_quotes else content
+
+
+def get_plural_forms_for_language(language_code):
+    mappings = {
+        "en": ["one"],
+        "cy": ["zero", "one", "two", "few", "many"],
+        "ga": ["one", "two", "few", "many"],
+        "eo": ["one"],
+    }
+
+    return mappings[language_code] + ["other"]

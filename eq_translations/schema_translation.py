@@ -1,6 +1,6 @@
 from babel.messages import pofile
 
-from eq_translations.utils import dumb_to_smart_quotes, are_dumb_strings_equal
+from eq_translations.utils import are_dumb_strings_equal
 
 
 class SchemaTranslation:
@@ -11,12 +11,14 @@ class SchemaTranslation:
         self.catalog = catalog or self.catalog
 
     def load(self, translation_file_path):
-        with open(translation_file_path, encoding="utf8") as translation_file:
-            self.catalog = pofile.read_po(translation_file)
+        with open(
+            translation_file_path, encoding="utf8"
+        ) as translation_file:  # pragma: no cover
+            self.catalog = pofile.read_po(translation_file)  # pragma: no cover
 
     def save(self, translation_file_path):
-        with open(translation_file_path, "w+b") as translation_file:
-            pofile.write_po(translation_file, self.catalog)
+        with open(translation_file_path, "w+b") as translation_file:  # pragma: no cover
+            pofile.write_po(translation_file, self.catalog)  # pragma: no cover
 
     @staticmethod
     def get_comment_answer_ids(comments):
@@ -26,11 +28,22 @@ class SchemaTranslation:
             if "answer-id" in comment
         ]
 
-    def translate_message(
-        self, message_to_translate, answer_id=None, message_context=None
+    def get_translation(
+        self,
+        message_id_to_translate,
+        pluralizable,
+        answer_id=None,
+        message_context=None,
     ):
         for message in self.catalog:
-            if message.id and are_dumb_strings_equal(message.id, message_to_translate):
+            if (
+                message.id
+                and not (message.pluralizable ^ pluralizable)
+                and are_dumb_strings_equal(
+                    message.id, message_id_to_translate, pluralizable=pluralizable
+                )
+            ):
+
                 found = True
                 comment_answer_ids = []
 
@@ -46,4 +59,4 @@ class SchemaTranslation:
                         found &= message.context == message_context
 
                 if found:
-                    return dumb_to_smart_quotes(message.string)
+                    return message.string

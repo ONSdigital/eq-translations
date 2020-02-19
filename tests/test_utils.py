@@ -3,7 +3,7 @@ from eq_translations.utils import (
     find_pointers_containing,
     find_pointers_to,
     list_pointers,
-    compare_schemas,
+    are_dumb_strings_equal,
 )
 
 
@@ -132,56 +132,23 @@ def test_list_pointers():
     assert "/a/key/2" in pointers
 
 
-def test_compare_source_schema():
-    source_schema = {
-        "this": "is",
-        "a": {
-            "test": [
-                {"item": {}},
-                {"item": {}},
-                {"item": {}},
-                {"item": {}},
-                {"item": {}},
-            ]
-        },
-    }
+def test_are_dumb_strings_equal_not_pluralizable():
 
-    target_schema = {"this": "is", "a": {"test": [{"item": {}}, {"item": {}}]}}
-
-    differences = compare_schemas(source_schema, target_schema)
-
-    assert "/a/test/2" in differences
-    assert "/a/test/3" in differences
-    assert "/a/test/4" in differences
-    assert "/a/test/2/item" in differences
-    assert "/a/test/3/item" in differences
-    assert "/a/test/4/item" in differences
-
-    assert len(differences) == 6
+    assert are_dumb_strings_equal("'Test'", "'Test'") is True
+    assert are_dumb_strings_equal("'Test‘", "Test'") is True
 
 
-def test_compare_target_schema():
+def test_are_dumb_strings_equal_pluralizable():
 
-    source_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
-
-    target_schema = {
-        "this": "is",
-        "a": {
-            "test": [{"item": {}}, {"item": {}}, {"item": {}}],
-            "key": [{"x": {"2": 3}}, "y", "z"],
-        },
-    }
-
-    differences = compare_schemas(source_schema, target_schema)
-
-    assert "/this" in differences
-    assert "/a/test/2" in differences
-    assert "/a/test/2/item" in differences
-    assert "/a/key" in differences
-    assert "/a/key/0" in differences
-    assert "/a/key/0/x" in differences
-    assert "/a/key/0/x/2" in differences
-    assert "/a/key/1" in differences
-    assert "/a/key/2" in differences
-
-    assert len(differences) == 9
+    assert (
+        are_dumb_strings_equal(
+            ("'Test'", "Test's"), ("'Test'", "Test's"), pluralizable=True
+        )
+        is True
+    )
+    assert (
+        are_dumb_strings_equal(
+            ("'Test‘", "’Test‘"), ("'Test'", "’Test’"), pluralizable=True
+        )
+        is True
+    )

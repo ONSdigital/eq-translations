@@ -7,4 +7,4 @@ lint:
 	pipenv run black --check .
 
 test: lint
-	pipenv run pytest ./tests
+	pipenv run pytest --cov-config=.coveragerc --cov --cov-report html

@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: eq-language-testing\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-02-26 10:36+0000\n"
+"PO-Revision-Date: 2020-02-26 11:14\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Welsh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+"Plural-Forms: nplurals=6; plural=(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n == 3) ? 3 : ((n == 6) ? 4 : 5))));\n"
+"X-Crowdin-Project: eq-language-testing\n"
+"X-Crowdin-Language: cy\n"
+"X-Crowdin-File: test_language.pot\n"
+"Language: cy_GB\n"
+
+msgid "A questionnaire to demonstrate language switching"
+msgstr "Holiadur i ddangos newid iaith"
+
+msgid "Enter your date of birth"
+msgstr "Rhowch eich dyddiad geni"
+
+msgid "Test Language Survey"
+msgstr "Arolwg Iaith Prawf"
+
+msgid "Please enter a name"
+msgstr "Rhowch enw"
+
+msgid "How many people live at your household?"
+msgstr "Faint o bobl sy'n byw ar eich cartref?"
+
+msgid "What is {person_name_possessive} date of birth?"
+msgstr "Beth yw dyddiad geni {person_name_possessive}?"
+
+msgid "{number_of_people} person lives here, is this correct?"
+msgid_plural "{number_of_people} people live here, is this correct?"
+msgstr[0] "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir? (zero)"
+msgstr[1] "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir? (one)"
+msgstr[2] "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir? (two)"
+msgstr[3] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (few)"
+msgstr[4] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (many)"
+msgstr[5] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (other)"
+
+#. answer-id: first-name
+msgctxt "Answer for: Please enter a name"
+msgid "First Name"
+msgstr "Enw cyntaf"
+
+#. answer-id: last-name
+msgctxt "Answer for: Please enter a name"
+msgid "Last Name"
+msgstr "Enw olaf"
+
+#. answer-id: date-of-birth-answer
+msgctxt "Answer for: What is {person_name_possessive} date of birth?"
+msgid "Date of Birth"
+msgstr "Dyddiad Geni"
+
+#. answer-id: number-of-people-answer
+msgctxt "Answer for: How many people live at your household?"
+msgid "Number of household residents"
+msgstr "Nifer y preswylwyr cartrefi"
+
+#. answer-id: confirm-count
+msgctxt "Answer for: {number_of_people} people live here, is this correct?"
+msgid "No"
+msgstr "Na"
+
+#. answer-id: confirm-count
+msgctxt "Answer for: {number_of_people} people live here, is this correct?"
+msgid "Yes, {number_of_people} person lives here"
+msgid_plural "Yes, {number_of_people} people live here"
+msgstr[0] "Ydy, mae {number_of_people} person yn byw yma (zero)"
+msgstr[1] "Ydy, mae {number_of_people} person yn byw yma (one)"
+msgstr[2] "Ydy, mae {number_of_people} person yn byw yma (two)"
+msgstr[3] "Ydy, mae {number_of_people} pherson yn byw yma (few)"
+msgstr[4] "Ydy, mae {number_of_people} pherson yn byw yma (many)"
+msgstr[5] "Ydy, mae {number_of_people} pherson yn byw yma (other)"
+

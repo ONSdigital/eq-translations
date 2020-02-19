@@ -16,6 +16,10 @@ def main():
         "TARGET_SCHEMA", help="The path to the target schema to compare against"
     )
 
+    parser.add_argument(
+        "TARGET_LANGUAGE_CODE", help="The language code of the target schema"
+    )
+
     args = parser.parse_args()
 
     if not os.path.exists(args.SOURCE_SCHEMA):
@@ -25,7 +29,9 @@ def main():
         print(f"{args.TARGET_SCHEMA} does not exist")
         sys.exit(2)
 
-    handle_compare_schemas(args.SOURCE_SCHEMA, args.TARGET_SCHEMA)
+    handle_compare_schemas(
+        args.SOURCE_SCHEMA, args.TARGET_SCHEMA, args.TARGET_LANGUAGE_CODE
+    )
 
 
 if __name__ == "__main__":

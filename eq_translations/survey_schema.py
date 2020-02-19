@@ -1,5 +1,5 @@
-import json
 import copy
+import json
 
 from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
@@ -7,8 +7,10 @@ from jsonpointer import resolve_pointer, set_pointer
 from eq_translations.utils import (
     find_pointers_to,
     get_parent_pointer,
-    dumb_to_smart_quotes,
     is_placeholder,
+    get_message_id,
+    dumb_to_smart_quotes,
+    get_plural_forms_for_language,
 )
 
 
@@ -29,14 +31,19 @@ class SurveySchema:
     context_placeholder_pointers = []
     no_context_placeholder_pointers = []
 
+    context_text_plural_pointers = []
+    no_context_text_plural_pointer = []
+
     def __init__(self, schema_data=None):
         self.schema = schema_data
         self.load_placeholders()
+        self.load_text_plurals()
 
     def load(self, schema_path):
         with open(schema_path, encoding="utf8") as schema_file:
             self.schema = json.load(schema_file)
             self.load_placeholders()
+            self.load_text_plurals()
 
     def load_placeholders(self):
         if self.schema:
@@ -45,9 +52,16 @@ class SurveySchema:
                 self.no_context_placeholder_pointers,
             ) = self.get_placeholder_pointers()
 
+    def load_text_plurals(self):
+        if self.schema:
+            (
+                self.context_text_plural_pointers,
+                self.no_context_text_plural_pointer,
+            ) = self.get_text_plural_pointers()
+
     def save(self, schema_path):
-        with open(schema_path, "w", encoding="utf8") as schema_file:
-            return json.dump(self.schema, schema_file, indent=4)
+        with open(schema_path, "w", encoding="utf8") as schema_file:  # pragma: no cover
+            return json.dump(self.schema, schema_file, indent=4)  # pragma: no cover
 
     @property
     def pointers(self):
@@ -61,11 +75,16 @@ class SurveySchema:
             + self.get_message_pointers()
             + self.get_list_pointers()
             + self.no_context_placeholder_pointers
+            + self.no_context_text_plural_pointer
         )
 
     @property
     def context_pointers(self):
-        return self.get_answer_pointers() + self.context_placeholder_pointers
+        return (
+            self.get_answer_pointers()
+            + self.context_placeholder_pointers
+            + self.context_text_plural_pointers
+        )
 
     def get_core_pointers(self):
         """
@@ -94,6 +113,23 @@ class SurveySchema:
                 no_context_placeholder_pointers.append(pointer)
 
         return context_placeholder_pointers, no_context_placeholder_pointers
+
+    def get_text_plural_pointers(self):
+        """
+        Text plural pointers may have context or may not
+        :return:
+        """
+        found_pointers = find_pointers_to(self.schema, "text_plural")
+        context_text_plural_pointers = []
+        no_context_text_plural_pointers = []
+
+        for pointer in found_pointers:
+            if "/answers/" in pointer:
+                context_text_plural_pointers.append(pointer)
+            else:
+                no_context_text_plural_pointers.append(pointer)
+
+        return context_text_plural_pointers, no_context_text_plural_pointers
 
     def get_message_pointers(self):
         """
@@ -158,6 +194,19 @@ class SurveySchema:
         question_pointer = self.get_parent_question_pointer(pointer)
         return resolve_pointer(self.schema, question_pointer + "/title")
 
+    def get_message_context_from_pointer(self, pointer):
+        question = self.get_parent_question(pointer)
+
+        if "text_plural" in question:
+            message_context = question["text_plural"]["forms"]["other"]
+        elif is_placeholder(question):
+            message_context = question["text"]
+        else:
+            message_context = question
+
+        return f"Answer for: {message_context}"
+
+    @property
     def get_catalog(self):
         """
         :return: a schema catalog to be used as the content within a po/pot file
@@ -168,20 +217,19 @@ class SurveySchema:
         for pointer in self.no_context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
-                catalog.add(dumb_to_smart_quotes(pointer_contents))
+                message_id = get_message_id(content=pointer_contents)
+                catalog.add(id=message_id)
 
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
                 parent_answer_id = self.get_parent_id(pointer)
-                question = self.get_parent_question(pointer)
 
-                message_context = "Answer for: {}".format(
-                    question["text"] if is_placeholder(question) else question
-                )
+                message_id = get_message_id(content=pointer_contents)
+                message_context = self.get_message_context_from_pointer(pointer)
 
                 catalog.add(
-                    dumb_to_smart_quotes(pointer_contents),
+                    id=message_id,
                     context=message_context,
                     auto_comments=[f"answer-id: {parent_answer_id}"],
                 )
@@ -190,12 +238,13 @@ class SurveySchema:
 
         return catalog
 
-    def translate(self, schema_translation):
+    def translate(self, schema_translation, language_code):
         """
-        Use the supplied schema translation object to translate pointers found
+        Use the supplied schema translation object and language code to translate pointers found
         within the survey
 
         :param schema_translation:
+        :param language_code:
         :return:
         """
         translated_schema = copy.deepcopy(self.schema)
@@ -205,33 +254,44 @@ class SurveySchema:
         for pointer in self.no_context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
-                translation = schema_translation.translate_message(pointer_contents)
+                message_id = get_message_id(pointer_contents, use_smart_quotes=False)
+                pluralizable = isinstance(message_id, tuple)
+
+                translation = schema_translation.get_translation(
+                    message_id, pluralizable
+                )
+
                 if translation:
-                    translated_schema = set_pointer(
-                        translated_schema, pointer, translation
+                    self._update_translation_for_pointer(
+                        translated_schema,
+                        pointer,
+                        translation,
+                        pluralizable,
+                        language_code,
                     )
                 else:
                     missing_translations += 1
-                    print(
-                        "Missing translation at {}: '{}'".format(
-                            pointer, pointer_contents
-                        )
-                    )
+                    print(f"Missing translation at {pointer}: '{pointer_contents}'")
 
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
                 parent_answer_id = self.get_parent_id(pointer)
-                question = self.get_parent_question(pointer)
-                message_context = "Answer for: {}".format(
-                    question["text"] if is_placeholder(question) else question
+                message_context = self.get_message_context_from_pointer(pointer)
+                message_id = get_message_id(pointer_contents, use_smart_quotes=False)
+                pluralizable = isinstance(message_id, tuple)
+
+                translation = schema_translation.get_translation(
+                    message_id, pluralizable, parent_answer_id, message_context
                 )
-                translation = schema_translation.translate_message(
-                    pointer_contents, parent_answer_id, message_context
-                )
+
                 if translation:
-                    translated_schema = set_pointer(
-                        translated_schema, pointer, translation
+                    self._update_translation_for_pointer(
+                        translated_schema,
+                        pointer,
+                        translation,
+                        pluralizable,
+                        language_code,
                     )
                 else:
                     missing_translations += 1
@@ -243,3 +303,21 @@ class SurveySchema:
             print(f"Total Missing: {missing_translations}")
 
         return SurveySchema(translated_schema)
+
+    @staticmethod
+    def _update_translation_for_pointer(
+        translated_schema, pointer, translation, pluralizable, language_code
+    ):
+        if pluralizable and language_code:
+            plural_forms = get_plural_forms_for_language(language_code)
+            for idx, plural in enumerate(plural_forms):
+                plural_form_pointer = pointer + "/forms/" + plural
+                set_pointer(
+                    translated_schema,
+                    plural_form_pointer,
+                    dumb_to_smart_quotes(translation[idx]),
+                )
+        else:
+            set_pointer(
+                translated_schema, pointer, dumb_to_smart_quotes(translation),
+            )
