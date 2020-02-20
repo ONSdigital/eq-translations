@@ -35,7 +35,7 @@ def main():
 
     if not os.path.isdir(args.OUTPUT_DIRECTORY):
         print("Output directory does not exist")
-        exit(1)
+        sys.exit(1)
 
     file_prefix = "individual" if "individual" in args.SCHEMA_PATH else "household"
     template_file = f"census_{file_prefix}.pot"
@@ -54,7 +54,7 @@ def main():
 
     if not response:
         print("Empty response from crowdin")
-        exit(1)
+        sys.exit(1)
 
     output_path = os.path.join(args.OUTPUT_DIRECTORY, output_file)
 

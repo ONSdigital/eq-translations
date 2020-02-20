@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 
 from eq_translations.entrypoints import handle_compare_schemas
 
@@ -19,10 +20,10 @@ def main():
 
     if not os.path.exists(args.SOURCE_SCHEMA):
         print(f"{args.SOURCE_SCHEMA} does not exist")
-        exit(2)
+        sys.exit(2)
     if not os.path.exists(args.TARGET_SCHEMA):
         print(f"{args.TARGET_SCHEMA} does not exist")
-        exit(2)
+        sys.exit(2)
 
     handle_compare_schemas(args.SOURCE_SCHEMA, args.TARGET_SCHEMA)
 

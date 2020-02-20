@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 
 from eq_translations.entrypoints import handle_translate_schema
 
@@ -24,7 +25,7 @@ def main():
 
     if not os.path.isdir(args.OUTPUT_DIRECTORY):
         print("Not a valid output directory")
-        exit(2)
+        sys.exit(2)
 
     handle_translate_schema(
         args.SCHEMA_PATH, args.TRANSLATION_PATH, args.OUTPUT_DIRECTORY

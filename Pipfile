@@ -13,6 +13,10 @@ requests = "*"
 pylint = "*"
 pytest = "*"
 pylint-quotes = "*"
+black = "==19.10b0"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = false

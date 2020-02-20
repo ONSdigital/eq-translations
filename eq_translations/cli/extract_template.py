@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 
 from eq_translations.entrypoints import handle_extract_template
 
@@ -23,7 +24,7 @@ def main():
 
     if not os.path.isdir(args.OUTPUT_DIRECTORY):
         print("Output directory does not exist")
-        exit(2)
+        sys.exit(2)
 
     handle_extract_template(args.SCHEMA_PATH, args.OUTPUT_DIRECTORY)
 
