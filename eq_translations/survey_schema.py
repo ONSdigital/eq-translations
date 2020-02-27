@@ -121,6 +121,7 @@ class SurveySchema:
             schema_element = resolve_pointer(self.schema, list_pointer)
             if isinstance(schema_element, list):
                 for i, p in enumerate(schema_element):
+                    # placeholders are being skipped as they are dealt with elsewhere
                     if not is_placeholder(p):
                         pointers.append(f"{list_pointer}/{i}")
 
