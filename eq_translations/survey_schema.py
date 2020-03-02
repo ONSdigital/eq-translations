@@ -227,8 +227,8 @@ class SurveySchema:
         Use the supplied schema translation object and language code to translate pointers found
         within the survey
 
-        :param schema_translation:
-        :param language_code:
+        :param schema_translation: The SchemaTranslation object
+        :param language_code: The target language code
         :return:
         """
         translated_schema = copy.deepcopy(self.schema)
@@ -239,19 +239,12 @@ class SurveySchema:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
                 message_id = get_message_id(pointer_contents)
-                pluralizable = isinstance(message_id, tuple)
 
-                translation = schema_translation.get_translation(
-                    message_id, pluralizable
-                )
+                translation = schema_translation.get_translation(message_id)
 
                 if translation:
                     self._update_translation_for_pointer(
-                        translated_schema,
-                        pointer,
-                        translation,
-                        pluralizable,
-                        language_code,
+                        translated_schema, pointer, translation, language_code,
                     )
                 else:
                     missing_translations += 1
@@ -260,22 +253,16 @@ class SurveySchema:
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
-                parent_answer_id = self.get_parent_id(pointer)
-                message_context = self.get_message_context_from_pointer(pointer)
                 message_id = get_message_id(pointer_contents)
-                pluralizable = isinstance(message_id, tuple)
+                message_context = self.get_message_context_from_pointer(pointer)
 
                 translation = schema_translation.get_translation(
-                    message_id, pluralizable, parent_answer_id, message_context
+                    message_id, message_context
                 )
 
                 if translation:
                     self._update_translation_for_pointer(
-                        translated_schema,
-                        pointer,
-                        translation,
-                        pluralizable,
-                        language_code,
+                        translated_schema, pointer, translation, language_code,
                     )
                 else:
                     missing_translations += 1
@@ -290,9 +277,9 @@ class SurveySchema:
 
     @staticmethod
     def _update_translation_for_pointer(
-        translated_schema, pointer, translation, pluralizable, language_code
+        translated_schema, pointer, translation, language_code
     ):
-        if pluralizable and language_code:
+        if isinstance(translation, tuple) and language_code:
             plural_forms = get_plural_forms_for_language(language_code)
             for idx, plural in enumerate(plural_forms):
                 plural_form_pointer = pointer + "/forms/" + plural
