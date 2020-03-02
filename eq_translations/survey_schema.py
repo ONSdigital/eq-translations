@@ -238,7 +238,7 @@ class SurveySchema:
         for pointer in self.no_context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
-                message_id = get_message_id(pointer_contents, use_smart_quotes=False)
+                message_id = get_message_id(pointer_contents)
                 pluralizable = isinstance(message_id, tuple)
 
                 translation = schema_translation.get_translation(
@@ -262,7 +262,7 @@ class SurveySchema:
             if pointer_contents:
                 parent_answer_id = self.get_parent_id(pointer)
                 message_context = self.get_message_context_from_pointer(pointer)
-                message_id = get_message_id(pointer_contents, use_smart_quotes=False)
+                message_id = get_message_id(pointer_contents)
                 pluralizable = isinstance(message_id, tuple)
 
                 translation = schema_translation.get_translation(

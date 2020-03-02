@@ -120,23 +120,18 @@ def are_dumb_strings_equal(message_a, message_b, pluralizable=False):
     return remove_quotes(message_a) == remove_quotes(message_b)
 
 
-def get_message_id_for_plural_forms(forms, convert_to_smart_quote):
+def get_message_id_for_plural_forms(forms):
     singular = forms["one"]
     plural = forms["other"]
 
-    if convert_to_smart_quote:
-        return dumb_to_smart_quotes(singular), dumb_to_smart_quotes(plural)
-
-    return singular, plural
+    return dumb_to_smart_quotes(singular), dumb_to_smart_quotes(plural)
 
 
-def get_message_id(content, use_smart_quotes=True):
+def get_message_id(content):
     if "forms" in content:
-        return get_message_id_for_plural_forms(
-            content["forms"], convert_to_smart_quote=use_smart_quotes
-        )
+        return get_message_id_for_plural_forms(content["forms"])
 
-    return dumb_to_smart_quotes(content) if use_smart_quotes else content
+    return dumb_to_smart_quotes(content)
 
 
 def get_plural_forms_for_language(language_code):

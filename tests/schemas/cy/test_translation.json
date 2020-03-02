@@ -460,7 +460,10 @@
                             "title": "Teitl Crynodeb Cyfrifedig",
                             "calculation": {
                                 "calculation_type": "sum",
-                                "answers_to_calculate": ["number-of-people-answer", "number-of-visitors-answer"],
+                                "answers_to_calculate": [
+                                    "number-of-people-answer",
+                                    "number-of-visitors-answer"
+                                ],
                                 "title": "Crynodeb Teitl Cyfrifo Teitl Cyfrifo Bloc 2"
                             }
                         }
