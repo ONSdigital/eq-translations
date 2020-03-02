@@ -31,33 +31,33 @@ class SurveySchema:
     context_placeholder_pointers = []
     no_context_placeholder_pointers = []
 
-    context_text_plural_pointers = []
-    no_context_text_plural_pointer = []
+    context_plural_pointers = []
+    no_context_plural_pointers = []
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
         self.load_placeholders()
-        self.load_text_plurals()
+        self.load_plurals()
 
     def load(self, schema_path):
         with open(schema_path, encoding="utf8") as schema_file:
             self.schema = json.load(schema_file)
             self.load_placeholders()
-            self.load_text_plurals()
+            self.load_plurals()
 
     def load_placeholders(self):
         if self.schema:
             (
                 self.context_placeholder_pointers,
                 self.no_context_placeholder_pointers,
-            ) = self.get_placeholder_pointers()
+            ) = self.get_pointers_for_key("text")
 
-    def load_text_plurals(self):
+    def load_plurals(self):
         if self.schema:
             (
-                self.context_text_plural_pointers,
-                self.no_context_text_plural_pointer,
-            ) = self.get_text_plural_pointers()
+                self.context_plural_pointers,
+                self.no_context_plural_pointers,
+            ) = self.get_pointers_for_key("text_plural")
 
     def save(self, schema_path):
         with open(schema_path, "w", encoding="utf8") as schema_file:  # pragma: no cover
@@ -75,7 +75,7 @@ class SurveySchema:
             + self.get_message_pointers()
             + self.get_list_pointers()
             + self.no_context_placeholder_pointers
-            + self.no_context_text_plural_pointer
+            + self.no_context_plural_pointers
         )
 
     @property
@@ -83,7 +83,7 @@ class SurveySchema:
         return (
             self.get_answer_pointers()
             + self.context_placeholder_pointers
-            + self.context_text_plural_pointers
+            + self.context_plural_pointers
         )
 
     def get_core_pointers(self):
@@ -97,39 +97,23 @@ class SurveySchema:
             pointers.extend(key_pointers)
         return pointers
 
-    def get_placeholder_pointers(self):
+    def get_pointers_for_key(self, key):
         """
-        Placeholder pointers may have context or may not
+        Pointers may or may not have context
+        :param key: The key to search for
         :return:
         """
-        found_pointers = find_pointers_to(self.schema, "text")
-        context_placeholder_pointers = []
-        no_context_placeholder_pointers = []
+        found_pointers = find_pointers_to(self.schema, key)
+        context_pointers = []
+        no_context_pointers = []
 
         for pointer in found_pointers:
             if "/answers/" in pointer:
-                context_placeholder_pointers.append(pointer)
+                context_pointers.append(pointer)
             else:
-                no_context_placeholder_pointers.append(pointer)
+                no_context_pointers.append(pointer)
 
-        return context_placeholder_pointers, no_context_placeholder_pointers
-
-    def get_text_plural_pointers(self):
-        """
-        Text plural pointers may have context or may not
-        :return:
-        """
-        found_pointers = find_pointers_to(self.schema, "text_plural")
-        context_text_plural_pointers = []
-        no_context_text_plural_pointers = []
-
-        for pointer in found_pointers:
-            if "/answers/" in pointer:
-                context_text_plural_pointers.append(pointer)
-            else:
-                no_context_text_plural_pointers.append(pointer)
-
-        return context_text_plural_pointers, no_context_text_plural_pointers
+        return context_pointers, no_context_pointers
 
     def get_message_pointers(self):
         """

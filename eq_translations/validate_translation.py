@@ -38,7 +38,7 @@ def compare_schemas(source_schema, target_schema):
 def validate_translated_plural_forms(translated_schema, language_code):
     context_plural_pointers, no_context_plural_pointers = SurveySchema(
         translated_schema
-    ).get_text_plural_pointers()
+    ).get_pointers_for_key("text_plural")
 
     plurals_for_language = get_plural_forms_for_language(language_code)
 

@@ -846,10 +846,10 @@ class TestTranslate(unittest.TestCase):
 
         assert (
             "/question/answers/0/options/0/label/text_plural"
-            in schema.context_text_plural_pointers
+            in schema.context_plural_pointers
         )
 
-        assert "/question/title/text_plural" in schema.no_context_text_plural_pointer
+        assert "/question/title/text_plural" in schema.no_context_plural_pointers
 
     def test_placeholder_translation(self):
         schema_translation = SchemaTranslation()
