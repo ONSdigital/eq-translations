@@ -313,14 +313,6 @@ class TestSurveySchema(unittest.TestCase):
         assert option_parent_id == "confirm-feeling-answer"
         assert answer_parent_id == "confirm-feeling-answer"
 
-    def test_get_parent_question_pointer(self):
-        schema = SurveySchema()
-        parent_question_pointer = schema.get_parent_question_pointer(
-            "/question/0/answers/0/options/0/label"
-        )
-
-        assert parent_question_pointer == "/question"
-
     def test_get_parent_question(self):
         original_question = {
             "question": {
@@ -565,14 +557,12 @@ class TestTranslate(unittest.TestCase):
         catalog.add(
             "Answering for this person",
             "WELSH - Answering for this person",
-            auto_comments=["answer-id: feeling-answer"],
             context="Answer for: Who are you answering for??",
         )
 
         catalog.add(
             "Answering myself",
             "WELSH - Answering myself",
-            auto_comments=["answer-id: feeling-answer"],
             context="Answer for: Who are you answering for??",
         )
 
@@ -789,29 +779,14 @@ class TestTranslate(unittest.TestCase):
             in actual_items
         )
 
-        singluar_label = schema_data["sections"][0]["question"]["answers"][0][
-            "options"
-        ][0]["label"]["text_plural"]["forms"]["one"]
+        singular = schema_data["sections"][0]["question"]["answers"][0]["options"][0][
+            "label"
+        ]["text_plural"]["forms"]["one"]
         plural_label = schema_data["sections"][0]["question"]["answers"][0]["options"][
             0
         ]["label"]["text_plural"]["forms"]["other"]
 
-        assert (singluar_label, plural_label) in actual_items
-
-    def test_get_catalog_uses_smart_quotes(self):
-        schema_data = {
-            "sections": [
-                {"question": [{"title": "What is 'this persons' date of birth?"}]}
-            ]
-        }
-
-        schema = SurveySchema(schema_data)
-
-        catalog = schema.get_catalog
-
-        actual_items = [message.id for message in catalog]
-
-        assert "What is ‘this persons’ date of birth?" in actual_items
+        assert (singular, plural_label) in actual_items
 
     def test_find_pointers_ignores_placeholders(self):
         schema = SurveySchema(self.SCHEMA_WITH_SINGLE_PLACEHOLDER)
@@ -836,10 +811,13 @@ class TestTranslate(unittest.TestCase):
         schema = SurveySchema(self.SCHEMA_WITH_MULTIPLE_PLACEHOLDERS)
 
         message = schema.get_catalog.get(
-            "{address}",
-            "Answer for: During term time, where does <em>{person_name}</em> usually live?",
+            id="{address}",
+            context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
         )
-        assert message.auto_comments == ["answer-id: term-time-location-answer"]
+        assert (
+            message.context
+            == "Answer for: During term time, where does <em>{person_name}</em> usually live?"
+        )
 
     def test_get_text_plural_pointers(self):
         schema = SurveySchema(TestSurveySchema.PLURAL_FORMS_SCHEMA)
@@ -909,14 +887,12 @@ class TestTranslate(unittest.TestCase):
         catalog.add(
             "First name",
             "WELSH - First name",
-            auto_comments=["answer-id: first-name"],
             context="Answer for: What is your name?",
         )
 
         catalog.add(
             "First name",
             "WELSH - First name - Proxy",
-            auto_comments=["answer-id: first-name"],
             context="Answer for: What is their name?",
         )
 
@@ -970,7 +946,6 @@ class TestTranslate(unittest.TestCase):
                 "WELSH - many",
                 "WELSH - other",
             ),
-            auto_comments=["answer-id: confirm-count"],
             context="Answer for: {number_of_people} people live here, is this correct?",
         )
 

@@ -175,72 +175,58 @@ msgstr[3] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir?"
 msgstr[4] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir?"
 msgstr[5] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir?"
 
-#. answer-id: feeling-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Feeling answer"
 msgstr "Teimlo ateb"
 
-#. answer-id: feeling-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Answering for this person"
 msgstr "Ateb ar gyfer y person hwn"
 
-#. answer-id: feeling-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Answering myself"
 msgstr "Ateb fy hun"
 
-#. answer-id: feeling-bad-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Specify why answering for yourself is bad"
 msgstr "Nodwch pam mae ateb drosoch eich hun yn ddrwg"
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is ‘this persons’ date of birth?"
 msgid "confirm"
 msgstr "cadarnhau"
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is ‘this persons’ date of birth?"
 msgid "Yes"
 msgstr "Ydw"
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is ‘this persons’ date of birth?"
 msgid "No"
 msgstr "Na"
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is your date of birth?"
 msgid "confirm"
 msgstr "cadarnhau"
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is your date of birth?"
 msgid "Yes"
 msgstr "Ydw"
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is your date of birth?"
 msgid "No"
 msgstr "Na"
 
-#. answer-id: number-of-people-answer
 msgctxt "Answer for: How many people live here?"
 msgid "How many people live here?"
 msgstr "Faint o bobl sy'n byw yma?"
 
-#. answer-id: confirm-count
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr "Na"
 
-#. answer-id: number-of-visitors-answer
 msgctxt "Answer for: How many visitors have lived here?"
 msgid "How many visitors have lived here?"
 msgstr "Faint o ymwelwyr sydd wedi byw yma?"
 
-#. answer-id: confirm-count
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "Yes, {number_of_people} person lives here"
 msgid_plural "Yes, {number_of_people} people live here"

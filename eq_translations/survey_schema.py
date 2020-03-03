@@ -36,28 +36,28 @@ class SurveySchema:
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
-        self.load_placeholders()
-        self.load_plurals()
+        self._load_placeholders()
+        self._load_plurals()
 
     def load(self, schema_path):
         with open(schema_path, encoding="utf8") as schema_file:
             self.schema = json.load(schema_file)
-            self.load_placeholders()
-            self.load_plurals()
+            self._load_placeholders()
+            self._load_plurals()
 
-    def load_placeholders(self):
+    def _load_placeholders(self):
         if self.schema:
             (
                 self.context_placeholder_pointers,
                 self.no_context_placeholder_pointers,
-            ) = self.get_pointers_for_key("text")
+            ) = self.get_placeholder_pointers()
 
-    def load_plurals(self):
+    def _load_plurals(self):
         if self.schema:
             (
                 self.context_plural_pointers,
                 self.no_context_plural_pointers,
-            ) = self.get_pointers_for_key("text_plural")
+            ) = self.get_plural_pointers()
 
     def save(self, schema_path):
         with open(schema_path, "w", encoding="utf8") as schema_file:  # pragma: no cover
@@ -70,9 +70,9 @@ class SurveySchema:
     @property
     def no_context_pointers(self):
         return (
-            self.get_core_pointers()
+            self._get_core_pointers()
             + self.get_title_pointers()
-            + self.get_message_pointers()
+            + self._get_message_pointers()
             + self.get_list_pointers()
             + self.no_context_placeholder_pointers
             + self.no_context_plural_pointers
@@ -86,7 +86,7 @@ class SurveySchema:
             + self.context_plural_pointers
         )
 
-    def get_core_pointers(self):
+    def _get_core_pointers(self):
         """
         Iterate the schema and return the pointers found
         :return:
@@ -97,7 +97,7 @@ class SurveySchema:
             pointers.extend(key_pointers)
         return pointers
 
-    def get_pointers_for_key(self, key):
+    def _get_pointers_for_key(self, key):
         """
         Pointers may or may not have context
         :param key: The key to search for
@@ -115,7 +115,7 @@ class SurveySchema:
 
         return context_pointers, no_context_pointers
 
-    def get_message_pointers(self):
+    def _get_message_pointers(self):
         """
         Message pointers need to be iterated as a dict and each key added individually
         :return:
@@ -157,6 +157,26 @@ class SurveySchema:
         """
         return find_pointers_to(self.schema, "label")
 
+    def get_placeholder_pointers(self):
+        """
+        Placeholder 'text' may require context for translation
+        """
+        (
+            context_placeholder_pointers,
+            no_context_placeholder_pointers,
+        ) = self._get_pointers_for_key("text")
+        return context_placeholder_pointers, no_context_placeholder_pointers
+
+    def get_plural_pointers(self):
+        """
+        'text_plural' may require context for translation
+        """
+        (
+            context_plural_pointers,
+            no_context_plural_pointers,
+        ) = self._get_pointers_for_key("text_plural")
+        return context_plural_pointers, no_context_plural_pointers
+
     def get_parent_id(self, pointer):
         resolved_data = resolve_pointer(self.schema, pointer)
 
@@ -167,7 +187,7 @@ class SurveySchema:
         return self.get_parent_id(parent_pointer)
 
     @staticmethod
-    def get_parent_question_pointer(pointer):
+    def _get_parent_question_pointer(pointer):
         pointer_parts = pointer.split("/")
 
         if "question" in pointer_parts:
@@ -175,7 +195,7 @@ class SurveySchema:
             return "/".join(pointer_parts[: pointer_index + 1])
 
     def get_parent_question(self, pointer):
-        question_pointer = self.get_parent_question_pointer(pointer)
+        question_pointer = self._get_parent_question_pointer(pointer)
         return resolve_pointer(self.schema, question_pointer + "/title")
 
     def get_message_context_from_pointer(self, pointer):
@@ -207,15 +227,12 @@ class SurveySchema:
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
             if pointer_contents:
-                parent_answer_id = self.get_parent_id(pointer)
 
                 message_id = get_message_id(content=pointer_contents)
                 message_context = self.get_message_context_from_pointer(pointer)
 
                 catalog.add(
-                    id=message_id,
-                    context=message_context,
-                    auto_comments=[f"answer-id: {parent_answer_id}"],
+                    id=message_id, context=message_context,
                 )
 
         print(f"Total Messages: {total_translations}")

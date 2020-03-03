@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-03-02 13:23+0000\n"
+"POT-Creation-Date: 2020-03-03 08:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,72 +216,58 @@ msgid_plural "{number_of_people} people live here, is this correct?"
 msgstr[0] ""
 msgstr[1] ""
 
-#. answer-id: feeling-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Feeling answer"
 msgstr ""
 
-#. answer-id: feeling-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Answering for this person"
 msgstr ""
 
-#. answer-id: feeling-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Answering myself"
 msgstr ""
 
-#. answer-id: feeling-bad-answer
 msgctxt "Answer for: Who are you answering for?"
 msgid "Specify why answering for yourself is bad"
 msgstr ""
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is ‘this persons’ date of birth?"
 msgid "confirm"
 msgstr ""
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is ‘this persons’ date of birth?"
 msgid "Yes"
 msgstr ""
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is ‘this persons’ date of birth?"
 msgid "No"
 msgstr ""
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is your date of birth?"
 msgid "confirm"
 msgstr ""
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is your date of birth?"
 msgid "Yes"
 msgstr ""
 
-#. answer-id: confirm-feeling-answer
 msgctxt "Answer for: What is your date of birth?"
 msgid "No"
 msgstr ""
 
-#. answer-id: number-of-people-answer
 msgctxt "Answer for: How many people live here?"
 msgid "How many people live here?"
 msgstr ""
 
-#. answer-id: confirm-count
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr ""
 
-#. answer-id: number-of-visitors-answer
 msgctxt "Answer for: How many visitors have lived here?"
 msgid "How many visitors have lived here?"
 msgstr ""
 
-#. answer-id: confirm-count
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "Yes, {number_of_people} person lives here"
 msgid_plural "Yes, {number_of_people} people live here"

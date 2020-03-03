@@ -3,8 +3,25 @@ from eq_translations.utils import (
     find_pointers_containing,
     find_pointers_to,
     list_pointers,
-    are_dumb_strings_equal,
+    get_message_id,
 )
+
+
+def test_get_message_id():
+    pointer_content = "A test title"
+
+    assert get_message_id(pointer_content) == pointer_content
+
+
+def test_get_message_id_for_plurals():
+    pointer_contents = {
+        "forms": {"one": "Singular text", "other": "Plural text"},
+    }
+
+    singular_form = pointer_contents["forms"]["one"]
+    plural_form = pointer_contents["forms"]["other"]
+
+    assert get_message_id(pointer_contents) == (singular_form, plural_form)
 
 
 def test_find_pointers_containing_root():
@@ -130,25 +147,3 @@ def test_list_pointers():
     assert "/a/key/0/x/2" in pointers
     assert "/a/key/1" in pointers
     assert "/a/key/2" in pointers
-
-
-def test_are_dumb_strings_equal_not_pluralizable():
-
-    assert are_dumb_strings_equal("'Test'", "'Test'") is True
-    assert are_dumb_strings_equal("'Test‘", "Test'") is True
-
-
-def test_are_dumb_strings_equal_pluralizable():
-
-    assert (
-        are_dumb_strings_equal(
-            ("'Test'", "Test's"), ("'Test'", "Test's"), pluralizable=True
-        )
-        is True
-    )
-    assert (
-        are_dumb_strings_equal(
-            ("'Test‘", "’Test‘"), ("'Test'", "’Test’"), pluralizable=True
-        )
-        is True
-    )

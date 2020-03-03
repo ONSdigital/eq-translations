@@ -43,32 +43,26 @@ msgstr[3] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (few)"
 msgstr[4] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (many)"
 msgstr[5] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (other)"
 
-#. answer-id: first-name
 msgctxt "Answer for: Please enter a name"
 msgid "First Name"
 msgstr "Enw cyntaf"
 
-#. answer-id: last-name
 msgctxt "Answer for: Please enter a name"
 msgid "Last Name"
 msgstr "Enw olaf"
 
-#. answer-id: date-of-birth-answer
 msgctxt "Answer for: What is {person_name_possessive} date of birth?"
 msgid "Date of Birth"
 msgstr "Dyddiad Geni"
 
-#. answer-id: number-of-people-answer
 msgctxt "Answer for: How many people live at your household?"
 msgid "Number of household residents"
 msgstr "Nifer o breswylwyr yn y cartref"
 
-#. answer-id: confirm-count
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr "Na"
 
-#. answer-id: confirm-count
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "Yes, {number_of_people} person lives here"
 msgid_plural "Yes, {number_of_people} people live here"

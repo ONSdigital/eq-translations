@@ -18,14 +18,6 @@ class SchemaTranslation:
         with open(translation_file_path, "w+b") as translation_file:  # pragma: no cover
             pofile.write_po(translation_file, self.catalog)  # pragma: no cover
 
-    @staticmethod
-    def get_comment_answer_ids(comments):
-        return [
-            comment.split(":")[1].strip()
-            for comment in comments
-            if "answer-id" in comment
-        ]
-
     def get_translation(
         self, message_id_to_translate, message_context=None,
     ):

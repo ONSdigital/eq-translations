@@ -97,41 +97,11 @@ def dumb_to_smart_quotes(string):
     return string
 
 
-def remove_quotes(message):
-    quotation_marks = [
-        "\N{APOSTROPHE}",
-        "\N{LEFT SINGLE QUOTATION MARK}",
-        "\N{RIGHT SINGLE QUOTATION MARK}",
-        "\N{LEFT DOUBLE QUOTATION MARK}",
-        "\N{RIGHT DOUBLE QUOTATION MARK}",
-    ]
-    for char in quotation_marks:
-        message = message.replace(char, "")
-
-    return message.strip()
-
-
-def are_dumb_strings_equal(message_a, message_b, pluralizable=False):
-    if pluralizable:
-        return {remove_quotes(msg) for msg in message_a} == {
-            remove_quotes(msg) for msg in message_b
-        }
-
-    return remove_quotes(message_a) == remove_quotes(message_b)
-
-
-def get_message_id_for_plural_forms(forms):
-    singular = forms["one"]
-    plural = forms["other"]
-
-    return dumb_to_smart_quotes(singular), dumb_to_smart_quotes(plural)
-
-
 def get_message_id(content):
     if "forms" in content:
-        return get_message_id_for_plural_forms(content["forms"])
+        return content["forms"]["one"], content["forms"]["other"]
 
-    return dumb_to_smart_quotes(content)
+    return content
 
 
 def get_plural_forms_for_language(language_code):
