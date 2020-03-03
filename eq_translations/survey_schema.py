@@ -253,37 +253,22 @@ class SurveySchema:
         missing_translations = 0
 
         for pointer in self.no_context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-                message_id = get_message_id(pointer_contents)
-
-                translation = schema_translation.get_translation(message_id)
-
-                if translation:
-                    self._update_translation_for_pointer(
-                        translated_schema, pointer, translation, language_code,
-                    )
-                else:
-                    missing_translations += 1
-                    print(f"Missing translation at {pointer}: '{pointer_contents}'")
+            missing_translations += self._handle_translation_for_pointer(
+                pointer,
+                schema_translation,
+                translated_schema,
+                language_code,
+                with_context=False,
+            )
 
         for pointer in self.context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-                message_id = get_message_id(pointer_contents)
-                message_context = self.get_message_context_from_pointer(pointer)
-
-                translation = schema_translation.get_translation(
-                    message_id, message_context
-                )
-
-                if translation:
-                    self._update_translation_for_pointer(
-                        translated_schema, pointer, translation, language_code,
-                    )
-                else:
-                    missing_translations += 1
-                    print(f"Missing translation at {pointer}: '{pointer_contents}'")
+            missing_translations += self._handle_translation_for_pointer(
+                pointer,
+                schema_translation,
+                translated_schema,
+                language_code,
+                with_context=True,
+            )
 
         print(f"\nTotal Messages: {total_translations}")
 
@@ -291,6 +276,37 @@ class SurveySchema:
             print(f"Total Missing: {missing_translations}")
 
         return SurveySchema(translated_schema)
+
+    def _handle_translation_for_pointer(
+        self,
+        pointer,
+        schema_translation,
+        translated_schema,
+        language_code,
+        with_context,
+    ):
+        is_translation_missing = False
+        message_context = None
+        pointer_contents = resolve_pointer(self.schema, pointer)
+
+        if pointer_contents:
+            message_id = get_message_id(pointer_contents)
+            if with_context:
+                message_context = self.get_message_context_from_pointer(pointer)
+
+            translation = schema_translation.get_translation(
+                message_id_to_translate=message_id, message_context=message_context
+            )
+
+            if translation:
+                self._update_translation_for_pointer(
+                    translated_schema, pointer, translation, language_code,
+                )
+            else:
+                print(f"Missing translation at {pointer}: '{pointer_contents}'")
+                is_translation_missing = True
+
+        return is_translation_missing
 
     @staticmethod
     def _update_translation_for_pointer(
