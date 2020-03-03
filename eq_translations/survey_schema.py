@@ -219,21 +219,10 @@ class SurveySchema:
         total_translations = len(self.no_context_pointers + self.context_pointers)
 
         for pointer in self.no_context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-                message_id = get_message_id(content=pointer_contents)
-                catalog.add(id=message_id)
+            self._add_message_to_catalog(pointer, catalog, with_context=False)
 
         for pointer in self.context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-
-                message_id = get_message_id(content=pointer_contents)
-                message_context = self.get_message_context_from_pointer(pointer)
-
-                catalog.add(
-                    id=message_id, context=message_context,
-                )
+            self._add_message_to_catalog(pointer, catalog, with_context=True)
 
         print(f"Total Messages: {total_translations}")
 
@@ -291,6 +280,7 @@ class SurveySchema:
 
         if pointer_contents:
             message_id = get_message_id(pointer_contents)
+
             if with_context:
                 message_context = self.get_message_context_from_pointer(pointer)
 
@@ -324,4 +314,18 @@ class SurveySchema:
         else:
             set_pointer(
                 translated_schema, pointer, dumb_to_smart_quotes(translation),
+            )
+
+    def _add_message_to_catalog(self, pointer, catalog, with_context):
+        message_context = None
+        pointer_contents = resolve_pointer(self.schema, pointer)
+
+        if pointer_contents:
+            message_id = get_message_id(content=pointer_contents)
+
+            if with_context:
+                message_context = self.get_message_context_from_pointer(pointer)
+
+            catalog.add(
+                id=message_id, context=message_context,
             )
