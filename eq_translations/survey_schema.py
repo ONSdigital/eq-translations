@@ -169,8 +169,10 @@ class SurveySchema:
 
         for pointer in self.no_context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
+            if isinstance(pointer_contents, str):
                 catalog.add(dumb_to_smart_quotes(pointer_contents))
+            else:
+                catalog.add(dumb_to_smart_quotes(pointer_contents.get("text")))
 
         for pointer in self.context_pointers:
             pointer_contents = resolve_pointer(self.schema, pointer)
