@@ -134,8 +134,14 @@ def remove_quotes(message):
         "\N{LEFT DOUBLE QUOTATION MARK}",
         "\N{RIGHT DOUBLE QUOTATION MARK}",
     ]
-    for char in quotation_marks:
-        message = message.replace(char, "")
+
+    if isinstance(message, str):
+        for char in quotation_marks:
+            message = message.replace(char, "")
+    else:
+        message = message.get("text")
+        for char in quotation_marks:
+            message = message.replace(char, "")
 
     return message.strip()
 

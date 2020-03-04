@@ -150,6 +150,59 @@ class TestSurveySchema(unittest.TestCase):
         assert "/list/1" not in pointers
         assert "/list/2" not in pointers
 
+    def test_pointers_when_list_item_is_a_placeholder(self):
+        schema = SurveySchema(
+            {
+                "sections": [
+                    {
+                        "content": [
+                            {
+                                "title": "Include:",
+                                "list": [
+                                    "all employees in Great Britain (England, Scotland and Wales), both full and "
+                                    "part-time, who received pay in the relevant period "
+                                ],
+                            },
+                            {
+                                "title": "Exclude:",
+                                "list": [
+                                    {
+                                        "placeholders": [
+                                            {
+                                                "placeholder": "date",
+                                                "transforms": [
+                                                    {
+                                                        "arguments": {
+                                                            "date_format": "d MMMM yyyy",
+                                                            "date_to_format": {
+                                                                "value": "2019-10-09"
+                                                            },
+                                                        },
+                                                        "transform": "format_date",
+                                                    }
+                                                ],
+                                            }
+                                        ],
+                                        "text": "trainees on government schemes on {date}",
+                                    },
+                                    "employees working abroad unless paid directly from this business’s GB payroll",
+                                    "employees in Northern Ireland",
+                                ],
+                            },
+                        ]
+                    }
+                ]
+            }
+        )
+        pointers = schema.get_list_pointers()
+
+        assert "/sections/0/content/0/list/0" in pointers
+        assert "/sections/0/content/1/list/0" not in pointers
+        assert "/sections/0/content/1/list/1" in pointers
+        assert "/sections/0/content/1/list/2" in pointers
+
+        assert len(pointers) == 3
+
     def test_get_answer_messages(self):
         schema = SurveySchema(
             {

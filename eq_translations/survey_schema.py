@@ -120,9 +120,11 @@ class SurveySchema:
         for list_pointer in list_pointers:
             schema_element = resolve_pointer(self.schema, list_pointer)
             if isinstance(schema_element, list):
-                pointers.extend(
-                    [f"{list_pointer}/{i}" for i, p in enumerate(schema_element)]
-                )
+                for i, p in enumerate(schema_element):
+                    # placeholders are being skipped as they are dealt with elsewhere
+                    if not is_placeholder(p):
+                        pointers.append(f"{list_pointer}/{i}")
+
         return pointers
 
     def get_title_pointers(self):
