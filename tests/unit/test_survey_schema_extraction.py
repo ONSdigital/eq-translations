@@ -1,3 +1,5 @@
+from jsonpointer import resolve_pointer
+
 from eq_translations.survey_schema import SurveySchema
 
 
@@ -60,8 +62,27 @@ def test_list_pointers():
                         "contents": [
                             {
                                 "list": [
-                                    "all employees in Great Britain (England, Scotland and Wales), "
-                                    "both full and part-time, who received pay in the relevant period"
+                                    "all part-time employees in Great Britain (England, Scotland and Wales) who received pay in the relevant period",
+                                    {
+                                        "placeholders": [
+                                            {
+                                                "placeholder": "date",
+                                                "transforms": [
+                                                    {
+                                                        "arguments": {
+                                                            "date_format": "d MMMM yyyy",
+                                                            "date_to_format": {
+                                                                "value": "2019-10-09"
+                                                            },
+                                                        },
+                                                        "transform": "format_date",
+                                                    }
+                                                ],
+                                            }
+                                        ],
+                                        "text": "all trainees on government schemes on {date}",
+                                    },
+                                    "all full-time employees in Great Britain (England, Scotland and Wales) who received pay in the relevant period",
                                 ]
                             }
                         ],
@@ -96,6 +117,9 @@ def test_list_pointers():
     pointers = schema.pointer_dicts
 
     assert {"pointer": "/content_variants/0/content/contents/0/list/0"} in pointers
+    assert {"pointer": "/content_variants/0/content/contents/0/list/1"} not in pointers
+    assert {"pointer": "/content_variants/0/content/contents/0/list/2"} in pointers
+
     assert {"pointer": "/content_variants/1/content/contents/0/list/0"} in pointers
     assert {"pointer": "/content_variants/1/content/contents/0/list/1"} in pointers
     assert {"pointer": "/content_variants/1/content/contents/0/list/2"} in pointers
@@ -300,3 +324,17 @@ def test_summary_without_placeholder_extraction():
     assert {"pointer": "/summary/item_title"} in pointers
     assert {"pointer": "/summary/empty_list_text"} in pointers
     assert {"pointer": "/summary/add_link_text"} in pointers
+
+
+def test_all_pointers_resolve_to_correct_instance():
+    survey_schema = SurveySchema()
+    survey_schema.load("tests/schemas/en/test_translation.json")
+
+    for pointer_dict in survey_schema.pointer_dicts:
+        pointer = pointer_dict["pointer"]
+        element = resolve_pointer(survey_schema.schema, pointer)
+
+        if "/text_plural" in pointer:
+            assert isinstance(element, dict)
+        else:
+            assert isinstance(element, str)

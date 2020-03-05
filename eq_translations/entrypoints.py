@@ -10,7 +10,7 @@ from eq_translations.validate_translation import (
 def handle_extract_template(schema_path, output_directory):
     schema = SurveySchema()
     schema.load(schema_path)
-    catalog = schema.get_catalog
+    catalog = schema.catalog
 
     schema_name, _ = os.path.splitext(os.path.basename(schema_path))
 

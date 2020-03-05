@@ -9,7 +9,7 @@ from eq_translations.utils import (
 
 def compare_schemas(source_schema, target_schema):
     """
-    Compare the pointers_dicts in two json structures and return differences
+    Compare the pointers in two json structures and return differences
     :param source_schema: Structure to identify differences against
     :param target_schema: Target structure to compare against
     :return:

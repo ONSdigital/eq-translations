@@ -187,7 +187,7 @@ def test_get_catalog():
     }
 
     schema = SurveySchema(schema_data)
-    catalog = schema.get_catalog
+    catalog = schema.catalog
 
     actual_items = [message.id for message in catalog]
 
@@ -262,7 +262,7 @@ def test_get_placeholder_pointers(schema_with_placeholders):
 def test_placeholder_catalog_context(schema_with_placeholders):
     schema = SurveySchema(schema_with_placeholders)
 
-    message = schema.get_catalog.get(
+    message = schema.catalog.get(
         id="{address}",
         context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
     )

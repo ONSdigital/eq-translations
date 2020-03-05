@@ -74,9 +74,11 @@ class SurveySchema:
     def _get_pointers_from_list_element(self, schema_element, pointer, with_context):
         pointers = []
         for idx, _ in enumerate(schema_element):
-            new_pointer = f"{pointer}/{idx}"
-            pointer_dict = self._get_pointer_dict(new_pointer, with_context)
-            pointers.append(pointer_dict)
+            sub_element = schema_element[idx]
+            if isinstance(sub_element, str):
+                new_pointer = f"{pointer}/{idx}"
+                pointer_dict = self._get_pointer_dict(new_pointer, with_context)
+                pointers.append(pointer_dict)
 
         return pointers
 
@@ -131,7 +133,7 @@ class SurveySchema:
         return f"Answer for: {message_context}"
 
     @property
-    def get_catalog(self):
+    def catalog(self):
         """
         :return: a schema catalog to be used as the content within a po/pot file
         """
@@ -155,7 +157,7 @@ class SurveySchema:
 
     def translate(self, schema_translation, language_code):
         """
-        Use the supplied schema translation object and language code to translate pointers_dicts found
+        Use the supplied schema translation object and language code to translate pointers found
         within the survey
 
         :param schema_translation: The SchemaTranslation object

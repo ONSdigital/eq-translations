@@ -3,7 +3,7 @@ import re
 
 def list_pointers(input_data, pointer=None):
     """
-    Recursive function which lists all available pointers_dicts in a json structure
+    Recursive function which lists all available pointers in a json structure
     :param input_data: the input data to search
     :param pointer: the current pointer
     :return: generator of the json pointer paths
@@ -20,7 +20,7 @@ def list_pointers(input_data, pointer=None):
 
 def find_pointers_containing(input_data, search_key, pointer=None):
     """
-    Recursive function which lists pointers_dicts which contain a search key
+    Recursive function which lists pointers which contain a search key
     :param input_data: the input data to search
     :param search_key: the key to search for
     :param pointer: the current pointer
@@ -42,7 +42,7 @@ def find_pointers_containing(input_data, search_key, pointer=None):
 
 def find_pointers_to(input_data, search_key):
     """
-    Find pointers_dicts to a particular search key
+    Find pointers to a particular search key
     :param input_data: the input data to search
     :param search_key: the key to search for
     :return: list of the json pointer paths
