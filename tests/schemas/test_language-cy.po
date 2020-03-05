@@ -28,11 +28,11 @@ msgstr "Arolwg Iaith Prawf"
 msgid "Please enter a name"
 msgstr "Rhowch enw"
 
-msgid "How many people live at your household?"
-msgstr "Faint o bobl sy'n byw ar eich cartref?"
-
 msgid "What is {person_name_possessive} date of birth?"
 msgstr "Beth yw dyddiad geni {person_name_possessive}?"
+
+msgid "How many people live at your household?"
+msgstr "Faint o bobl sy'n byw ar eich cartref?"
 
 msgid "{number_of_people} person lives here, is this correct?"
 msgid_plural "{number_of_people} people live here, is this correct?"
@@ -60,10 +60,6 @@ msgid "Number of household residents"
 msgstr "Nifer o breswylwyr yn y cartref"
 
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
-msgid "No"
-msgstr "Na"
-
-msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "Yes, {number_of_people} person lives here"
 msgid_plural "Yes, {number_of_people} people live here"
 msgstr[0] "Ydy, mae {number_of_people} person yn byw yma (zero)"
@@ -73,3 +69,6 @@ msgstr[3] "Ydy, mae {number_of_people} pherson yn byw yma (few)"
 msgstr[4] "Ydy, mae {number_of_people} pherson yn byw yma (many)"
 msgstr[5] "Ydy, mae {number_of_people} pherson yn byw yma (other)"
 
+msgctxt "Answer for: {number_of_people} people live here, is this correct?"
+msgid "No"
+msgstr "Na"

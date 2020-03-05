@@ -5,7 +5,7 @@ from babel.messages import Catalog
 from eq_translations.schema_translation import SchemaTranslation
 
 
-class TestSchemaTranslation(unittest.TestCase):
+class TestGetTranslation(unittest.TestCase):
     def setUp(self):
         self.messages = [
             {
@@ -73,27 +73,27 @@ class TestSchemaTranslation(unittest.TestCase):
         self.translator = SchemaTranslation(catalog)
 
     def test_translate_unknown_message(self):
-        result = self.translator.get_translation(message_id_to_translate="Some string")
+        result = self.translator.get_translation(message_id="Some string")
 
         assert result is None
 
     def test_translate_non_pluralizable_message(self):
         result = self.translator.get_translation(
-            message_id_to_translate=self.messages[0]["original"]
+            message_id=self.messages[0]["original"]
         )
 
         assert result == "WELSH - {}".format(self.messages[0]["original"])
 
     def test_translate_pluralizable_message(self):
         result = self.translator.get_translation(
-            message_id_to_translate=self.messages[3]["original"]
+            message_id=self.messages[3]["original"]
         )
 
         assert result == ("WELSH - one", "WELSH - other", "WELSH - many")
 
     def test_translate_non_pluralizable_message_with_context(self):
         result = self.translator.get_translation(
-            message_id_to_translate=self.messages[1]["original"],
+            message_id=self.messages[1]["original"],
             message_context=self.messages[1]["context"],
         )
 
@@ -101,7 +101,7 @@ class TestSchemaTranslation(unittest.TestCase):
 
     def test_translate_pluralizable_message_with_context(self):
         result = self.translator.get_translation(
-            message_id_to_translate=self.messages[4]["original"],
+            message_id=self.messages[4]["original"],
             message_context=self.messages[4]["context"],
         )
 
@@ -109,7 +109,7 @@ class TestSchemaTranslation(unittest.TestCase):
 
     def test_translate_context_message_mismatch(self):
         result = self.translator.get_translation(
-            message_id_to_translate=self.messages[1]["original"],
+            message_id=self.messages[1]["original"],
             message_context="some-random-context",
         )
 
@@ -117,7 +117,7 @@ class TestSchemaTranslation(unittest.TestCase):
 
     def test_translate_context_message_with_no_context(self):
         result = self.translator.get_translation(
-            message_id_to_translate=self.messages[1]["original"], message_context=None
+            message_id=self.messages[1]["original"], message_context=None
         )
 
         assert result is None

@@ -3,7 +3,7 @@ build:
 
 lint:
 	pipenv check ./eq_translations ./tests
-	pipenv run pylint eq_translations
+	pipenv run pylint eq_translations ./tests
 	pipenv run black --check .
 
 test: lint

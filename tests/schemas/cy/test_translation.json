@@ -347,6 +347,11 @@
                                         },
                                         "maximum": {
                                             "value": 100
+                                        },
+                                        "validation": {
+                                            "messages": {
+                                                "NUMBER_TOO_LARGE": "Y gwerth uchaf a ganiateir yw 100. Cywirwch eich ateb."
+                                            }
                                         }
                                     }
                                 ],

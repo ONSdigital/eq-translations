@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-03-03 08:56+0000\n"
+"POT-Creation-Date: 2020-03-05 11:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,23 @@ msgid ""
 " the detailed guidance for completing this survey</a>"
 msgstr ""
 
+msgid ""
+"Innovation, for the purpose of this survey, is defined as "
+"<strong>new</strong> or <strong>significantly improved goods or "
+"services</strong> as well as <strong>processes</strong> used to produce "
+"or supply all goods or services that {ru_name} has introduced, regardless"
+" of their origin."
+msgstr ""
+
+msgid "These innovations may be new to {ru_name} or new to the market"
+msgstr ""
+
+msgid ""
+"Investments for future innovation and changes that {ru_name} has "
+"introduced at a <strong>strategic</strong> level (in organisation and "
+"practices) are also covered"
+msgstr ""
+
 msgid "This is a description"
 msgstr ""
 
@@ -58,66 +75,6 @@ msgid ""
 msgstr ""
 
 msgid "Notice is given under section 1 of the Statistics of Trade Act 1947."
-msgstr ""
-
-msgid "Test translation"
-msgstr ""
-
-msgid "Navigation Title"
-msgstr ""
-
-msgid "Introduction"
-msgstr ""
-
-msgid "What you need to do next"
-msgstr ""
-
-msgid "Information you need"
-msgstr ""
-
-msgid "How we use your data"
-msgstr ""
-
-msgid "Questions will follow."
-msgstr ""
-
-msgid "Who are you answering for?"
-msgstr ""
-
-msgid "Why use LiFePO4 batteries?"
-msgstr ""
-
-msgid "3 Benefits of LifePO4 batteries."
-msgstr ""
-
-msgid "Feeling answer"
-msgstr ""
-
-msgid "What is ‘this persons’ date of birth?"
-msgstr ""
-
-msgid "Include:"
-msgstr ""
-
-msgid "Exclude:"
-msgstr ""
-
-msgid "What is your date of birth?"
-msgstr ""
-
-msgid "How many people live here?"
-msgstr ""
-
-msgid "How many visitors have lived here?"
-msgstr ""
-
-msgid "Calculated Summary Title"
-msgstr ""
-
-msgid "Calculated Summary Calculation Title Block 2"
-msgstr ""
-
-msgid "Summary"
 msgstr ""
 
 msgid ""
@@ -194,21 +151,56 @@ msgstr ""
 msgid "employees in Northern Ireland"
 msgstr ""
 
-msgid ""
-"Innovation, for the purpose of this survey, is defined as "
-"<strong>new</strong> or <strong>significantly improved goods or "
-"services</strong> as well as <strong>processes</strong> used to produce "
-"or supply all goods or services that {ru_name} has introduced, regardless"
-" of their origin."
+msgid "The maximum value allowed is 100. Please correct your answer."
 msgstr ""
 
-msgid "These innovations may be new to {ru_name} or new to the market"
+msgid "Test translation"
 msgstr ""
 
-msgid ""
-"Investments for future innovation and changes that {ru_name} has "
-"introduced at a <strong>strategic</strong> level (in organisation and "
-"practices) are also covered"
+msgid "Navigation Title"
+msgstr ""
+
+msgid "Introduction"
+msgstr ""
+
+msgid "What you need to do next"
+msgstr ""
+
+msgid "Information you need"
+msgstr ""
+
+msgid "How we use your data"
+msgstr ""
+
+msgid "Questions will follow."
+msgstr ""
+
+msgid "Who are you answering for?"
+msgstr ""
+
+msgid "Why use LiFePO4 batteries?"
+msgstr ""
+
+msgid "3 Benefits of LifePO4 batteries."
+msgstr ""
+
+msgctxt "Answer for: Who are you answering for?"
+msgid "Feeling answer"
+msgstr ""
+
+msgid "What is ‘this persons’ date of birth?"
+msgstr ""
+
+msgid "Include:"
+msgstr ""
+
+msgid "Exclude:"
+msgstr ""
+
+msgid "What is your date of birth?"
+msgstr ""
+
+msgid "How many people live here?"
 msgstr ""
 
 msgid "{number_of_people} person lives here, is this correct?"
@@ -216,8 +208,16 @@ msgid_plural "{number_of_people} people live here, is this correct?"
 msgstr[0] ""
 msgstr[1] ""
 
-msgctxt "Answer for: Who are you answering for?"
-msgid "Feeling answer"
+msgid "How many visitors have lived here?"
+msgstr ""
+
+msgid "Calculated Summary Title"
+msgstr ""
+
+msgid "Calculated Summary Calculation Title Block 2"
+msgstr ""
+
+msgid "Summary"
 msgstr ""
 
 msgctxt "Answer for: Who are you answering for?"
@@ -261,16 +261,16 @@ msgid "How many people live here?"
 msgstr ""
 
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
+msgid "Yes, {number_of_people} person lives here"
+msgid_plural "Yes, {number_of_people} people live here"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr ""
 
 msgctxt "Answer for: How many visitors have lived here?"
 msgid "How many visitors have lived here?"
 msgstr ""
-
-msgctxt "Answer for: {number_of_people} people live here, is this correct?"
-msgid "Yes, {number_of_people} person lives here"
-msgid_plural "Yes, {number_of_people} people live here"
-msgstr[0] ""
-msgstr[1] ""
 

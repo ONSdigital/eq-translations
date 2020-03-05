@@ -6,8 +6,6 @@ from jsonpointer import resolve_pointer, set_pointer
 
 from eq_translations.utils import (
     find_pointers_to,
-    get_parent_pointer,
-    is_placeholder,
     get_message_id,
     dumb_to_smart_quotes,
     get_plural_forms_for_language,
@@ -16,175 +14,97 @@ from eq_translations.utils import (
 
 class SurveySchema:
     schema = {}
-    no_context_keys = [
+    keys_with_context = ["playback", "title", "label"]
+    keys_for_translation = [
         "show_guidance",
         "hide_guidance",
         "description",
         "legal_basis",
-        "playback",
         "item_title",
         "add_link_text",
         "empty_list_text",
         "instruction",
         "cancel_text",
-    ]
-    context_placeholder_pointers = []
-    no_context_placeholder_pointers = []
-
-    context_plural_pointers = []
-    no_context_plural_pointers = []
+        "list",
+        "messages",
+    ] + keys_with_context
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
-        self._load_placeholders()
-        self._load_plurals()
 
     def load(self, schema_path):
-        with open(schema_path, encoding="utf8") as schema_file:
-            self.schema = json.load(schema_file)
-            self._load_placeholders()
-            self._load_plurals()
-
-    def _load_placeholders(self):
-        if self.schema:
-            (
-                self.context_placeholder_pointers,
-                self.no_context_placeholder_pointers,
-            ) = self.get_placeholder_pointers()
-
-    def _load_plurals(self):
-        if self.schema:
-            (
-                self.context_plural_pointers,
-                self.no_context_plural_pointers,
-            ) = self.get_plural_pointers()
+        with open(schema_path, encoding="utf8") as schema_file:  # pragma: no cover
+            self.schema = json.load(schema_file)  # pragma: no cover
 
     def save(self, schema_path):
         with open(schema_path, "w", encoding="utf8") as schema_file:  # pragma: no cover
             return json.dump(self.schema, schema_file, indent=4)  # pragma: no cover
 
     @property
-    def pointers(self):
-        return self.no_context_pointers + self.context_pointers
-
-    @property
-    def no_context_pointers(self):
-        return (
-            self._get_core_pointers()
-            + self.get_title_pointers()
-            + self._get_message_pointers()
-            + self.get_list_pointers()
-            + self.no_context_placeholder_pointers
-            + self.no_context_plural_pointers
-        )
-
-    @property
-    def context_pointers(self):
-        return (
-            self.get_answer_pointers()
-            + self.context_placeholder_pointers
-            + self.context_plural_pointers
-        )
-
-    def _get_core_pointers(self):
-        """
-        Iterate the schema and return the pointers found
-        :return:
-        """
-        pointers = []
-        for key in SurveySchema.no_context_keys:
-            key_pointers = find_pointers_to(self.schema, key)
-            pointers.extend(key_pointers)
-        return pointers
-
-    def _get_pointers_for_key(self, key):
-        """
-        Pointers may or may not have context
-        :param key: The key to search for
-        :return:
-        """
-        found_pointers = find_pointers_to(self.schema, key)
-        context_pointers = []
-        no_context_pointers = []
-
-        for pointer in found_pointers:
-            if "/answers/" in pointer:
-                context_pointers.append(pointer)
-            else:
-                no_context_pointers.append(pointer)
-
-        return context_pointers, no_context_pointers
-
-    def _get_message_pointers(self):
-        """
-        Message pointers need to be iterated as a dict and each key added individually
-        :return:
-        """
+    def pointer_dicts(self):
         pointers = []
 
-        message_pointers = find_pointers_to(self.schema, "messages")
-        for message_pointer in message_pointers:
-            schema_element = resolve_pointer(self.schema, message_pointer)
-            for element in schema_element:
-                pointers.append(f"{message_pointer}/{element}")
+        for key in self.keys_for_translation:
+            with_context = key in self.keys_with_context
+
+            for pointer in find_pointers_to(self.schema, key):
+                # The 'list' property is used by both 'contents' and 'when' blocks.
+                if "/when/" in pointer:
+                    continue
+
+                schema_element = resolve_pointer(self.schema, pointer)
+                if isinstance(schema_element, dict):
+                    pointers_found = self._get_pointers_from_dict_element(
+                        schema_element, pointer, with_context
+                    )
+                    pointers.extend(pointers_found)
+
+                elif isinstance(schema_element, list):
+                    pointers_found = self._get_pointers_from_list_element(
+                        schema_element, pointer, with_context
+                    )
+                    pointers.extend(pointers_found)
+
+                else:
+                    pointer_dict = self._get_pointer_dict(pointer, with_context)
+                    pointers.append(pointer_dict)
+
         return pointers
 
-    def get_list_pointers(self):
-        """
-        List pointers need to be iterated and each element added individually
-        :return:
-        """
+    def _get_pointers_from_list_element(self, schema_element, pointer, with_context):
         pointers = []
+        for idx, _ in enumerate(schema_element):
+            new_pointer = f"{pointer}/{idx}"
+            pointer_dict = self._get_pointer_dict(new_pointer, with_context)
+            pointers.append(pointer_dict)
 
-        list_pointers = find_pointers_to(self.schema, "list")
-        for list_pointer in list_pointers:
-            schema_element = resolve_pointer(self.schema, list_pointer)
-            if isinstance(schema_element, list):
-                pointers.extend(
-                    [f"{list_pointer}/{i}" for i, p in enumerate(schema_element)]
-                )
         return pointers
 
-    def get_title_pointers(self):
-        """
-        Titles need to be handled separately as they may require context for translation
-        """
-        return find_pointers_to(self.schema, "title")
+    def _get_pointers_from_dict_element(self, schema_element, pointer, with_context):
+        pointers = []
+        if "text_plural" in schema_element:
+            new_pointer = f"{pointer}/text_plural"
+            pointer_dict = self._get_pointer_dict(new_pointer, with_context)
+            pointers.append(pointer_dict)
+            return pointers
 
-    def get_answer_pointers(self):
-        """
-        Labels for options/answers need to be handled separately as they require context
-        """
-        return find_pointers_to(self.schema, "label")
+        for element in schema_element:
+            sub_element = schema_element[element]
+            if isinstance(sub_element, str):
+                new_pointer = f"{pointer}/{element}"
+                pointer_dict = self._get_pointer_dict(new_pointer, with_context)
+                pointers.append(pointer_dict)
 
-    def get_placeholder_pointers(self):
-        """
-        Placeholder 'text' may require context for translation
-        """
-        (
-            context_placeholder_pointers,
-            no_context_placeholder_pointers,
-        ) = self._get_pointers_for_key("text")
-        return context_placeholder_pointers, no_context_placeholder_pointers
+        return pointers
 
-    def get_plural_pointers(self):
-        """
-        'text_plural' may require context for translation
-        """
-        (
-            context_plural_pointers,
-            no_context_plural_pointers,
-        ) = self._get_pointers_for_key("text_plural")
-        return context_plural_pointers, no_context_plural_pointers
+    def _get_pointer_dict(self, pointer, with_context):
+        pointer_dict = {"pointer": pointer}
 
-    def get_parent_id(self, pointer):
-        resolved_data = resolve_pointer(self.schema, pointer)
+        if with_context and f"/answers/" in pointer:
+            message_context = self._get_message_context_from_pointer(pointer)
+            pointer_dict["context"] = message_context
 
-        if isinstance(resolved_data, dict) and "id" in resolved_data:
-            return resolved_data["id"]
-
-        parent_pointer = get_parent_pointer(pointer)
-        return self.get_parent_id(parent_pointer)
+        return pointer_dict
 
     @staticmethod
     def _get_parent_question_pointer(pointer):
@@ -198,12 +118,12 @@ class SurveySchema:
         question_pointer = self._get_parent_question_pointer(pointer)
         return resolve_pointer(self.schema, question_pointer + "/title")
 
-    def get_message_context_from_pointer(self, pointer):
+    def _get_message_context_from_pointer(self, pointer):
         question = self.get_parent_question(pointer)
 
         if "text_plural" in question:
             message_context = question["text_plural"]["forms"]["other"]
-        elif is_placeholder(question):
+        elif "placeholders" in question:
             message_context = question["text"]
         else:
             message_context = question
@@ -216,21 +136,26 @@ class SurveySchema:
         :return: a schema catalog to be used as the content within a po/pot file
         """
         catalog = Catalog()
-        total_translations = len(self.no_context_pointers + self.context_pointers)
 
-        for pointer in self.no_context_pointers:
-            self._add_message_to_catalog(pointer, catalog, with_context=False)
+        for pointer_dict in self.pointer_dicts:
+            message_context = pointer_dict.get("context")
+            pointer_contents = resolve_pointer(self.schema, pointer_dict["pointer"])
 
-        for pointer in self.context_pointers:
-            self._add_message_to_catalog(pointer, catalog, with_context=True)
+            if not pointer_contents:
+                continue
 
-        print(f"Total Messages: {total_translations}")
+            message_id = get_message_id(content=pointer_contents)
+            catalog.add(
+                id=message_id, context=message_context,
+            )
+
+        print(f"Total Messages: {len(self.pointer_dicts)}")
 
         return catalog
 
     def translate(self, schema_translation, language_code):
         """
-        Use the supplied schema translation object and language code to translate pointers found
+        Use the supplied schema translation object and language code to translate pointers_dicts found
         within the survey
 
         :param schema_translation: The SchemaTranslation object
@@ -238,94 +163,43 @@ class SurveySchema:
         :return:
         """
         translated_schema = copy.deepcopy(self.schema)
-        total_translations = len(self.no_context_pointers + self.context_pointers)
         missing_translations = 0
 
-        for pointer in self.no_context_pointers:
-            missing_translations += self._handle_translation_for_pointer(
-                pointer,
-                schema_translation,
-                translated_schema,
-                language_code,
-                with_context=False,
+        for pointer_dict in self.pointer_dicts:
+            pointer = pointer_dict["pointer"]
+            pointer_contents = resolve_pointer(self.schema, pointer)
+
+            if not pointer_contents:
+                continue
+
+            message_id = get_message_id(pointer_contents)
+            message_context = pointer_dict.get("context")
+
+            translation = schema_translation.get_translation(
+                message_id, message_context
             )
 
-        for pointer in self.context_pointers:
-            missing_translations += self._handle_translation_for_pointer(
-                pointer,
-                schema_translation,
-                translated_schema,
-                language_code,
-                with_context=True,
-            )
+            if translation:
+                if isinstance(translation, tuple) and language_code:
+                    plural_forms = get_plural_forms_for_language(language_code)
+                    for idx, plural in enumerate(plural_forms):
+                        plural_form_pointer = f"{pointer}/forms/{plural}"
+                        set_pointer(
+                            translated_schema,
+                            plural_form_pointer,
+                            dumb_to_smart_quotes(translation[idx]),
+                        )
+                else:
+                    set_pointer(
+                        translated_schema, pointer, dumb_to_smart_quotes(translation),
+                    )
+            else:
+                print(f"Missing translation at {pointer}: '{pointer_contents}'")
+                missing_translations += 1
 
-        print(f"\nTotal Messages: {total_translations}")
+        print(f"\nTotal Messages: {len(self.pointer_dicts)}")
 
         if missing_translations:
             print(f"Total Missing: {missing_translations}")
 
         return SurveySchema(translated_schema)
-
-    def _handle_translation_for_pointer(
-        self,
-        pointer,
-        schema_translation,
-        translated_schema,
-        language_code,
-        with_context,
-    ):
-        is_translation_missing = False
-        message_context = None
-        pointer_contents = resolve_pointer(self.schema, pointer)
-
-        if pointer_contents:
-            message_id = get_message_id(pointer_contents)
-
-            if with_context:
-                message_context = self.get_message_context_from_pointer(pointer)
-
-            translation = schema_translation.get_translation(
-                message_id_to_translate=message_id, message_context=message_context
-            )
-
-            if translation:
-                self._update_translation_for_pointer(
-                    translated_schema, pointer, translation, language_code,
-                )
-            else:
-                print(f"Missing translation at {pointer}: '{pointer_contents}'")
-                is_translation_missing = True
-
-        return is_translation_missing
-
-    @staticmethod
-    def _update_translation_for_pointer(
-        translated_schema, pointer, translation, language_code
-    ):
-        if isinstance(translation, tuple) and language_code:
-            plural_forms = get_plural_forms_for_language(language_code)
-            for idx, plural in enumerate(plural_forms):
-                plural_form_pointer = pointer + "/forms/" + plural
-                set_pointer(
-                    translated_schema,
-                    plural_form_pointer,
-                    dumb_to_smart_quotes(translation[idx]),
-                )
-        else:
-            set_pointer(
-                translated_schema, pointer, dumb_to_smart_quotes(translation),
-            )
-
-    def _add_message_to_catalog(self, pointer, catalog, with_context):
-        message_context = None
-        pointer_contents = resolve_pointer(self.schema, pointer)
-
-        if pointer_contents:
-            message_id = get_message_id(content=pointer_contents)
-
-            if with_context:
-                message_context = self.get_message_context_from_pointer(pointer)
-
-            catalog.add(
-                id=message_id, context=message_context,
-            )

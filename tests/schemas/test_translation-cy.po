@@ -223,6 +223,9 @@ msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr "Na"
 
+msgid "The maximum value allowed is 100. Please correct your answer."
+msgstr "Y gwerth uchaf a ganiateir yw 100. Cywirwch eich ateb."
+
 msgctxt "Answer for: How many visitors have lived here?"
 msgid "How many visitors have lived here?"
 msgstr "Faint o ymwelwyr sydd wedi byw yma?"

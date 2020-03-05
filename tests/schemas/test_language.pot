@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-03-03 08:52+0000\n"
+"POT-Creation-Date: 2020-03-05 11:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,10 +29,10 @@ msgstr ""
 msgid "Please enter a name"
 msgstr ""
 
-msgid "How many people live at your household?"
+msgid "What is {person_name_possessive} date of birth?"
 msgstr ""
 
-msgid "What is {person_name_possessive} date of birth?"
+msgid "How many people live at your household?"
 msgstr ""
 
 msgid "{number_of_people} person lives here, is this correct?"
@@ -57,12 +57,12 @@ msgid "Number of household residents"
 msgstr ""
 
 msgctxt "Answer for: {number_of_people} people live here, is this correct?"
-msgid "No"
-msgstr ""
-
-msgctxt "Answer for: {number_of_people} people live here, is this correct?"
 msgid "Yes, {number_of_people} person lives here"
 msgid_plural "Yes, {number_of_people} people live here"
 msgstr[0] ""
 msgstr[1] ""
+
+msgctxt "Answer for: {number_of_people} people live here, is this correct?"
+msgid "No"
+msgstr ""
 

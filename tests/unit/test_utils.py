@@ -1,5 +1,4 @@
 from eq_translations.utils import (
-    get_parent_pointer,
     find_pointers_containing,
     find_pointers_to,
     list_pointers,
@@ -27,7 +26,7 @@ def test_get_message_id_for_plurals():
 def test_find_pointers_containing_root():
     schema = {"test": ""}
 
-    pointers = [p for p in find_pointers_containing(schema, "test")]
+    pointers = list(find_pointers_containing(schema, "test"))
 
     assert pointers == []
 
@@ -100,14 +99,6 @@ def test_find_pointers_to_list():
     assert "/a/test/2/item" in pointers
     assert "/a/test/3/item" in pointers
     assert "/a/test/4/item" in pointers
-
-
-def test_get_parent_pointer():
-    option_parent_pointer = get_parent_pointer("/questions/0/answers/0/options/0/label")
-    answer_parent_pointer = get_parent_pointer("/questions/0/answers/0/label")
-
-    assert option_parent_pointer == "/questions/0/answers/0/options/0"
-    assert answer_parent_pointer == "/questions/0/answers/0"
 
 
 def test_list_pointers():
