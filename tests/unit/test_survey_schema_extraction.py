@@ -6,7 +6,7 @@ from eq_translations.survey_schema import SurveySchema
 def test_variant_pointers(schema_with_question_variants):
     schema = SurveySchema(schema_with_question_variants)
 
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/question_variants/0/question/title",
@@ -20,7 +20,7 @@ def test_variant_pointers(schema_with_question_variants):
 
 def test_messages_pointers(schema_with_question_variants):
     schema = SurveySchema(schema_with_question_variants)
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/question_variants/0/question/answers/0/validation/messages/MANDATORY_TEXTFIELD",
@@ -53,7 +53,7 @@ def test_titles_pointers():
             }
         }
     )
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/question/title",
@@ -64,7 +64,7 @@ def test_titles_pointers():
         "value": "Grand total of previous values",
     } in translatable_strings
 
-    assert len(translatable_strings) == 2
+    assert schema.total_translatable_strings == 2
 
 
 def test_list_pointers():
@@ -128,7 +128,7 @@ def test_list_pointers():
         }
     )
 
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/content_variants/0/content/contents/0/list/0",
@@ -182,7 +182,7 @@ def test_answer_label_pointers():
         }
     )
 
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/question/answers/0/options/0/label",
@@ -261,30 +261,31 @@ def test_relationship_playback_pointers():
     }
 
     schema = SurveySchema(relationships_question)
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/question/answers/0/playback",
         "value": "{second_person_name} is {first_person_name_possessive} <em>…</em>",
         "context": "Answer for: Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
-    } in schema.translatable_strings
+    } in translatable_strings
 
     assert {
         "pointer": "/question/answers/0/options/0/playback",
         "value": "{second_person_name} is {first_person_name_possessive} <em>husband or wife</em>",
         "context": "Answer for: Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
-    } in schema.translatable_strings
+    } in translatable_strings
 
     assert {
         "pointer": "/question/answers/0/options/1/playback",
         "value": "{second_person_name} is {first_person_name_possessive} <em>legally registered civil partner</em>",
         "context": "Answer for: Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
-    } in schema.translatable_strings
+    } in translatable_strings
 
     assert {
         "pointer": "/question/answers/0/options/2/playback",
         "value": "{second_person_name} is {first_person_name_possessive} <em>son or daughter</em>",
         "context": "Answer for: Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
-    } in schema.translatable_strings
+    } in translatable_strings
 
 
 def test_summary_with_placeholder_extraction():
@@ -336,7 +337,7 @@ def test_summary_with_placeholder_extraction():
     }
 
     schema = SurveySchema(summary_placeholder)
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/summary/item_title/text",
@@ -367,7 +368,7 @@ def test_summary_without_placeholder_extraction():
     }
 
     schema = SurveySchema(summary_placeholder)
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/summary/title",

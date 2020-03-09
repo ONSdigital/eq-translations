@@ -244,7 +244,7 @@ def test_get_catalog():
 
 def test_get_placeholder_pointers(schema_with_placeholders):
     schema = SurveySchema(schema_with_placeholders)
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/question/answers/0/options/0/label/text",
@@ -279,7 +279,7 @@ def test_placeholder_catalog_context(schema_with_placeholders):
 
 def test_get_text_plural_pointers(schema_with_plurals):
     schema = SurveySchema(schema_with_plurals)
-    translatable_strings = schema.translatable_strings
+    translatable_strings = list(schema.translatable_strings)
 
     assert {
         "pointer": "/question/answers/0/options/0/label/text_plural",
