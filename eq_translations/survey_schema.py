@@ -138,9 +138,7 @@ class SurveySchema:
         """
         catalog = Catalog()
 
-        total_messages = 0
         for pointer_dict in self.translatable_strings:
-            total_messages += 1
             message_context = pointer_dict.get("context")
             value = pointer_dict["value"]
 
