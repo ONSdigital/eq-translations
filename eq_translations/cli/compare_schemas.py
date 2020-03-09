@@ -17,7 +17,7 @@ def main():
     )
 
     parser.add_argument(
-        "TARGET_LANGUAGE_CODE", help="The language code of the target schema"
+        "TARGET_LANGUAGE_CODE", help="The target schema's language code"
     )
 
     args = parser.parse_args()
