@@ -43,7 +43,7 @@ class SurveySchema:
     @property
     def translatable_strings(self):
         """
-        :return: A list of pointer self._get_pointer_dict
+        :return: A list of pointer dictionaries
         """
         pointers = []
 
