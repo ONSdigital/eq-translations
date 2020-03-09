@@ -244,19 +244,24 @@ def test_get_catalog():
 
 def test_get_placeholder_pointers(schema_with_placeholders):
     schema = SurveySchema(schema_with_placeholders)
-    pointers = schema.pointer_dicts
+    translatable_strings = schema.translatable_strings
 
     assert {
         "pointer": "/question/answers/0/options/0/label/text",
+        "value": "{address}",
         "context": "Answer for: During term time, where does <em>{person_name}</em> usually live?",
-    } in pointers
+    } in translatable_strings
 
     assert {
         "pointer": "/question/answers/0/options/1/label/text",
+        "value": "The address in {country}",
         "context": "Answer for: During term time, where does <em>{person_name}</em> usually live?",
-    } in pointers
+    } in translatable_strings
 
-    assert {"pointer": "/question/title/text"} in pointers
+    assert {
+        "pointer": "/question/title/text",
+        "value": "During term time, where does <em>{person_name}</em> usually live?",
+    } in translatable_strings
 
 
 def test_placeholder_catalog_context(schema_with_placeholders):
@@ -274,14 +279,30 @@ def test_placeholder_catalog_context(schema_with_placeholders):
 
 def test_get_text_plural_pointers(schema_with_plurals):
     schema = SurveySchema(schema_with_plurals)
-    pointers = schema.pointer_dicts
+    translatable_strings = schema.translatable_strings
 
     assert {
         "pointer": "/question/answers/0/options/0/label/text_plural",
+        "value": {
+            "forms": {
+                "one": "Yes, {number_of_people} person lives here",
+                "other": "Yes, {number_of_people} people live here",
+            },
+            "count": {"source": "answers", "identifier": "number-of-people-answer"},
+        },
         "context": "Answer for: {number_of_people} people live here, is this correct?",
-    } in pointers
+    } in translatable_strings
 
-    assert {"pointer": "/question/title/text_plural"} in pointers
+    assert {
+        "pointer": "/question/title/text_plural",
+        "value": {
+            "forms": {
+                "one": "{number_of_people} person lives here, is this correct?",
+                "other": "{number_of_people} people live here, is this correct?",
+            },
+            "count": {"source": "answers", "identifier": "number-of-people-answer",},
+        },
+    } in translatable_strings
 
 
 def test_placeholder_translation(schema_with_placeholders):

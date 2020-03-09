@@ -12,6 +12,7 @@ install:
   - pipenv install --dev --deploy
 
 script:
+  - make lint
   - make test
   - export TAG=`if [ "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
   - docker build -t onsdigital/eq-translations:$TAG -f Dockerfile .

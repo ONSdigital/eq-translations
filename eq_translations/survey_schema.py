@@ -15,7 +15,7 @@ from eq_translations.utils import (
 class SurveySchema:
     schema = {}
     keys_with_context = ["playback", "title", "label"]
-    keys_for_translation = [
+    keys_to_translate = [
         "show_guidance",
         "hide_guidance",
         "description",
@@ -41,10 +41,13 @@ class SurveySchema:
             return json.dump(self.schema, schema_file, indent=4)  # pragma: no cover
 
     @property
-    def pointer_dicts(self):
+    def translatable_strings(self):
+        """
+        :return: A list of pointer self._get_pointer_dict
+        """
         pointers = []
 
-        for key in self.keys_for_translation:
+        for key in self.keys_to_translate:
             with_context = key in self.keys_with_context
 
             for pointer in find_pointers_to(self.schema, key):
@@ -55,52 +58,63 @@ class SurveySchema:
                 schema_element = resolve_pointer(self.schema, pointer)
                 if isinstance(schema_element, dict):
                     pointers_found = self._get_pointers_from_dict_element(
-                        schema_element, pointer, with_context
+                        pointer, schema_element, with_context
                     )
                     pointers.extend(pointers_found)
 
                 elif isinstance(schema_element, list):
                     pointers_found = self._get_pointers_from_list_element(
-                        schema_element, pointer, with_context
+                        pointer, schema_element, with_context
                     )
                     pointers.extend(pointers_found)
 
                 else:
-                    pointer_dict = self._get_pointer_dict(pointer, with_context)
+                    pointer_dict = self._get_pointer_dict(
+                        pointer, schema_element, with_context
+                    )
                     pointers.append(pointer_dict)
 
         return pointers
 
-    def _get_pointers_from_list_element(self, schema_element, pointer, with_context):
+    def _get_pointers_from_list_element(self, pointer, schema_element, with_context):
         pointers = []
         for idx, _ in enumerate(schema_element):
-            sub_element = schema_element[idx]
-            if isinstance(sub_element, str):
+            value = schema_element[idx]
+            if isinstance(value, str):
                 new_pointer = f"{pointer}/{idx}"
-                pointer_dict = self._get_pointer_dict(new_pointer, with_context)
+                pointer_dict = self._get_pointer_dict(new_pointer, value, with_context)
                 pointers.append(pointer_dict)
 
         return pointers
 
-    def _get_pointers_from_dict_element(self, schema_element, pointer, with_context):
+    def _get_pointers_from_dict_element(self, pointer, schema_element, with_context):
         pointers = []
-        if "text_plural" in schema_element:
+        plural_forms = schema_element.get("text_plural")
+        if plural_forms:
             new_pointer = f"{pointer}/text_plural"
-            pointer_dict = self._get_pointer_dict(new_pointer, with_context)
+            pointer_dict = self._get_pointer_dict(
+                new_pointer, plural_forms, with_context
+            )
             pointers.append(pointer_dict)
             return pointers
 
         for element in schema_element:
-            sub_element = schema_element[element]
-            if isinstance(sub_element, str):
+            value = schema_element[element]
+            if isinstance(value, str):
                 new_pointer = f"{pointer}/{element}"
-                pointer_dict = self._get_pointer_dict(new_pointer, with_context)
+                pointer_dict = self._get_pointer_dict(new_pointer, value, with_context)
                 pointers.append(pointer_dict)
 
         return pointers
 
-    def _get_pointer_dict(self, pointer, with_context):
-        pointer_dict = {"pointer": pointer}
+    def _get_pointer_dict(self, pointer, value=None, with_context=False):
+        """
+        :param pointer: Defines a string syntax for identifying a specific value within the schema.
+        :param value: The resolved value of the pointer. This is a Tuple for plural forms, and a String for all other elements
+        :param with_context: Boolean flag to signify whether this pointer should have the question title as context.
+        :return: A dictionary.
+        """
+        pointer_dict = {"pointer": pointer, "value": value}
 
         if with_context and f"/answers/" in pointer:
             message_context = self._get_message_context_from_pointer(pointer)
@@ -139,19 +153,19 @@ class SurveySchema:
         """
         catalog = Catalog()
 
-        for pointer_dict in self.pointer_dicts:
+        for pointer_dict in self.translatable_strings:
             message_context = pointer_dict.get("context")
-            pointer_contents = resolve_pointer(self.schema, pointer_dict["pointer"])
+            value = pointer_dict["value"]
 
-            if not pointer_contents:
+            if not value:
                 continue
 
-            message_id = get_message_id(content=pointer_contents)
+            message_id = get_message_id(content=value)
             catalog.add(
                 id=message_id, context=message_context,
             )
 
-        print(f"Total Messages: {len(self.pointer_dicts)}")
+        print(f"Total Messages: {len(self.translatable_strings)}")
 
         return catalog
 
@@ -167,14 +181,14 @@ class SurveySchema:
         translated_schema = copy.deepcopy(self.schema)
         missing_translations = 0
 
-        for pointer_dict in self.pointer_dicts:
+        for pointer_dict in self.translatable_strings:
             pointer = pointer_dict["pointer"]
-            pointer_contents = resolve_pointer(self.schema, pointer)
+            value = pointer_dict["value"]
 
-            if not pointer_contents:
+            if not value:
                 continue
 
-            message_id = get_message_id(pointer_contents)
+            message_id = get_message_id(value)
             message_context = pointer_dict.get("context")
 
             translation = schema_translation.get_translation(
@@ -196,10 +210,10 @@ class SurveySchema:
                         translated_schema, pointer, dumb_to_smart_quotes(translation),
                     )
             else:
-                print(f"Missing translation at {pointer}: '{pointer_contents}'")
+                print(f"Missing translation at {pointer}: '{value}'")
                 missing_translations += 1
 
-        print(f"\nTotal Messages: {len(self.pointer_dicts)}")
+        print(f"\nTotal Messages: {len(self.translatable_strings)}")
 
         if missing_translations:
             print(f"Total Missing: {missing_translations}")
