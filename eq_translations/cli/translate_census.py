@@ -19,7 +19,7 @@ def main():
         sys.exit(1)
 
     parser = argparse.ArgumentParser(
-        description="Translate the census survey using Crowdin"
+        description="Translate the Census survey using Crowdin"
     )
 
     parser.add_argument(
