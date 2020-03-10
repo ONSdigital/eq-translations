@@ -77,7 +77,7 @@ def dumb_to_smart_quotes(string):
 
 
 def get_message_id(content):
-    if "forms" in content:
+    if isinstance(content, dict) and "forms" in content:
         return content["forms"]["one"], content["forms"]["other"]
 
     return content
