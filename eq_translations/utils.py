@@ -14,8 +14,8 @@ def list_pointers(input_data, pointer=None):
             yield from list_pointers(v, pointer + "/" + k if pointer else "/" + k)
     elif isinstance(input_data, list) and input_data:
         for index, item in enumerate(input_data):
-            yield "{}/{}".format(pointer, index) if pointer else "/{}".format(index)
-            yield from list_pointers(item, "{}/{}".format(pointer, index))
+            yield f"{pointer}/{index}" if pointer else f"/{index}"
+            yield from list_pointers(item, f"{pointer}/{index}")
 
 
 def find_pointers_containing(input_data, search_key, pointer=None):
@@ -31,13 +31,11 @@ def find_pointers_containing(input_data, search_key, pointer=None):
             yield pointer
         for k, v in input_data.items():
             yield from find_pointers_containing(
-                v, search_key, pointer + "/" + k if pointer else "/" + k
+                v, search_key, f"{pointer}/{k}" if pointer else f"/{k}"
             )
     elif isinstance(input_data, list):
         for index, item in enumerate(input_data):
-            yield from find_pointers_containing(
-                item, search_key, "{}/{}".format(pointer, index)
-            )
+            yield from find_pointers_containing(item, search_key, f"{pointer}/{index}")
 
 
 def find_pointers_to(input_data, search_key):
@@ -47,9 +45,9 @@ def find_pointers_to(input_data, search_key):
     :param search_key: the key to search for
     :return: list of the json pointer paths
     """
-    root_pointers = ["/{}".format(search_key)] if search_key in input_data else []
+    root_pointers = [f"/{search_key}"] if search_key in input_data else []
     pointer_iterator = find_pointers_containing(input_data, search_key)
-    return root_pointers + ["{}/{}".format(p, search_key) for p in pointer_iterator]
+    return root_pointers + [f"{pointer}/{search_key}" for pointer in pointer_iterator]
 
 
 def dumb_to_smart_quotes(string):

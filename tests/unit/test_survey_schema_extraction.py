@@ -1,5 +1,3 @@
-from jsonpointer import resolve_pointer
-
 from eq_translations.survey_schema import SurveySchema
 
 

@@ -82,7 +82,7 @@ class TestGetTranslation(unittest.TestCase):
             message_id=self.messages[0]["original"]
         )
 
-        assert result == "WELSH - {}".format(self.messages[0]["original"])
+        assert result == f"WELSH - {self.messages[0]['original']}"
 
     def test_translate_pluralizable_message(self):
         result = self.translator.get_translation(

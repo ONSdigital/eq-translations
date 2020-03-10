@@ -15,7 +15,7 @@ def handle_extract_template(schema_path, output_directory):
     schema_name, _ = os.path.splitext(os.path.basename(schema_path))
 
     translation = SchemaTranslation(catalog)
-    translation.save(os.path.join(output_directory, "{}.pot".format(schema_name)))
+    translation.save(os.path.join(output_directory, f"{schema_name}.pot"))
 
 
 def handle_translate_schema(
