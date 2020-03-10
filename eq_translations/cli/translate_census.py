@@ -41,7 +41,6 @@ def main():
     template_file = f"census_{file_prefix}.pot"
     output_file = f"census_{file_prefix}-cy.po"
     project_api_key = os.getenv("CROWDIN_PROJECT_API_KEY")
-
     download_url = f"https://api.crowdin.com/api/project/{project_id}/export-file?key={project_api_key}&file={template_file}&language=cy"
 
     print("Fetching translation file from Crowdin")
