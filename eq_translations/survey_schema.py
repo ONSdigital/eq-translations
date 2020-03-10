@@ -14,8 +14,8 @@ from eq_translations.utils import (
 
 class SurveySchema:
     schema = {}
-    keys_with_context = {"playback", "title", "label"}
-    keys_to_translate = {
+    keys_with_context = ["playback", "title", "label"]
+    keys_to_translate = [
         "show_guidance",
         "hide_guidance",
         "description",
@@ -27,7 +27,7 @@ class SurveySchema:
         "cancel_text",
         "list",
         "messages",
-    } | keys_with_context
+    ] + keys_with_context
 
     total_translatable_strings = 0
 
