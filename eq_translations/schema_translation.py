@@ -23,5 +23,4 @@ class SchemaTranslation:
     ):
         message = self.catalog.get(id=message_id, context=message_context)
 
-        if message:
-            return message.string
+	return message.string if message else None
