@@ -86,10 +86,10 @@ class SurveySchema:
                 yield self._get_pointer_dict(new_pointer, value, with_context)
 
     def _get_pointers_from_list_element(self, pointer, schema_element, with_context):
-        for idx, _ in enumerate(schema_element):
-            value = schema_element[idx]
+        for index, _ in enumerate(schema_element):
+            value = schema_element[index]
             if isinstance(value, str):
-                new_pointer = f"{pointer}/{idx}"
+                new_pointer = f"{pointer}/{index}"
                 yield self._get_pointer_dict(new_pointer, value, with_context)
 
     def _get_pointer_dict(self, pointer, value=None, with_context=False):
@@ -183,12 +183,12 @@ class SurveySchema:
             if translation:
                 if isinstance(translation, tuple) and language_code:
                     plural_forms = get_plural_forms_for_language(language_code)
-                    for idx, plural in enumerate(plural_forms):
+                    for index, plural in enumerate(plural_forms):
                         plural_form_pointer = f"{pointer}/forms/{plural}"
                         set_pointer(
                             translated_schema,
                             plural_form_pointer,
-                            dumb_to_smart_quotes(translation[idx]),
+                            dumb_to_smart_quotes(translation[index]),
                         )
                 else:
                     set_pointer(
