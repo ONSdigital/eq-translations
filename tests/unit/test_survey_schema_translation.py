@@ -244,24 +244,24 @@ def test_get_catalog():
 
 def test_get_placeholder_pointers(schema_with_placeholders):
     schema = SurveySchema(schema_with_placeholders)
-    translatable_strings = list(schema.translatable_strings)
+    translatable_items = list(schema.translatable_items)
 
     assert {
         "pointer": "/question/answers/0/options/0/label/text",
         "value": "{address}",
         "context": "Answer for: During term time, where does <em>{person_name}</em> usually live?",
-    } in translatable_strings
+    } in translatable_items
 
     assert {
         "pointer": "/question/answers/0/options/1/label/text",
         "value": "The address in {country}",
         "context": "Answer for: During term time, where does <em>{person_name}</em> usually live?",
-    } in translatable_strings
+    } in translatable_items
 
     assert {
         "pointer": "/question/title/text",
         "value": "During term time, where does <em>{person_name}</em> usually live?",
-    } in translatable_strings
+    } in translatable_items
 
 
 def test_placeholder_catalog_context(schema_with_placeholders):
@@ -279,7 +279,7 @@ def test_placeholder_catalog_context(schema_with_placeholders):
 
 def test_get_text_plural_pointers(schema_with_plurals):
     schema = SurveySchema(schema_with_plurals)
-    translatable_strings = list(schema.translatable_strings)
+    translatable_items = list(schema.translatable_items)
 
     assert {
         "pointer": "/question/answers/0/options/0/label/text_plural",
@@ -291,7 +291,7 @@ def test_get_text_plural_pointers(schema_with_plurals):
             "count": {"source": "answers", "identifier": "number-of-people-answer"},
         },
         "context": "Answer for: {number_of_people} people live here, is this correct?",
-    } in translatable_strings
+    } in translatable_items
 
     assert {
         "pointer": "/question/title/text_plural",
@@ -302,7 +302,7 @@ def test_get_text_plural_pointers(schema_with_plurals):
             },
             "count": {"source": "answers", "identifier": "number-of-people-answer",},
         },
-    } in translatable_strings
+    } in translatable_items
 
 
 def test_placeholder_translation(schema_with_placeholders):
