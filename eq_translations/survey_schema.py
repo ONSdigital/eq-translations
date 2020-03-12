@@ -4,6 +4,7 @@ import json
 from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
 
+from eq_translations.translatable_item import TranslatableItem
 from eq_translations.utils import (
     find_pointers_to,
     get_message_id,
@@ -43,7 +44,7 @@ class SurveySchema:
     @property
     def translatable_items(self):
         """
-        :yield: A pointer dictionary
+        :yield: A TranslatableItem
         :return: A generator
         """
 
@@ -98,18 +99,16 @@ class SurveySchema:
 
     def _get_translatable_item(self, pointer, value=None, with_context=False):
         """
-        :param pointer: Defines a string syntax for identifying a specific value within the schema.
-        :param value: The resolved value of the pointer. This is a Tuple for plural forms, and a String for all other elements
         :param with_context: Boolean flag to signify whether this pointer should have the question title as context.
-        :return: A dictionary.
+        :return: A TranslatableItem
         """
-        pointer_dict = {"pointer": pointer, "value": value}
+        context = (
+            self._get_context_from_pointer(pointer)
+            if with_context and f"/answers/" in pointer
+            else None
+        )
 
-        if with_context and f"/answers/" in pointer:
-            context = self._get_context_from_pointer(pointer)
-            pointer_dict["context"] = context
-
-        return pointer_dict
+        return TranslatableItem(pointer, value, context)
 
     @staticmethod
     def _get_parent_question_pointer(pointer):
@@ -145,15 +144,12 @@ class SurveySchema:
         translatable_items = list(self.translatable_items)
 
         for translatable_item in translatable_items:
-            context = translatable_item.get("context")
-            value = translatable_item["value"]
-
-            if not value:
+            if not translatable_item.value:
                 continue
 
-            message_id = get_message_id(value)
+            message_id = get_message_id(translatable_item.value)
             catalog.add(
-                id=message_id, context=context,
+                id=message_id, context=translatable_item.context,
             )
 
         print(f"Total Messages: {len(translatable_items)}")
@@ -175,14 +171,11 @@ class SurveySchema:
         translatable_items = list(self.translatable_items)
 
         for translatable_item in translatable_items:
-            pointer = translatable_item["pointer"]
-            value = translatable_item["value"]
-
-            if not value:
+            if not translatable_item.value:
                 continue
 
-            message_id = get_message_id(value)
-            context = translatable_item.get("context")
+            message_id = get_message_id(translatable_item.value)
+            context = translatable_item.context
 
             translation = schema_translation.get_translation(message_id, context)
 
@@ -190,7 +183,9 @@ class SurveySchema:
                 if isinstance(translation, tuple) and language_code:
                     plural_forms = get_plural_forms_for_language(language_code)
                     for index, plural_form in enumerate(plural_forms):
-                        plural_form_pointer = f"{pointer}/{plural_form}"
+                        plural_form_pointer = (
+                            f"{translatable_item.pointer}/{plural_form}"
+                        )
                         set_pointer(
                             translated_schema,
                             plural_form_pointer,
@@ -198,10 +193,14 @@ class SurveySchema:
                         )
                 else:
                     set_pointer(
-                        translated_schema, pointer, dumb_to_smart_quotes(translation),
+                        translated_schema,
+                        translatable_item.pointer,
+                        dumb_to_smart_quotes(translation),
                     )
             else:
-                print(f"Missing translation at {pointer}: '{value}'")
+                print(
+                    f"Missing translation at {translatable_item.pointer}: '{translatable_item.value}'"
+                )
                 missing_translations += 1
 
         print(f"\nTotal Messages: {len(translatable_items)}")

@@ -1,6 +1,7 @@
 from babel.messages import Catalog
 
 from eq_translations import SchemaTranslation, SurveySchema
+from eq_translations.translatable_item import TranslatableItem
 
 
 def test_translate():
@@ -246,22 +247,31 @@ def test_get_placeholder_pointers(schema_with_placeholders):
     schema = SurveySchema(schema_with_placeholders)
     translatable_items = list(schema.translatable_items)
 
-    assert {
-        "pointer": "/question/answers/0/options/0/label/text",
-        "value": "{address}",
-        "context": "Answer for: During term time, where does <em>{person_name}</em> usually live?",
-    } in translatable_items
+    assert (
+        TranslatableItem(
+            pointer="/question/answers/0/options/0/label/text",
+            value="{address}",
+            context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
+        )
+        in translatable_items
+    )
 
-    assert {
-        "pointer": "/question/answers/0/options/1/label/text",
-        "value": "The address in {country}",
-        "context": "Answer for: During term time, where does <em>{person_name}</em> usually live?",
-    } in translatable_items
+    assert (
+        TranslatableItem(
+            pointer="/question/answers/0/options/1/label/text",
+            value="The address in {country}",
+            context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
+        )
+        in translatable_items
+    )
 
-    assert {
-        "pointer": "/question/title/text",
-        "value": "During term time, where does <em>{person_name}</em> usually live?",
-    } in translatable_items
+    assert (
+        TranslatableItem(
+            pointer="/question/title/text",
+            value="During term time, where does <em>{person_name}</em> usually live?",
+        )
+        in translatable_items
+    )
 
 
 def test_placeholder_catalog_context(schema_with_placeholders):
@@ -281,22 +291,28 @@ def test_get_text_plural_pointers(schema_with_plurals):
     schema = SurveySchema(schema_with_plurals)
     translatable_items = list(schema.translatable_items)
 
-    assert {
-        "pointer": "/question/answers/0/options/0/label/text_plural/forms",
-        "value": {
-            "one": "Yes, {number_of_people} person lives here",
-            "other": "Yes, {number_of_people} people live here",
-        },
-        "context": "Answer for: {number_of_people} people live here, is this correct?",
-    } in translatable_items
+    assert (
+        TranslatableItem(
+            pointer="/question/answers/0/options/0/label/text_plural/forms",
+            value={
+                "one": "Yes, {number_of_people} person lives here",
+                "other": "Yes, {number_of_people} people live here",
+            },
+            context="Answer for: {number_of_people} people live here, is this correct?",
+        )
+        in translatable_items
+    )
 
-    assert {
-        "pointer": "/question/title/text_plural/forms",
-        "value": {
-            "one": "{number_of_people} person lives here, is this correct?",
-            "other": "{number_of_people} people live here, is this correct?",
-        },
-    } in translatable_items
+    assert (
+        TranslatableItem(
+            pointer="/question/title/text_plural/forms",
+            value={
+                "one": "{number_of_people} person lives here, is this correct?",
+                "other": "{number_of_people} people live here, is this correct?",
+            },
+        )
+        in translatable_items
+    )
 
 
 def test_placeholder_translation(schema_with_placeholders):
