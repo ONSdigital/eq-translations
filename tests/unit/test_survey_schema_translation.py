@@ -282,25 +282,19 @@ def test_get_text_plural_pointers(schema_with_plurals):
     translatable_items = list(schema.translatable_items)
 
     assert {
-        "pointer": "/question/answers/0/options/0/label/text_plural",
+        "pointer": "/question/answers/0/options/0/label/text_plural/forms",
         "value": {
-            "forms": {
-                "one": "Yes, {number_of_people} person lives here",
-                "other": "Yes, {number_of_people} people live here",
-            },
-            "count": {"source": "answers", "identifier": "number-of-people-answer"},
+            "one": "Yes, {number_of_people} person lives here",
+            "other": "Yes, {number_of_people} people live here",
         },
         "context": "Answer for: {number_of_people} people live here, is this correct?",
     } in translatable_items
 
     assert {
-        "pointer": "/question/title/text_plural",
+        "pointer": "/question/title/text_plural/forms",
         "value": {
-            "forms": {
-                "one": "{number_of_people} person lives here, is this correct?",
-                "other": "{number_of_people} people live here, is this correct?",
-            },
-            "count": {"source": "answers", "identifier": "number-of-people-answer",},
+            "one": "{number_of_people} person lives here, is this correct?",
+            "other": "{number_of_people} people live here, is this correct?",
         },
     } in translatable_items
 

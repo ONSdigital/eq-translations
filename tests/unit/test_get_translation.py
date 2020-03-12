@@ -94,7 +94,7 @@ class TestGetTranslation(unittest.TestCase):
     def test_translate_non_pluralizable_message_with_context(self):
         result = self.translator.get_translation(
             message_id=self.messages[1]["original"],
-            message_context=self.messages[1]["context"],
+            context=self.messages[1]["context"],
         )
 
         assert result == f"WELSH - {self.messages[1]['original']}"
@@ -102,22 +102,21 @@ class TestGetTranslation(unittest.TestCase):
     def test_translate_pluralizable_message_with_context(self):
         result = self.translator.get_translation(
             message_id=self.messages[4]["original"],
-            message_context=self.messages[4]["context"],
+            context=self.messages[4]["context"],
         )
 
         assert result == ("WELSH - one", "WELSH - other", "WELSH - many")
 
     def test_translate_context_message_mismatch(self):
         result = self.translator.get_translation(
-            message_id=self.messages[1]["original"],
-            message_context="some-random-context",
+            message_id=self.messages[1]["original"], context="some-random-context",
         )
 
         assert result is None
 
     def test_translate_context_message_with_no_context(self):
         result = self.translator.get_translation(
-            message_id=self.messages[1]["original"], message_context=None
+            message_id=self.messages[1]["original"], context=None
         )
 
         assert result is None

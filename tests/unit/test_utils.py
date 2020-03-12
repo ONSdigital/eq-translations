@@ -13,12 +13,10 @@ def test_get_message_id():
 
 
 def test_get_message_id_for_plurals():
-    pointer_contents = {
-        "forms": {"one": "Singular text", "other": "Plural text"},
-    }
+    pointer_contents = {"one": "Singular text", "other": "Plural text"}
 
-    singular_form = pointer_contents["forms"]["one"]
-    plural_form = pointer_contents["forms"]["other"]
+    singular_form = pointer_contents["one"]
+    plural_form = pointer_contents["other"]
 
     assert get_message_id(pointer_contents) == (singular_form, plural_form)
 

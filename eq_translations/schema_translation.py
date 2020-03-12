@@ -19,8 +19,8 @@ class SchemaTranslation:
             pofile.write_po(translation_file, self.catalog)  # pragma: no cover
 
     def get_translation(
-        self, message_id, message_context=None,
+        self, message_id, context=None,
     ):
-        message = self.catalog.get(id=message_id, context=message_context)
+        message = self.catalog.get(id=message_id, context=context)
 
         return message.string if message else None

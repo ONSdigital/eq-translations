@@ -74,11 +74,11 @@ class SurveySchema:
     def _get_translatable_items_from_dict_element(
         self, pointer, schema_element, with_context
     ):
-        plural_forms = schema_element.get("text_plural")
+        plural_forms = schema_element.get("text_plural", {}).get("forms")
         if plural_forms:
-            plural_pointer = f"{pointer}/text_plural"
+            plural_forms_pointer = f"{pointer}/text_plural/forms"
             yield self._get_translatable_item(
-                plural_pointer, plural_forms, with_context
+                plural_forms_pointer, plural_forms, with_context
             )
 
         for element, value in schema_element.items():
@@ -143,21 +143,20 @@ class SurveySchema:
         catalog = Catalog()
 
         translatable_items = list(self.translatable_items)
-        total_translatable_items = len(translatable_items)
 
-        for pointer_dict in translatable_items:
-            message_context = pointer_dict.get("context")
-            value = pointer_dict["value"]
+        for translatable_item in translatable_items:
+            context = translatable_item.get("context")
+            value = translatable_item["value"]
 
             if not value:
                 continue
 
-            message_id = get_message_id(content=value)
+            message_id = get_message_id(value)
             catalog.add(
-                id=message_id, context=message_context,
+                id=message_id, context=context,
             )
 
-        print(f"Total Messages: {total_translatable_items}")
+        print(f"Total Messages: {len(translatable_items)}")
 
         return catalog
 
@@ -174,27 +173,24 @@ class SurveySchema:
         missing_translations = 0
 
         translatable_items = list(self.translatable_items)
-        total_translatable_items = len(translatable_items)
 
-        for pointer_dict in translatable_items:
-            pointer = pointer_dict["pointer"]
-            value = pointer_dict["value"]
+        for translatable_item in translatable_items:
+            pointer = translatable_item["pointer"]
+            value = translatable_item["value"]
 
             if not value:
                 continue
 
             message_id = get_message_id(value)
-            message_context = pointer_dict.get("context")
+            context = translatable_item.get("context")
 
-            translation = schema_translation.get_translation(
-                message_id, message_context
-            )
+            translation = schema_translation.get_translation(message_id, context)
 
             if translation:
                 if isinstance(translation, tuple) and language_code:
                     plural_forms = get_plural_forms_for_language(language_code)
-                    for index, plural in enumerate(plural_forms):
-                        plural_form_pointer = f"{pointer}/forms/{plural}"
+                    for index, plural_form in enumerate(plural_forms):
+                        plural_form_pointer = f"{pointer}/{plural_form}"
                         set_pointer(
                             translated_schema,
                             plural_form_pointer,
@@ -208,7 +204,7 @@ class SurveySchema:
                 print(f"Missing translation at {pointer}: '{value}'")
                 missing_translations += 1
 
-        print(f"\nTotal Messages: {total_translatable_items}")
+        print(f"\nTotal Messages: {len(translatable_items)}")
 
         if missing_translations:
             print(f"Total Missing: {missing_translations}")
