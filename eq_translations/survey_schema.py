@@ -77,12 +77,14 @@ class SurveySchema:
     ):
         plural_forms = schema_element.get("text_plural", {}).get("forms")
         if plural_forms:
-            yield from self._get_plural_translatable_item(
-                pointer, plural_forms, with_context
+            plural_forms_pointer = f"{pointer}/text_plural/forms"
+            yield self._get_translatable_item(
+                plural_forms_pointer, plural_forms, with_context
             )
         elif "text" in schema_element:
-            yield from self._get_placeholder_text_translatable_item(
-                pointer, schema_element["text"], with_context
+            placeholder_pointer = f"{pointer}/text"
+            yield self._get_translatable_item(
+                placeholder_pointer, schema_element["text"], with_context
             )
         else:
             for element, value in schema_element.items():
@@ -95,15 +97,9 @@ class SurveySchema:
 
         for index, element in enumerate(schema_element):
             if isinstance(element, dict):
-                plural_forms = element.get("text_plural", {}).get("forms")
-                if plural_forms:
-                    yield from self._get_plural_translatable_item(
-                        pointer, plural_forms, with_context
-                    )
-                elif "text" in element:
-                    yield from self._get_placeholder_text_translatable_item(
-                        pointer, element["text"], with_context
-                    )
+                yield from self._get_translatable_items_from_dict_element(
+                    pointer, element, with_context
+                )
             else:
                 list_item_pointer = f"{pointer}/{index}"
                 yield self._get_translatable_item(
@@ -122,20 +118,6 @@ class SurveySchema:
         )
 
         return TranslatableItem(pointer, value, context)
-
-    def _get_plural_translatable_item(self, pointer, plural_forms, with_context):
-        plural_forms_pointer = f"{pointer}/text_plural/forms"
-        yield self._get_translatable_item(
-            plural_forms_pointer, plural_forms, with_context
-        )
-
-    def _get_placeholder_text_translatable_item(
-        self, pointer, placeholder_text, with_context
-    ):
-        placeholder_pointer = f"{pointer}/text"
-        yield self._get_translatable_item(
-            placeholder_pointer, placeholder_text, with_context
-        )
 
     @staticmethod
     def _get_parent_question_pointer(pointer):
