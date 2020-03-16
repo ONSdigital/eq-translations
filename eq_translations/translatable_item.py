@@ -6,7 +6,7 @@ from typing import Union, Optional
 class TranslatableItem:
     """A translatable item within the schema
 
-        pointer (str): Defines a string syntax for identifying a specific value within the schema.
+        pointer (str): The string syntax for identifying this item within the JavaScript Object Notation (JSON) document
         value (str or tuple): The resolved value of the pointer. This is a Tuple for plural forms, and a String for all other elements
         context (str): The context to use when translating the item
     """

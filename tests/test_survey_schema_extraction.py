@@ -112,6 +112,18 @@ def test_list_translatable_items():
                                         "text": "all trainees on government schemes on {date}",
                                     },
                                     "all full-time employees in Great Britain (England, Scotland and Wales) who received pay in the relevant period",
+                                    {
+                                        "text_plural": {
+                                            "forms": {
+                                                "one": "the person who lives here",
+                                                "other": "the people who live here",
+                                            },
+                                            "count": {
+                                                "source": "answers",
+                                                "identifier": "number-of-people-answer",
+                                            },
+                                        }
+                                    },
                                 ]
                             }
                         ],
@@ -144,6 +156,7 @@ def test_list_translatable_items():
     )
 
     translatable_items = list(schema.translatable_items)
+    pointers = [item.pointer for item in translatable_items]
 
     assert (
         TranslatableItem(
@@ -152,14 +165,38 @@ def test_list_translatable_items():
         )
         in translatable_items
     )
-    assert "/content_variants/0/content/contents/0/list/1" not in [
-        item.pointer for item in translatable_items
-    ]
+
+    # Placeholder 'text' is extracted explicitly
+    assert "/content_variants/0/content/contents/0/list/1" not in pointers
+
+    assert (
+        TranslatableItem(
+            pointer="/content_variants/0/content/contents/0/list/text",
+            value="all trainees on government schemes on {date}",
+            context=None,
+        )
+        in translatable_items
+    )
 
     assert (
         TranslatableItem(
             pointer="/content_variants/0/content/contents/0/list/2",
             value="all full-time employees in Great Britain (England, Scotland and Wales) who received pay in the relevant period",
+        )
+        in translatable_items
+    )
+
+    # Plural form 'text_plural' is extracted explicitly
+    assert "/content_variants/0/content/contents/0/list/3" not in pointers
+
+    assert (
+        TranslatableItem(
+            pointer="/content_variants/0/content/contents/0/list/text_plural/forms",
+            value={
+                "one": "the person who lives here",
+                "other": "the people who live here",
+            },
+            context=None,
         )
         in translatable_items
     )
