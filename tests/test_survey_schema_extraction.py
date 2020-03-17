@@ -478,11 +478,26 @@ def test_summary_without_placeholder_extraction():
     )
 
 
-def test_schema_language():
+def test_get_schema_language():
     survey_schema = SurveySchema()
     survey_schema.load("tests/schemas/en/test_translation.json")
 
     assert survey_schema.language == "en"
+
+
+def test_set_schema_language():
+    survey_schema = SurveySchema(
+        {
+            "data_version": "0.0.3",
+            "language": "en",
+            "description": "Census England Household Schema",
+        }
+    )
+
+    assert survey_schema.language == "en"
+
+    survey_schema.language = "cy"
+    assert survey_schema.schema["language"] == "cy"
 
 
 def test_all_pointers_resolve_to_correct_instance():

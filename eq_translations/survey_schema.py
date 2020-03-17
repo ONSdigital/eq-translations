@@ -38,8 +38,11 @@ class SurveySchema:
 
     @property
     def language(self):
-        if self.schema:
-            return self.schema["language"]
+        return self.schema.get("language")
+
+    @language.setter
+    def language(self, value):
+        self.schema["language"] = value
 
     @property
     def translatable_items(self):
@@ -167,7 +170,7 @@ class SurveySchema:
 
     def translate(self, schema_translation):
         """
-        Use the supplied schema translation object and language code to translate pointers found
+        Use the supplied schema translation object to translate all translatable strings
         within the survey
 
         :param schema_translation: The SchemaTranslation object

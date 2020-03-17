@@ -28,6 +28,8 @@ def handle_translate_schema(schema_path, translation_path, output_directory):
     translation.load(translation_path)
 
     translated_schema = survey_schema.translate(translation)
+    translated_schema.language = translation.language
+
     translated_schema.save(os.path.join(output_directory, schema_name))
 
     compare_schemas(survey_schema.schema, translated_schema.schema)

@@ -65,6 +65,8 @@ def main():
     translation.load(output_path)
 
     translated_schema = schema.translate(translation)
+    translated_schema.language = translation.language
+
     translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
 
 
