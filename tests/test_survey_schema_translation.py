@@ -6,9 +6,9 @@ from eq_translations.translatable_item import TranslatableItem
 
 
 def test_translate():
-    schema_translation = SchemaTranslation(locale=Locale("cy"))
+    schema_translation = SchemaTranslation()
 
-    catalog = Catalog()
+    catalog = Catalog(locale=Locale("cy"))
 
     catalog.add(
         "Answering for this person",
@@ -444,9 +444,9 @@ def test_variant_translation(schema_with_question_variants):
 
 
 def test_plural_translation(schema_with_plurals):
-    schema_translation = SchemaTranslation(locale=Locale("cy"))
+    schema_translation = SchemaTranslation()
 
-    catalog = Catalog()
+    catalog = Catalog(locale=Locale("cy"))
 
     catalog.add(
         id=(

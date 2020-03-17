@@ -1,7 +1,5 @@
 import os
 
-from babel import Locale
-
 from eq_translations import SurveySchema, SchemaTranslation
 from eq_translations.utils import get_plural_forms_for_language
 from eq_translations.validate_translation import (
@@ -16,7 +14,7 @@ def handle_extract_template(schema_path, output_directory):
 
     schema_name, _ = os.path.splitext(os.path.basename(schema_path))
 
-    translation = SchemaTranslation(schema.catalog, locale=Locale("en"))
+    translation = SchemaTranslation(schema.catalog)
     translation.save(os.path.join(output_directory, f"{schema_name}.pot"))
 
 
