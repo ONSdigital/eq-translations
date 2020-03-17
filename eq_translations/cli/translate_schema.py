@@ -21,10 +21,6 @@ def main():
         help="The destination directory for the translation template",
     )
 
-    parser.add_argument(
-        "TARGET_LANGUAGE_CODE", help="The target schema's language code"
-    )
-
     args = parser.parse_args()
 
     if not os.path.isdir(args.OUTPUT_DIRECTORY):
@@ -32,10 +28,7 @@ def main():
         sys.exit(2)
 
     handle_translate_schema(
-        args.SCHEMA_PATH,
-        args.TRANSLATION_PATH,
-        args.OUTPUT_DIRECTORY,
-        args.TARGET_LANGUAGE_CODE,
+        args.SCHEMA_PATH, args.TRANSLATION_PATH, args.OUTPUT_DIRECTORY
     )
 
 

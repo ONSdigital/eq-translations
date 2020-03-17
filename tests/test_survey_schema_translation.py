@@ -1,3 +1,4 @@
+from babel import Locale
 from babel.messages import Catalog
 
 from eq_translations import SchemaTranslation, SurveySchema
@@ -5,7 +6,7 @@ from eq_translations.translatable_item import TranslatableItem
 
 
 def test_translate():
-    schema_translation = SchemaTranslation()
+    schema_translation = SchemaTranslation(locale=Locale("cy"))
 
     catalog = Catalog()
 
@@ -70,7 +71,7 @@ def test_translate():
             ]
         }
     )
-    translated = schema.translate(schema_translation, language_code="cy")
+    translated = schema.translate(schema_translation)
 
     expected = {
         "blocks": [
@@ -340,7 +341,7 @@ def test_placeholder_translation(schema_with_placeholders):
     schema_translation.catalog = catalog
 
     schema = SurveySchema(schema_with_placeholders)
-    translated = schema.translate(schema_translation, language_code="cy")
+    translated = schema.translate(schema_translation)
 
     expected = {
         "question": {
@@ -430,7 +431,7 @@ def test_variant_translation(schema_with_question_variants):
 
     variant_schema = SurveySchema(schema_with_question_variants)
 
-    translated = variant_schema.translate(schema_translation, language_code="cy")
+    translated = variant_schema.translate(schema_translation)
 
     assert (
         translated.schema["question_variants"][0]["question"]["answers"][0]["label"]
@@ -443,7 +444,7 @@ def test_variant_translation(schema_with_question_variants):
 
 
 def test_plural_translation(schema_with_plurals):
-    schema_translation = SchemaTranslation()
+    schema_translation = SchemaTranslation(locale=Locale("cy"))
 
     catalog = Catalog()
 
@@ -482,7 +483,7 @@ def test_plural_translation(schema_with_plurals):
 
     plural_forms_schema = SurveySchema(schema_with_plurals)
 
-    translated = plural_forms_schema.translate(schema_translation, language_code="cy")
+    translated = plural_forms_schema.translate(schema_translation)
 
     forms_for_title = translated.schema["question"]["title"]["text_plural"]["forms"]
 

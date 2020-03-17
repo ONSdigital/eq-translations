@@ -1,3 +1,4 @@
+from eq_translations.utils import get_plural_forms_for_language
 from eq_translations.validate_translation import (
     compare_schemas,
     validate_translated_plural_forms,
@@ -73,8 +74,9 @@ def test_validate_translated_plural_forms():
         ],
     }
 
+    plural_forms = get_plural_forms_for_language("cy")
     missing_plural_forms = validate_translated_plural_forms(
-        translated_schema, language_code="cy"
+        translated_schema, plural_forms
     )
 
     assert "one" not in missing_plural_forms

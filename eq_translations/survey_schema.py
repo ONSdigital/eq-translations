@@ -5,12 +5,7 @@ from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
 
 from eq_translations.translatable_item import TranslatableItem
-from eq_translations.utils import (
-    find_pointers_to,
-    get_message_id,
-    dumb_to_smart_quotes,
-    get_plural_forms_for_language,
-)
+from eq_translations.utils import find_pointers_to, get_message_id, dumb_to_smart_quotes
 
 
 class SurveySchema:
@@ -165,13 +160,12 @@ class SurveySchema:
 
         return catalog
 
-    def translate(self, schema_translation, language_code):
+    def translate(self, schema_translation):
         """
         Use the supplied schema translation object and language code to translate pointers found
         within the survey
 
         :param schema_translation: The SchemaTranslation object
-        :param language_code: The target language code
         :return:
         """
         translated_schema = copy.deepcopy(self.schema)
@@ -189,9 +183,10 @@ class SurveySchema:
             translation = schema_translation.get_translation(message_id, context)
 
             if translation:
-                if isinstance(translation, tuple) and language_code:
-                    plural_forms = get_plural_forms_for_language(language_code)
-                    for index, plural_form in enumerate(plural_forms):
+                if isinstance(translation, tuple):
+                    for index, plural_form in enumerate(
+                        schema_translation.plural_forms
+                    ):
                         plural_form_pointer = (
                             f"{translatable_item.pointer}/{plural_form}"
                         )
@@ -215,6 +210,6 @@ class SurveySchema:
         print(f"\nTotal Messages: {len(translatable_items)}")
 
         if missing_translations:
-            print(f"Total Missing: {missing_translations}")
+            print(f"Total Missing Translations: {missing_translations}")
 
         return SurveySchema(translated_schema)

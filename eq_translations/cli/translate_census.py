@@ -64,7 +64,7 @@ def main():
     translation = SchemaTranslation()
     translation.load(output_path)
 
-    translated_schema = schema.translate(translation, language_code="cy")
+    translated_schema = schema.translate(translation)
     translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
 
 

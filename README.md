@@ -34,7 +34,7 @@ The library exports a `eq_translations.SurveySchema` class and `eq_translations.
 
 `extract_template(schema_path, output_directory)`
 
-`translate_schema(schema_path, translation_path, output_directory, target_language_code)`
+`translate_schema(schema_path, translation_path, output_directory)`
 
 `handle_compare_schemas(source_schema, target_schema, target_language_code)`
 
@@ -55,7 +55,7 @@ This will output the translatable text to an POT file.
 After the text has been translated, create a new translated schema with:
 
 ```
-pipenv run python -m eq_translations.cli.translate_schema <schema_file> <translation_path> <output_directory> <target_language_code>
+pipenv run python -m eq_translations.cli.translate_schema <schema_file> <translation_path> <output_directory>
 ```
 
 To compare two schemas for differences in structure:
