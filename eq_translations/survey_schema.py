@@ -37,6 +37,11 @@ class SurveySchema:
             return json.dump(self.schema, schema_file, indent=4)  # pragma: no cover
 
     @property
+    def language(self):
+        if self.schema:
+            return self.schema["language"]
+
+    @property
     def translatable_items(self):
         """
         :yield: A TranslatableItem

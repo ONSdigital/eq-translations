@@ -36,7 +36,7 @@ The library exports a `eq_translations.SurveySchema` class and `eq_translations.
 
 `translate_schema(schema_path, translation_path, output_directory)`
 
-`handle_compare_schemas(source_schema, target_schema, target_language_code)`
+`handle_compare_schemas(source_schema, target_schema)`
 
 The following scripts will also be available on your path once the package is installed: `extract_template`, `translate_census`, `translate_schema`, `compare_schemas`
 
@@ -61,7 +61,7 @@ pipenv run python -m eq_translations.cli.translate_schema <schema_file> <transla
 To compare two schemas for differences in structure:
 
 ```
-pipenv run python -m eq_translations.cli.compare_schemas <path_to_source_schema> <path_to_target_schema> <target_language_code>
+pipenv run python -m eq_translations.cli.compare_schemas <path_to_source_schema> <path_to_target_schema>
 ```
 
 To run the tests:

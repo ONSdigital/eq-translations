@@ -35,7 +35,7 @@ def handle_translate_schema(schema_path, translation_path, output_directory):
     validate_translated_plural_forms(translated_schema.schema, translation.plural_forms)
 
 
-def handle_compare_schemas(source_schema, target_schema, target_language_code):
+def handle_compare_schemas(source_schema, target_schema):
     source_survey = SurveySchema()
     source_survey.load(source_schema)
     target_survey = SurveySchema()
@@ -43,5 +43,5 @@ def handle_compare_schemas(source_schema, target_schema, target_language_code):
 
     compare_schemas(source_survey.schema, target_survey.schema)
 
-    plural_forms = get_plural_forms_for_language(target_language_code)
+    plural_forms = get_plural_forms_for_language(target_survey.language)
     validate_translated_plural_forms(target_survey.schema, plural_forms)
