@@ -1,4 +1,5 @@
 from jsonpointer import resolve_pointer
+from termcolor import colored
 
 from eq_translations.utils import (
     list_pointers,
@@ -14,46 +15,60 @@ def compare_schemas(source_schema, target_schema):
     :param target_schema: Target structure to compare against
     :return:
     """
-    source_survey_pointers = set(list_pointers(source_schema))
-    target_survey_pointers = set(list_pointers(target_schema))
-
-    missing_target_pointers = source_survey_pointers.difference(target_survey_pointers)
-    missing_source_pointers = target_survey_pointers.difference(source_survey_pointers)
-
-    missing_non_plural_target_pointers = {
-        pointer for pointer in missing_target_pointers if "text_plural" not in pointer
+    non_plural_source_survey_pointers = {
+        p for p in list_pointers(source_schema) if "text_plural" not in p
     }
-    missing_non_plural_source_pointers = {
-        pointer for pointer in missing_source_pointers if "text_plural" not in pointer
+    non_plural_target_survey_pointers = {
+        p for p in list_pointers(target_schema) if "text_plural" not in p
     }
 
-    missing_pointers = (
-        missing_non_plural_target_pointers | missing_non_plural_source_pointers
+    missing_target_pointers = non_plural_source_survey_pointers.difference(
+        non_plural_target_survey_pointers
     )
+    missing_source_pointers = non_plural_target_survey_pointers.difference(
+        non_plural_source_survey_pointers
+    )
+
+    missing_pointers = missing_target_pointers | missing_source_pointers
 
     if missing_pointers:
         print(
-            f"\nDifferences between source/target schema strings (excluding text_plural): {len(missing_pointers)}"
+            colored(
+                f"\nDifferences between source/target schema strings (excluding text_plural): {len(missing_pointers)}",
+                "red",
+            )
         )
-        print(f"Total strings in source schema: {len(source_survey_pointers)}")
-        print(f"Total strings in target schema: {len(target_survey_pointers)}\n")
+        print(
+            f"Total non-plural strings in source schema: {len(non_plural_source_survey_pointers)}"
+        )
+        print(
+            f"Total non-plural strings in target schema: {len(non_plural_target_survey_pointers)}\n"
+        )
 
-        if missing_non_plural_target_pointers:
+        if missing_target_pointers:
             print(
-                "Pointers in the source schema that are missing from the target schema:"
+                colored(
+                    "Pointers in the source schema that are missing from the target schema:",
+                    "red",
+                )
             )
-            for pointer in missing_non_plural_target_pointers:
-                print(pointer)
+            for pointer in missing_target_pointers:
+                print(colored(pointer, "yellow"))
 
-        if missing_non_plural_source_pointers:
+        if missing_source_pointers:
             print(
-                "Pointers in the target schema that are missing from the source schema:"
+                colored(
+                    "\nPointers in the target schema that are missing from the source schema:",
+                    "red",
+                )
             )
-            for pointer in missing_non_plural_source_pointers:
-                print(pointer)
+            for pointer in missing_source_pointers:
+                print(colored(pointer, "yellow"))
 
     else:
-        print("\nNon-plural pointers in source and target schemas match")
+        print(
+            colored("\nNo missing non-plural pointers in source or target schema", "green")
+        )
 
     return missing_pointers
 
@@ -71,14 +86,16 @@ def validate_translated_plural_forms(translated_schema, language):
 
     if missing_plural_forms:
         print(
-            f"\nTotal plural forms missing in translated schema: {len(missing_plural_forms)}"
+            colored(
+                f"\nTotal plural forms missing in translated schema: {len(missing_plural_forms)}",
+                "red",
+            )
         )
+        print("Missing plural forms at:")
 
         for pointer, form in missing_plural_forms:
-            print(
-                f"Missing plural form in translated schema at {pointer}/forms/: '{form}'"
-            )
+            print(colored(f"{pointer}/forms/: '{form}'", "yellow"))
     else:
-        print("\nPlural forms validated successfully")
+        print(colored("\nPlural forms validated successfully", "green"))
 
     return missing_plural_forms
