@@ -115,8 +115,9 @@ def test_translate():
                         }
                     ],
                 }
-            }
-        ]
+            },
+        ],
+        "language": "cy",
     }
 
     assert expected == translated.schema
@@ -319,7 +320,7 @@ def test_get_text_plural_pointers(schema_with_plurals):
 def test_placeholder_translation(schema_with_placeholders):
     schema_translation = SchemaTranslation()
 
-    catalog = Catalog()
+    catalog = Catalog(locale=Locale("cy"))
 
     catalog.add(
         id="During term time, where does <em>{person_name}</em> usually live?",
@@ -406,7 +407,8 @@ def test_placeholder_translation(schema_with_placeholders):
                     "type": "Radio",
                 }
             ],
-        }
+        },
+        "language": "cy",
     }
 
     assert expected == translated.schema
@@ -504,3 +506,17 @@ def test_plural_translation(schema_with_plurals):
     assert forms_for_answer_label["few"] == "WELSH - few"
     assert forms_for_answer_label["many"] == "WELSH - many"
     assert forms_for_answer_label["other"] == "WELSH - other"
+
+
+def test_translate_sets_language():
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add("test")
+
+    schema_translation = SchemaTranslation(catalog=catalog)
+
+    schema = SurveySchema({})
+    schema.translate(schema_translation)
+
+    translated_schema = schema.translate(schema_translation)
+
+    assert translated_schema.language == "cy"

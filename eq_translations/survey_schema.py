@@ -5,7 +5,12 @@ from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
 
 from eq_translations.translatable_item import TranslatableItem
-from eq_translations.utils import find_pointers_to, get_message_id, dumb_to_smart_quotes
+from eq_translations.utils import (
+    find_pointers_to,
+    get_message_id,
+    dumb_to_smart_quotes,
+    get_plural_forms_for_language,
+)
 
 
 class SurveySchema:
@@ -39,10 +44,6 @@ class SurveySchema:
     @property
     def language(self):
         return self.schema.get("language")
-
-    @language.setter
-    def language(self, value):
-        self.schema["language"] = value
 
     @property
     def translatable_items(self):
@@ -164,7 +165,7 @@ class SurveySchema:
                 id=message_id, context=translatable_item.context,
             )
 
-        print(f"Total Messages: {len(translatable_items)}")
+        print(f"Total Translatable Items: {len(translatable_items)}")
 
         return catalog
 
@@ -177,8 +178,9 @@ class SurveySchema:
         :return:
         """
         translated_schema = copy.deepcopy(self.schema)
-        missing_translations = 0
+        translated_schema["language"] = schema_translation.language
 
+        missing_translations = 0
         translatable_items = list(self.translatable_items)
 
         for translatable_item in translatable_items:
@@ -192,9 +194,10 @@ class SurveySchema:
 
             if translation:
                 if isinstance(translation, tuple):
-                    for index, plural_form in enumerate(
-                        schema_translation.plural_forms
-                    ):
+                    plural_forms = get_plural_forms_for_language(
+                        schema_translation.language
+                    )
+                    for index, plural_form in enumerate(plural_forms):
                         plural_form_pointer = (
                             f"{translatable_item.pointer}/{plural_form}"
                         )
@@ -215,7 +218,7 @@ class SurveySchema:
                 )
                 missing_translations += 1
 
-        print(f"\nTotal Messages: {len(translatable_items)}")
+        print(f"\nTotal Translatable Items: {len(translatable_items)}")
 
         if missing_translations:
             print(f"Total Missing Translations: {missing_translations}")

@@ -3,6 +3,7 @@ from jsonpointer import resolve_pointer
 from eq_translations.utils import (
     list_pointers,
     find_pointers_to,
+    get_plural_forms_for_language,
 )
 
 
@@ -37,40 +38,47 @@ def compare_schemas(source_schema, target_schema):
         print(f"Total strings in source schema: {len(source_survey_pointers)}")
         print(f"Total strings in target schema: {len(target_survey_pointers)}\n")
 
-        if missing_target_pointers:
+        if missing_non_plural_target_pointers:
             print(
                 "Pointers in the source schema that are missing from the target schema:"
             )
-            for pointer in missing_target_pointers:
+            for pointer in missing_non_plural_target_pointers:
                 print(pointer)
 
-        if missing_source_pointers:
+        if missing_non_plural_source_pointers:
             print(
                 "Pointers in the target schema that are missing from the source schema:"
             )
-            for pointer in missing_source_pointers:
+            for pointer in missing_non_plural_source_pointers:
                 print(pointer)
+
+    else:
+        print("\nNon-plural pointers in source and target schemas match")
 
     return missing_pointers
 
 
-def validate_translated_plural_forms(translated_schema, plural_forms):
+def validate_translated_plural_forms(translated_schema, language):
     missing_plural_forms = []
+    plural_forms = get_plural_forms_for_language(language)
     plural_pointers = find_pointers_to(translated_schema, "text_plural")
 
     for pointer in plural_pointers:
         text_plural_forms = resolve_pointer(translated_schema, pointer)["forms"]
-
         for form in plural_forms:
             if not text_plural_forms.get(form):
-                missing_plural_forms.append(form)
-                print(
-                    f"Missing plural form in translated schema at {pointer}/forms/: '{form}'"
-                )
+                missing_plural_forms.append((pointer, form))
 
     if missing_plural_forms:
         print(
             f"\nTotal plural forms missing in translated schema: {len(missing_plural_forms)}"
         )
+
+        for pointer, form in missing_plural_forms:
+            print(
+                f"Missing plural form in translated schema at {pointer}/forms/: '{form}'"
+            )
+    else:
+        print("\nPlural forms validated successfully")
 
     return missing_plural_forms

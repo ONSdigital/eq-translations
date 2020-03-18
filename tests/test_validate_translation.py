@@ -1,4 +1,3 @@
-from eq_translations.utils import get_plural_forms_for_language
 from eq_translations.validate_translation import (
     compare_schemas,
     validate_translated_plural_forms,
@@ -33,7 +32,7 @@ def test_compare_source_schema():
     assert len(differences) == 6
 
 
-def test_compare_target_schema():
+def test_compare_target_schema_missing_pointer():
 
     source_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
 
@@ -60,31 +59,47 @@ def test_compare_target_schema():
     assert len(differences) == 9
 
 
-def test_validate_translated_plural_forms():
+def test_compare_target_schema_no_missing_pointer():
+
+    source_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
+
+    target_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
+
+    differences = compare_schemas(source_schema, target_schema)
+
+    assert not differences
+
+
+def test_validate_missing_translated_plural_forms():
     translated_schema = {
         "text_plural": {
             "forms": {"one": "one", "other": "other", "many": "many", "few": ""},
             "count": {"source": "answers", "identifier": "number-of-people-answer"},
-        },
-        "placeholders": [
-            {
-                "placeholder": "number_of_people",
-                "value": {"source": "answers", "identifier": "number-of-people-answer"},
-            }
-        ],
+        }
     }
 
-    plural_forms = get_plural_forms_for_language("cy")
-    missing_plural_forms = validate_translated_plural_forms(
-        translated_schema, plural_forms
-    )
+    missing_plural_forms = validate_translated_plural_forms(translated_schema, "cy")
+    plurals = [missing_plural[1] for missing_plural in missing_plural_forms]
 
-    assert "one" not in missing_plural_forms
-    assert "other" not in missing_plural_forms
-    assert "many" not in missing_plural_forms
+    assert "one" not in plurals
+    assert "other" not in plurals
+    assert "many" not in plurals
 
-    assert "few" in missing_plural_forms
-    assert "zero" in missing_plural_forms
-    assert "two" in missing_plural_forms
+    assert "few" in plurals
+    assert "zero" in plurals
+    assert "two" in plurals
 
     assert len(missing_plural_forms) == 3
+
+
+def test_validate_no_missing_translated_plural_forms():
+    translated_schema = {
+        "text_plural": {
+            "forms": {"one": "one", "other": "other"},
+            "count": {"source": "answers", "identifier": "number-of-people-answer"},
+        }
+    }
+
+    missing_plural_forms = validate_translated_plural_forms(translated_schema, "en")
+
+    assert not missing_plural_forms

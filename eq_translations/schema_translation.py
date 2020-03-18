@@ -1,7 +1,5 @@
 from babel.messages import pofile
 
-from eq_translations.utils import get_plural_forms_for_language
-
 
 class SchemaTranslation:
 
@@ -24,11 +22,6 @@ class SchemaTranslation:
     def language(self):
         if self.catalog and self.catalog.locale:
             return self.catalog.locale.language
-
-    @property
-    def plural_forms(self):
-        if self.language:
-            return get_plural_forms_for_language(self.language)
 
     def get_translation(
         self, message_id, context=None,
