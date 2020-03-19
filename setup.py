@@ -17,6 +17,6 @@ setup(
             "compare_schemas=eq_translations.cli.compare_schemas:main",
         ]
     },
-    install_requires=["babel", "jsonpointer", "tqdm", "requests"],
+    install_requires=["babel", "jsonpointer", "tqdm", "requests", "termcolor"],
     zip_safe=False,
 )
