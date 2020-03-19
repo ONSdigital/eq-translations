@@ -4,8 +4,8 @@ from termcolor import colored
 
 from eq_translations import SurveySchema, SchemaTranslation
 from eq_translations.validate_translation import (
-    compare_schemas,
-    validate_translated_plural_forms,
+    get_missing_non_plural_pointers,
+    get_missing_translated_plural_forms,
 )
 
 
@@ -31,9 +31,11 @@ def handle_translate_schema(schema_path, translation_path, output_directory):
     translated_schema = survey_schema.translate(translation)
     translated_schema.save(os.path.join(output_directory, schema_name))
 
-    missing_pointers = compare_schemas(survey_schema.schema, translated_schema.schema)
+    missing_pointers = get_missing_non_plural_pointers(
+        survey_schema.schema, translated_schema.schema
+    )
 
-    missing_plural_forms = validate_translated_plural_forms(
+    missing_plural_forms = get_missing_translated_plural_forms(
         translated_schema.schema, translated_schema.language
     )
 
@@ -47,9 +49,11 @@ def handle_compare_schemas(source_schema, target_schema):
     target_survey = SurveySchema()
     target_survey.load(target_schema)
 
-    missing_pointers = compare_schemas(source_survey.schema, target_survey.schema)
+    missing_pointers = get_missing_non_plural_pointers(
+        source_survey.schema, target_survey.schema
+    )
 
-    missing_plural_forms = validate_translated_plural_forms(
+    missing_plural_forms = get_missing_translated_plural_forms(
         target_survey.schema, target_survey.language
     )
 

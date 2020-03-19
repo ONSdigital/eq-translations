@@ -8,7 +8,7 @@ from eq_translations.utils import (
 )
 
 
-def compare_schemas(source_schema, target_schema):
+def get_missing_non_plural_pointers(source_schema, target_schema):
     """
     Compare the pointers in two json structures and return differences
     :param source_schema: Structure to identify differences against
@@ -58,7 +58,7 @@ def compare_schemas(source_schema, target_schema):
     return missing_pointers
 
 
-def validate_translated_plural_forms(translated_schema, language):
+def get_missing_translated_plural_forms(translated_schema, language):
     missing_plural_forms = []
     plural_forms = get_plural_forms_for_language(language)
     plural_pointers = find_pointers_to(translated_schema, "text_plural")

@@ -1,6 +1,6 @@
 from eq_translations.validate_translation import (
-    compare_schemas,
-    validate_translated_plural_forms,
+    get_missing_non_plural_pointers,
+    get_missing_translated_plural_forms,
 )
 
 
@@ -20,7 +20,7 @@ def test_compare_source_schema():
 
     target_schema = {"this": "is", "a": {"test": [{"item": {}}, {"item": {}}]}}
 
-    differences = compare_schemas(source_schema, target_schema)
+    differences = get_missing_non_plural_pointers(source_schema, target_schema)
 
     assert "/a/test/2" in differences
     assert "/a/test/3" in differences
@@ -44,7 +44,7 @@ def test_compare_target_schema_missing_pointer():
         },
     }
 
-    differences = compare_schemas(source_schema, target_schema)
+    differences = get_missing_non_plural_pointers(source_schema, target_schema)
 
     assert "/this" in differences
     assert "/a/test/2" in differences
@@ -65,12 +65,12 @@ def test_compare_target_schema_no_missing_pointer():
 
     target_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
 
-    differences = compare_schemas(source_schema, target_schema)
+    differences = get_missing_non_plural_pointers(source_schema, target_schema)
 
     assert not differences
 
 
-def test_validate_missing_translated_plural_forms():
+def test_get_missing_translated_plural_forms():
     translated_schema = {
         "text_plural": {
             "forms": {"one": "one", "other": "other", "many": "many", "few": ""},
@@ -78,7 +78,7 @@ def test_validate_missing_translated_plural_forms():
         }
     }
 
-    missing_plural_forms = validate_translated_plural_forms(translated_schema, "cy")
+    missing_plural_forms = get_missing_translated_plural_forms(translated_schema, "cy")
     plurals = [missing_plural[1] for missing_plural in missing_plural_forms]
 
     assert "one" not in plurals
@@ -92,7 +92,7 @@ def test_validate_missing_translated_plural_forms():
     assert len(missing_plural_forms) == 3
 
 
-def test_validate_no_missing_translated_plural_forms():
+def test_get_no_missing_translated_plural_forms():
     translated_schema = {
         "text_plural": {
             "forms": {"one": "one", "other": "other"},
@@ -100,6 +100,6 @@ def test_validate_no_missing_translated_plural_forms():
         }
     }
 
-    missing_plural_forms = validate_translated_plural_forms(translated_schema, "en")
+    missing_plural_forms = get_missing_translated_plural_forms(translated_schema, "en")
 
     assert not missing_plural_forms
