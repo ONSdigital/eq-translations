@@ -42,35 +42,18 @@ def compare_schemas(source_schema, target_schema):
             f"Total non-plural strings in source schema: {len(non_plural_source_survey_pointers)}"
         )
         print(
-            f"Total non-plural strings in target schema: {len(non_plural_target_survey_pointers)}\n"
+            f"Total non-plural strings in target schema: {len(non_plural_target_survey_pointers)}"
         )
-
-        if missing_target_pointers:
-            print(
-                colored(
-                    "Pointers in the source schema that are missing from the target schema:",
-                    "red",
-                )
-            )
-            for pointer in missing_target_pointers:
-                print(colored(pointer, "yellow"))
 
         if missing_source_pointers:
-            print(
-                colored(
-                    "\nPointers in the target schema that are missing from the source schema:",
-                    "red",
-                )
-            )
+            print("Missing from the source schema:")
             for pointer in missing_source_pointers:
-                print(colored(pointer, "yellow"))
+                print(colored(f"  - {pointer}", "yellow"))
 
-    else:
-        print(
-            colored(
-                "\nNo missing non-plural pointers in source or target schema", "green"
-            )
-        )
+        if missing_target_pointers:
+            print("Missing from the target schema:")
+            for pointer in missing_target_pointers:
+                print(colored(f"  - {pointer}", "yellow"))
 
     return missing_pointers
 
@@ -96,8 +79,6 @@ def validate_translated_plural_forms(translated_schema, language):
         print("Missing plural forms at:")
 
         for pointer, form in missing_plural_forms:
-            print(colored(f"{pointer}/forms/: '{form}'", "yellow"))
-    else:
-        print(colored("\nPlural forms validated successfully", "green"))
+            print(colored(f"  - {pointer}/forms/: '{form}'", "yellow"))
 
     return missing_plural_forms
