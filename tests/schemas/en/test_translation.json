@@ -1,0 +1,493 @@
+{
+    "data_version": "0.0.3",
+    "language": "en",
+    "description": "Test translations",
+    "legal_basis": "Notice is given under section 1 of the Statistics of Trade Act 1947.",
+    "view_submitted_response": {
+        "enabled": true,
+        "duration": 901
+    },
+    "metadata": [
+        {
+            "name": "user_id",
+            "type": "string"
+        },
+        {
+            "name": "period_id",
+            "type": "string"
+        },
+        {
+            "name": "ru_name",
+            "type": "string"
+        }
+    ],
+    "mime_type": "application/json/ons/eq",
+    "schema_version": "0.0.1",
+    "sections": [
+        {
+            "groups": [
+                {
+                    "blocks": [
+                        {
+                            "id": "introduction",
+                            "type": "Introduction",
+                            "title": "Introduction",
+                            "primary_content": [
+                                {
+                                    "id": "use-of-information",
+                                    "title": "What you need to do next",
+                                    "contents": [
+                                        {
+                                            "list": [
+                                                "Data should relate to all sites in England, Scotland and Wales unless otherwise stated.",
+                                                "You can provide informed estimates if actual figures aren’t available.",
+                                                "We will treat your data securely and confidentially."
+                                            ]
+                                        },
+                                        {
+                                            "description": "To take part, all you need to do is check that you have the information you need to answer the survey questions."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "preview_content": {
+                                "id": "preview",
+                                "title": "Information you need",
+                                "contents": [
+                                    {
+                                        "description": "You can select the dates of the period you are reporting for, if the given dates are not appropriate."
+                                    },
+                                    {
+                                        "description": "<a rel='noopener noreferrer' target='_blank' href='https://www.ons.gov.uk/surveys/informationforbusinesses/aboutonsbusinesssurveys/detailedguidancetohelpcompletethequarterlyacquisitionsanddisposalsofcapitalassetssurvey'>Read the detailed guidance for completing this survey</a>"
+                                    }
+                                ],
+                                "questions": [
+                                    {
+                                        "id": "employee-pay-frequency",
+                                        "question": "Employee pay frequency",
+                                        "contents": [
+                                            {
+                                                "list": [
+                                                    "You will need to indicate how frequently employees are paid i.e weekly, fortnightly, calendar monthly, four weekly or five weekly.",
+                                                    "You will be asked to answer the questions below for all of your selected pay patterns."
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "what-you-need-to-know",
+                                        "question": "What you need to know",
+                                        "contents": [
+                                            {
+                                                "list": [
+                                                    "You can provide informed estimates if actual figures aren’t available",
+                                                    "All information you provide is strictly confidential"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "definition-of-innovation",
+                                        "question": "Definition of innovation",
+                                        "contents": [
+                                            {
+                                                "description": {
+                                                    "text": "Innovation, for the purpose of this survey, is defined as <strong>new</strong> or <strong>significantly improved goods or services</strong> as well as <strong>processes</strong> used to produce or supply all goods or services that {ru_name} has introduced, regardless of their origin.",
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "ru_name",
+                                                            "value": {
+                                                                "source": "metadata",
+                                                                "identifier": "ru_name"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "description": {
+                                                    "text": "These innovations may be new to {ru_name} or new to the market",
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "ru_name",
+                                                            "value": {
+                                                                "source": "metadata",
+                                                                "identifier": "ru_name"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "description": {
+                                                    "text": "Investments for future innovation and changes that {ru_name} has introduced at a <strong>strategic</strong> level (in organisation and practices) are also covered",
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "ru_name",
+                                                            "value": {
+                                                                "source": "metadata",
+                                                                "identifier": "ru_name"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "secondary_content": [
+                                {
+                                    "id": "how-we-use-your-data",
+                                    "contents": [
+                                        {
+                                            "title": "How we use your data",
+                                            "list": [
+                                                "You cannot appeal your selection. Your business was selected to give us a comprehensive view of the UK economy",
+                                                "The data from you business is essential is it helps us calculate the GDP of the UK",
+                                                "Our surveys inform government decisions. For example, past statistics from our surveys led to the introduction of business grants"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "interstitial-block",
+                            "type": "Interstitial",
+                            "content": {
+                                "title": "Questions will follow.",
+                                "contents": [
+                                    {
+                                        "description": "This is a description"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "block-1",
+                            "question": {
+                                "id": "question-1",
+                                "title": "Who are you answering for?",
+                                "type": "General",
+                                "definitions": [
+                                    {
+                                        "title": "Why use LiFePO4 batteries?",
+                                        "contents": [
+                                            {
+                                                "description": "A typical photovoltaic system employs solar panels, each comprising a number of solar cells, which generate electrical power. PV installations may be ground-mounted, rooftop mounted or wall mounted. The mount may be fixed, or use a solar tracker to follow the sun across the sky."
+                                            },
+                                            {
+                                                "title": "3 Benefits of LifePO4 batteries."
+                                            },
+                                            {
+                                                "list": [
+                                                    "LifePO4 batteries have a life span 10 times longer than that of traditional lead acid batteries. This dramatically reduces the need for battery changes.",
+                                                    "Lithium iron phosphate batteries operate with much lower resistance and consequently recharge at a faster rate.",
+                                                    "LifeP04 lightweight batteries are lighter than lead acid batteries, usually weighing about 1/4 less."
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "answers": [
+                                    {
+                                        "type": "Radio",
+                                        "id": "feeling-answer",
+                                        "label": "Feeling answer",
+                                        "mandatory": true,
+                                        "options": [
+                                            {
+                                                "label": "Answering for this person",
+                                                "value": "Answering for this person"
+                                            },
+                                            {
+                                                "label": "Answering myself",
+                                                "value": "Answering myself",
+                                                "detail_answer": {
+                                                    "id": "feeling-bad-answer",
+                                                    "label": "Specify why answering for yourself is bad",
+                                                    "mandatory": true,
+                                                    "type": "TextField"
+                                                }
+                                            }
+                                        ],
+                                        "guidance": {
+                                            "hide_guidance": "Hide feeling answer help",
+                                            "show_guidance": "Show feeling answer help",
+                                            "contents": [
+                                                {
+                                                    "title": "Feeling answer",
+                                                    "description": "This should be answered to see if you are answering on behalf of someone else"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": "block-2",
+                            "type": "Question",
+                            "question_variants": [
+                                {
+                                    "question": {
+                                        "type": "General",
+                                        "id": "question-2",
+                                        "title": "What is ‘this persons’ date of birth?",
+                                        "answers": [
+                                            {
+                                                "id": "confirm-feeling-answer",
+                                                "type": "Radio",
+                                                "label": "confirm",
+                                                "mandatory": true,
+                                                "options": [
+                                                    {
+                                                        "value": "Yes",
+                                                        "label": "Yes"
+                                                    },
+                                                    {
+                                                        "value": "No",
+                                                        "label": "No"
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "guidance": {
+                                            "contents": [
+                                                {
+                                                    "title": "Include:",
+                                                    "list": [
+                                                        "all employees in Great Britain (England, Scotland and Wales), both full and part-time, who received pay in the relevant period"
+                                                    ]
+                                                },
+                                                {
+                                                    "title": "Exclude:",
+                                                    "list": [
+                                                        "trainees on government schemes",
+                                                        "employees working abroad unless paid directly from this business’s GB payroll",
+                                                        "employees in Northern Ireland"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "when": [
+                                        {
+                                            "id": "feeling-answer",
+                                            "condition": "equals",
+                                            "value": "Answering for this person"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "question": {
+                                        "type": "General",
+                                        "id": "question-2",
+                                        "title": "What is your date of birth?",
+                                        "answers": [
+                                            {
+                                                "id": "confirm-feeling-answer",
+                                                "type": "Radio",
+                                                "label": "confirm",
+                                                "mandatory": true,
+                                                "options": [
+                                                    {
+                                                        "value": "Yes",
+                                                        "label": "Yes"
+                                                    },
+                                                    {
+                                                        "value": "No",
+                                                        "label": "No"
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "guidance": {
+                                            "contents": [
+                                                {
+                                                    "title": "Include:",
+                                                    "list": [
+                                                        "all employees in Great Britain (England, Scotland and Wales), both full and part-time, who received pay in the relevant period"
+                                                    ]
+                                                },
+                                                {
+                                                    "title": "Exclude:",
+                                                    "list": [
+                                                        "trainees on government schemes",
+                                                        "employees working abroad unless paid directly from this business’s GB payroll",
+                                                        "employees in Northern Ireland"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "when": [
+                                        {
+                                            "id": "feeling-answer",
+                                            "condition": "equals",
+                                            "value": "Answering myself"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Question",
+                            "id": "number-of-people-block",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "number-of-people-answer",
+                                        "label": "How many people live here?",
+                                        "mandatory": true,
+                                        "type": "Number",
+                                        "minimum": {
+                                            "value": 0
+                                        },
+                                        "maximum": {
+                                            "value": 100
+                                        },
+                                        "validation": {
+                                            "messages" : {
+                                                "NUMBER_TOO_LARGE": "The maximum value allowed is 100. Please correct your answer."
+                                            }
+                                        }
+                                    }
+                                ],
+                                "title": "How many people live here?",
+                                "description": "",
+                                "id": "number-of-people-question",
+                                "type": "General"
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "confirm-number-of-people",
+                            "question": {
+                                "type": "General",
+                                "id": "total-people-question",
+                                "title": {
+                                    "text_plural": {
+                                        "forms": {
+                                            "one": "{number_of_people} person lives here, is this correct?",
+                                            "other": "{number_of_people} people live here, is this correct?"
+                                        },
+                                        "count": {
+                                            "source": "answers",
+                                            "identifier": "number-of-people-answer"
+                                        }
+                                    },
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "number_of_people",
+                                            "value": {
+                                                "source": "answers",
+                                                "identifier": "number-of-people-answer"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "answers": [
+                                    {
+                                        "id": "confirm-count",
+                                        "mandatory": true,
+                                        "type": "Radio",
+                                        "options": [
+                                            {
+                                                "label": {
+                                                    "text_plural": {
+                                                        "forms": {
+                                                            "one": "Yes, {number_of_people} person lives here",
+                                                            "other": "Yes, {number_of_people} people live here"
+                                                        },
+                                                        "count": {
+                                                            "source": "answers",
+                                                            "identifier": "number-of-people-answer"
+                                                        }
+                                                    },
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "number_of_people",
+                                                            "value": {
+                                                                "source": "answers",
+                                                                "identifier": "number-of-people-answer"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                "value": "Yes"
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": "No"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "number-of-visitors-block",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "number-of-visitors-answer",
+                                        "label": "How many visitors have lived here?",
+                                        "mandatory": true,
+                                        "type": "Number",
+                                        "minimum": {
+                                            "value": 0
+                                        },
+                                        "maximum": {
+                                            "value": 100
+                                        }
+                                    }
+                                ],
+                                "title": "How many visitors have lived here?",
+                                "description": "",
+                                "id": "number-of-visitors-question",
+                                "type": "General"
+                            }
+                        },
+                        {
+                            "type": "CalculatedSummary",
+                            "id": "block-3",
+                            "title": "Calculated Summary Title",
+                            "calculation": {
+                                "calculation_type": "sum",
+                                "answers_to_calculate": ["number-of-people-answer", "number-of-visitors-answer"],
+                                "title": "Calculated Summary Calculation Title Block 2"
+                            }
+                        }
+                    ],
+                    "id": "group",
+                    "title": ""
+                }
+            ],
+            "id": "section",
+            "title": "Navigation Title"
+        },
+        {
+            "id": "summary-section",
+            "title": "Summary",
+            "groups": [
+                {
+                    "id": "summary-group",
+                    "title": "Summary",
+                    "blocks": [
+                        {
+                            "type": "Summary",
+                            "id": "summary"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "survey_id": "0",
+    "theme": "default",
+    "title": "Test translation"
+}

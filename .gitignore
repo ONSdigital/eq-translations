@@ -22,3 +22,6 @@ tests/output/
 .Trashes
 .env
 .po/
+
+/htmlcov
+.coverage

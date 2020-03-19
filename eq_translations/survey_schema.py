@@ -1,155 +1,131 @@
-import json
 import copy
+import json
 
 from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
+from termcolor import colored
 
+from eq_translations.translatable_item import TranslatableItem
 from eq_translations.utils import (
     find_pointers_to,
-    get_parent_pointer,
+    get_message_id,
     dumb_to_smart_quotes,
-    is_placeholder,
+    get_plural_forms_for_language,
 )
 
 
 class SurveySchema:
     schema = {}
-    no_context_keys = [
+    keys_with_context = ["playback", "title", "label"]
+    keys_to_translate = [
         "show_guidance",
         "hide_guidance",
         "description",
         "legal_basis",
-        "playback",
         "item_title",
         "add_link_text",
         "empty_list_text",
         "instruction",
         "cancel_text",
-    ]
-    context_placeholder_pointers = []
-    no_context_placeholder_pointers = []
+        "list",
+        "messages",
+    ] + keys_with_context
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
-        self.load_placeholders()
 
     def load(self, schema_path):
-        with open(schema_path, encoding="utf8") as schema_file:
-            self.schema = json.load(schema_file)
-            self.load_placeholders()
-
-    def load_placeholders(self):
-        if self.schema:
-            (
-                self.context_placeholder_pointers,
-                self.no_context_placeholder_pointers,
-            ) = self.get_placeholder_pointers()
+        with open(schema_path, encoding="utf8") as schema_file:  # pragma: no cover
+            self.schema = json.load(schema_file)  # pragma: no cover
 
     def save(self, schema_path):
-        with open(schema_path, "w", encoding="utf8") as schema_file:
-            return json.dump(self.schema, schema_file, indent=4)
+        with open(schema_path, "w", encoding="utf8") as schema_file:  # pragma: no cover
+            return json.dump(self.schema, schema_file, indent=4)  # pragma: no cover
 
     @property
-    def pointers(self):
-        return self.no_context_pointers + self.context_pointers
+    def language(self):
+        return self.schema.get("language")
 
     @property
-    def no_context_pointers(self):
-        return (
-            self.get_core_pointers()
-            + self.get_title_pointers()
-            + self.get_message_pointers()
-            + self.get_list_pointers()
-            + self.no_context_placeholder_pointers
+    def translatable_items(self):
+        """
+        :yield: A TranslatableItem
+        :return: A generator
+        """
+
+        for key in self.keys_to_translate:
+            with_context = key in self.keys_with_context
+
+            for pointer in find_pointers_to(self.schema, key):
+                # The 'list' property is used by both 'contents' and 'when' blocks.
+                if "/when/" in pointer:
+                    continue
+
+                schema_element = resolve_pointer(self.schema, pointer)
+                if isinstance(schema_element, dict):
+                    yield from self._get_translatable_items_from_dict_element(
+                        pointer, schema_element, with_context
+                    )
+
+                elif isinstance(schema_element, list):
+                    yield from self._get_translatable_items_from_list_element(
+                        pointer, schema_element, with_context
+                    )
+
+                else:
+                    yield self._get_translatable_item(
+                        pointer, schema_element, with_context
+                    )
+
+    def _get_translatable_items_from_dict_element(
+        self, pointer, schema_element, with_context
+    ):
+        plural_forms = schema_element.get("text_plural", {}).get("forms")
+        if plural_forms:
+            plural_forms_pointer = f"{pointer}/text_plural/forms"
+            yield self._get_translatable_item(
+                plural_forms_pointer, plural_forms, with_context
+            )
+        elif "text" in schema_element:
+            placeholder_pointer = f"{pointer}/text"
+            yield self._get_translatable_item(
+                placeholder_pointer, schema_element["text"], with_context
+            )
+        else:
+            for element, value in schema_element.items():
+                element_pointer = f"{pointer}/{element}"
+                yield self._get_translatable_item(element_pointer, value, with_context)
+
+    def _get_translatable_items_from_list_element(
+        self, pointer, schema_element, with_context
+    ):
+
+        for index, element in enumerate(schema_element):
+            if isinstance(element, dict):
+                yield from self._get_translatable_items_from_dict_element(
+                    pointer, element, with_context
+                )
+            else:
+                list_item_pointer = f"{pointer}/{index}"
+                yield self._get_translatable_item(
+                    list_item_pointer, element, with_context
+                )
+
+    def _get_translatable_item(self, pointer, value=None, with_context=False):
+        """
+        :param with_context: Boolean flag to signify whether this pointer should have the question title as context.
+        :return: A TranslatableItem
+        """
+        context = (
+            self._get_context_from_pointer(pointer)
+            if with_context and f"/answers/" in pointer
+            else None
         )
 
-    @property
-    def context_pointers(self):
-        return self.get_answer_pointers() + self.context_placeholder_pointers
-
-    def get_core_pointers(self):
-        """
-        Iterate the schema and return the pointers found
-        :return:
-        """
-        pointers = []
-        for key in SurveySchema.no_context_keys:
-            key_pointers = find_pointers_to(self.schema, key)
-            pointers.extend(key_pointers)
-        return pointers
-
-    def get_placeholder_pointers(self):
-        """
-        Placeholder pointers may have context or may not
-        :return:
-        """
-        found_pointers = find_pointers_to(self.schema, "text")
-        context_placeholder_pointers = []
-        no_context_placeholder_pointers = []
-
-        for pointer in found_pointers:
-            if "/answers/" in pointer:
-                context_placeholder_pointers.append(pointer)
-            else:
-                no_context_placeholder_pointers.append(pointer)
-
-        return context_placeholder_pointers, no_context_placeholder_pointers
-
-    def get_message_pointers(self):
-        """
-        Message pointers need to be iterated as a dict and each key added individually
-        :return:
-        """
-        pointers = []
-
-        message_pointers = find_pointers_to(self.schema, "messages")
-        for message_pointer in message_pointers:
-            schema_element = resolve_pointer(self.schema, message_pointer)
-            for element in schema_element:
-                pointers.append(f"{message_pointer}/{element}")
-        return pointers
-
-    def get_list_pointers(self):
-        """
-        List pointers need to be iterated and each element added individually
-        :return:
-        """
-        pointers = []
-
-        list_pointers = find_pointers_to(self.schema, "list")
-        for list_pointer in list_pointers:
-            schema_element = resolve_pointer(self.schema, list_pointer)
-            if isinstance(schema_element, list):
-                for i, p in enumerate(schema_element):
-                    # placeholders are being skipped as they are dealt with elsewhere
-                    if not is_placeholder(p):
-                        pointers.append(f"{list_pointer}/{i}")
-
-        return pointers
-
-    def get_title_pointers(self):
-        """
-        Titles need to be handled separately as they may require context for translation
-        """
-        return find_pointers_to(self.schema, "title")
-
-    def get_answer_pointers(self):
-        """
-        Labels for options/answers need to be handled separately as they require context
-        """
-        return find_pointers_to(self.schema, "label")
-
-    def get_parent_id(self, pointer):
-        resolved_data = resolve_pointer(self.schema, pointer)
-
-        if isinstance(resolved_data, dict) and "id" in resolved_data:
-            return resolved_data["id"]
-
-        parent_pointer = get_parent_pointer(pointer)
-        return self.get_parent_id(parent_pointer)
+        return TranslatableItem(pointer, value, context)
 
     @staticmethod
-    def get_parent_question_pointer(pointer):
+    def _get_parent_question_pointer(pointer):
         pointer_parts = pointer.split("/")
 
         if "question" in pointer_parts:
@@ -157,91 +133,104 @@ class SurveySchema:
             return "/".join(pointer_parts[: pointer_index + 1])
 
     def get_parent_question(self, pointer):
-        question_pointer = self.get_parent_question_pointer(pointer)
+        question_pointer = self._get_parent_question_pointer(pointer)
         return resolve_pointer(self.schema, question_pointer + "/title")
 
-    def get_catalog(self):
+    def _get_context_from_pointer(self, pointer):
+        question = self.get_parent_question(pointer)
+
+        if "text_plural" in question:
+            context = question["text_plural"]["forms"]["other"]
+        elif "placeholders" in question:
+            context = question["text"]
+        else:
+            context = question
+
+        return f"Answer for: {context}"
+
+    @property
+    def catalog(self):
         """
         :return: a schema catalog to be used as the content within a po/pot file
         """
         catalog = Catalog()
-        total_translations = len(self.no_context_pointers + self.context_pointers)
 
-        for pointer in self.no_context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-                catalog.add(dumb_to_smart_quotes(pointer_contents))
+        translatable_items = list(self.translatable_items)
 
-        for pointer in self.context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-                parent_answer_id = self.get_parent_id(pointer)
-                question = self.get_parent_question(pointer)
+        for translatable_item in translatable_items:
+            if not translatable_item.value:
+                continue
 
-                message_context = "Answer for: {}".format(
-                    question["text"] if is_placeholder(question) else question
-                )
+            message_id = get_message_id(translatable_item.value)
+            catalog.add(
+                id=message_id, context=translatable_item.context,
+            )
 
-                catalog.add(
-                    dumb_to_smart_quotes(pointer_contents),
-                    context=message_context,
-                    auto_comments=[f"answer-id: {parent_answer_id}"],
-                )
-
-        print(f"Total Messages: {total_translations}")
+        print(f"Total Translatable Items: {len(translatable_items)}")
 
         return catalog
 
     def translate(self, schema_translation):
         """
-        Use the supplied schema translation object to translate pointers found
+        Use the supplied schema translation object to translate all translatable strings
         within the survey
 
-        :param schema_translation:
+        :param schema_translation: The SchemaTranslation object
         :return:
         """
         translated_schema = copy.deepcopy(self.schema)
-        total_translations = len(self.no_context_pointers + self.context_pointers)
+        translated_schema["language"] = schema_translation.language
+
         missing_translations = 0
+        translatable_items = list(self.translatable_items)
 
-        for pointer in self.no_context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-                translation = schema_translation.translate_message(pointer_contents)
-                if translation:
-                    translated_schema = set_pointer(
-                        translated_schema, pointer, translation
+        for translatable_item in translatable_items:
+            if not translatable_item.value:
+                continue
+
+            message_id = get_message_id(translatable_item.value)
+            context = translatable_item.context
+
+            translation = schema_translation.get_translation(message_id, context)
+
+            if translation:
+                if isinstance(translation, tuple):
+                    plural_forms = get_plural_forms_for_language(
+                        schema_translation.language
                     )
-                else:
-                    missing_translations += 1
-                    print(
-                        "Missing translation at {}: '{}'".format(
-                            pointer, pointer_contents
+                    for index, plural_form in enumerate(plural_forms):
+                        plural_form_pointer = (
+                            f"{translatable_item.pointer}/{plural_form}"
                         )
-                    )
-
-        for pointer in self.context_pointers:
-            pointer_contents = resolve_pointer(self.schema, pointer)
-            if pointer_contents:
-                parent_answer_id = self.get_parent_id(pointer)
-                question = self.get_parent_question(pointer)
-                message_context = "Answer for: {}".format(
-                    question["text"] if is_placeholder(question) else question
-                )
-                translation = schema_translation.translate_message(
-                    pointer_contents, parent_answer_id, message_context
-                )
-                if translation:
-                    translated_schema = set_pointer(
-                        translated_schema, pointer, translation
-                    )
+                        set_pointer(
+                            translated_schema,
+                            plural_form_pointer,
+                            dumb_to_smart_quotes(translation[index]),
+                        )
                 else:
-                    missing_translations += 1
-                    print(f"Missing translation at {pointer}: '{pointer_contents}'")
+                    set_pointer(
+                        translated_schema,
+                        translatable_item.pointer,
+                        dumb_to_smart_quotes(translation),
+                    )
+            else:
+                missing_translations += 1
 
-        print(f"\nTotal Messages: {total_translations}")
+                if missing_translations == 1:
+                    print("Missing translation at:")
+
+                print(
+                    colored(
+                        f"  - {translatable_item.pointer}: '{translatable_item.value}'",
+                        "yellow",
+                    )
+                )
+
+        print(f"\nTotal Translatable Items: {len(translatable_items)}")
 
         if missing_translations:
-            print(f"Total Missing: {missing_translations}")
+            print(
+                colored(f"Total Missing Translations: {missing_translations}", "yellow")
+            )
 
         return SurveySchema(translated_schema)

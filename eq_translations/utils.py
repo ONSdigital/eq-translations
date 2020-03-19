@@ -14,41 +14,8 @@ def list_pointers(input_data, pointer=None):
             yield from list_pointers(v, pointer + "/" + k if pointer else "/" + k)
     elif isinstance(input_data, list) and input_data:
         for index, item in enumerate(input_data):
-            yield "{}/{}".format(pointer, index) if pointer else "/{}".format(index)
-            yield from list_pointers(item, "{}/{}".format(pointer, index))
-
-
-def compare_schemas(source_schema, target_schema):
-    """
-    Compare the pointers in two json structures and return differences
-    :param source_schema: Structure to identify differences against
-    :param target_schema: Target structure to compare against
-    :return:
-    """
-    source_survey_pointers = set(list_pointers(source_schema))
-    target_survey_pointers = set(list_pointers(target_schema))
-
-    missing_target_pointers = source_survey_pointers.difference(target_survey_pointers)
-    missing_source_pointers = target_survey_pointers.difference(source_survey_pointers)
-
-    missing_pointers = missing_target_pointers | missing_source_pointers
-
-    for list_pointer in missing_pointers:
-        print("Missing Pointer: {}".format(list_pointer))
-
-    print("\nTotal attributes in source schema: {}".format(len(source_survey_pointers)))
-    print("Total attributes in target schema: {}".format(len(target_survey_pointers)))
-    print(
-        "Differences between source/target schema attributes: {} ".format(
-            len(missing_pointers)
-        )
-    )
-
-    return missing_pointers
-
-
-def is_placeholder(input_data):
-    return "placeholders" in input_data
+            yield f"{pointer}/{index}" if pointer else f"/{index}"
+            yield from list_pointers(item, f"{pointer}/{index}")
 
 
 def find_pointers_containing(input_data, search_key, pointer=None):
@@ -60,21 +27,15 @@ def find_pointers_containing(input_data, search_key, pointer=None):
     :return: generator of the json pointer paths
     """
     if isinstance(input_data, dict):
-        if (
-            pointer
-            and search_key in input_data
-            and not is_placeholder(input_data[search_key])
-        ):
+        if pointer and search_key in input_data:
             yield pointer
         for k, v in input_data.items():
             yield from find_pointers_containing(
-                v, search_key, pointer + "/" + k if pointer else "/" + k
+                v, search_key, f"{pointer}/{k}" if pointer else f"/{k}"
             )
     elif isinstance(input_data, list):
         for index, item in enumerate(input_data):
-            yield from find_pointers_containing(
-                item, search_key, "{}/{}".format(pointer, index)
-            )
+            yield from find_pointers_containing(item, search_key, f"{pointer}/{index}")
 
 
 def find_pointers_to(input_data, search_key):
@@ -84,20 +45,9 @@ def find_pointers_to(input_data, search_key):
     :param search_key: the key to search for
     :return: list of the json pointer paths
     """
-    root_pointers = (
-        ["/{}".format(search_key)]
-        if search_key in input_data and not is_placeholder(input_data[search_key])
-        else []
-    )
+    root_pointers = [f"/{search_key}"] if search_key in input_data else []
     pointer_iterator = find_pointers_containing(input_data, search_key)
-    return root_pointers + ["{}/{}".format(p, search_key) for p in pointer_iterator]
-
-
-def get_parent_pointer(pointer):
-    pointer_parts = pointer.split("/")
-
-    if len(pointer_parts) > 2:
-        return "/".join(pointer_parts[:-1])
+    return root_pointers + [f"{pointer}/{search_key}" for pointer in pointer_iterator]
 
 
 def dumb_to_smart_quotes(string):
@@ -126,25 +76,19 @@ def dumb_to_smart_quotes(string):
     return string
 
 
-def remove_quotes(message):
-    quotation_marks = [
-        "\N{APOSTROPHE}",
-        "\N{LEFT SINGLE QUOTATION MARK}",
-        "\N{RIGHT SINGLE QUOTATION MARK}",
-        "\N{LEFT DOUBLE QUOTATION MARK}",
-        "\N{RIGHT DOUBLE QUOTATION MARK}",
-    ]
+def get_message_id(content):
+    if isinstance(content, dict):
+        return content.get("one"), content.get("other")
 
-    if isinstance(message, str):
-        for char in quotation_marks:
-            message = message.replace(char, "")
-    else:
-        message = message.get("text")
-        for char in quotation_marks:
-            message = message.replace(char, "")
-
-    return message.strip()
+    return content
 
 
-def are_dumb_strings_equal(message_a, message_b):
-    return remove_quotes(message_a) == remove_quotes(message_b)
+def get_plural_forms_for_language(language_code):
+    mappings = {
+        "en": ["one"],
+        "cy": ["zero", "one", "two", "few", "many"],
+        "ga": ["one", "two", "few", "many"],
+        "eo": ["one"],
+    }
+
+    return mappings[language_code] + ["other"]

@@ -1,0 +1,210 @@
+{
+    "mime_type": "application/json/ons/eq",
+    "language": "cy",
+    "schema_version": "0.0.1",
+    "data_version": "0.0.3",
+    "survey_id": "0",
+    "title": "Arolwg Iaith Prawf",
+    "theme": "social",
+    "description": "Holiadur i ddangos newid iaith",
+    "metadata": [
+        {
+            "name": "user_id",
+            "type": "string"
+        },
+        {
+            "name": "period_id",
+            "type": "string"
+        }
+    ],
+    "sections": [
+        {
+            "id": "default-section",
+            "groups": [
+                {
+                    "id": "language-group",
+                    "title": "",
+                    "blocks": [
+                        {
+                            "type": "Question",
+                            "id": "name-block",
+                            "question": {
+                                "description": "",
+                                "id": "name-question",
+                                "title": "Rhowch enw",
+                                "type": "General",
+                                "answers": [
+                                    {
+                                        "id": "first-name",
+                                        "description": "",
+                                        "label": "Enw cyntaf",
+                                        "mandatory": true,
+                                        "type": "TextField"
+                                    },
+                                    {
+                                        "id": "last-name",
+                                        "description": "",
+                                        "label": "Enw olaf",
+                                        "mandatory": false,
+                                        "type": "TextField"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "dob-block",
+                            "question": {
+                                "description": "",
+                                "id": "dob-question",
+                                "title": {
+                                    "text": "Beth yw dyddiad geni {person_name_possessive}?",
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "person_name_possessive",
+                                            "transforms": [
+                                                {
+                                                    "arguments": {
+                                                        "delimiter": " ",
+                                                        "list_to_concatenate": {
+                                                            "identifier": [
+                                                                "first-name",
+                                                                "last-name"
+                                                            ],
+                                                            "source": "answers"
+                                                        }
+                                                    },
+                                                    "transform": "concatenate_list"
+                                                },
+                                                {
+                                                    "arguments": {
+                                                        "string_to_format": {
+                                                            "source": "previous_transform"
+                                                        }
+                                                    },
+                                                    "transform": "format_possessive"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "type": "General",
+                                "answers": [
+                                    {
+                                        "id": "date-of-birth-answer",
+                                        "description": "Rhowch eich dyddiad geni",
+                                        "label": "Dyddiad Geni",
+                                        "mandatory": true,
+                                        "type": "Date"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "number-of-people-block",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "number-of-people-answer",
+                                        "label": "Nifer o breswylwyr yn y cartref",
+                                        "mandatory": true,
+                                        "type": "Number",
+                                        "minimum": {
+                                            "value": 0
+                                        },
+                                        "maximum": {
+                                            "value": 100
+                                        }
+                                    }
+                                ],
+                                "description": "",
+                                "id": "number-of-people-question",
+                                "title": "Faint o bobl sy\u2019n byw ar eich cartref?",
+                                "type": "General"
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "confirm-number-of-people",
+                            "question": {
+                                "type": "General",
+                                "id": "total-people-question",
+                                "title": {
+                                    "text_plural": {
+                                        "forms": {
+                                            "one": "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir? (one)",
+                                            "other": "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (other)",
+                                            "zero": "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir? (zero)",
+                                            "two": "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir? (two)",
+                                            "few": "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (few)",
+                                            "many": "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (many)"
+                                        },
+                                        "count": {
+                                            "source": "answers",
+                                            "identifier": "number-of-people-answer"
+                                        }
+                                    },
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "number_of_people",
+                                            "value": {
+                                                "source": "answers",
+                                                "identifier": "number-of-people-answer"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "answers": [
+                                    {
+                                        "id": "confirm-count",
+                                        "mandatory": true,
+                                        "type": "Radio",
+                                        "options": [
+                                            {
+                                                "label": {
+                                                    "text_plural": {
+                                                        "forms": {
+                                                            "one": "Ydy, mae {number_of_people} person yn byw yma (one)",
+                                                            "other": "Ydy, mae {number_of_people} pherson yn byw yma (other)",
+                                                            "zero": "Ydy, mae {number_of_people} person yn byw yma (zero)",
+                                                            "two": "Ydy, mae {number_of_people} person yn byw yma (two)",
+                                                            "few": "Ydy, mae {number_of_people} pherson yn byw yma (few)",
+                                                            "many": "Ydy, mae {number_of_people} pherson yn byw yma (many)"
+                                                        },
+                                                        "count": {
+                                                            "source": "answers",
+                                                            "identifier": "number-of-people-answer"
+                                                        }
+                                                    },
+                                                    "placeholders": [
+                                                        {
+                                                            "placeholder": "number_of_people",
+                                                            "value": {
+                                                                "source": "answers",
+                                                                "identifier": "number-of-people-answer"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                "value": "Yes"
+                                            },
+                                            {
+                                                "label": "Na",
+                                                "value": "No"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Summary",
+                            "id": "summary"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

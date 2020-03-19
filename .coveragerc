@@ -1,0 +1,6 @@
+[run]
+include = eq_translations/*
+omit = eq_translation/cli/*
+
+[report]
+fail_under = 100

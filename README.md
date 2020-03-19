@@ -72,7 +72,7 @@ make test
 
 ### Census Commands
 
-To translate the census individual using current translations in crowdin
+To translate the Census individual schema using current translations in Crowdin
 
 ```
 pipenv run python -m eq_translations.cli.translate_census ../eq-survey-runner/data/en/census_individual_gb_eng.json out

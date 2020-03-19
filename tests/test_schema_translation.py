@@ -5,113 +5,118 @@ from babel.messages import Catalog
 from eq_translations.schema_translation import SchemaTranslation
 
 
-class TestSchemaTranslation(unittest.TestCase):
+class TestGetTranslation(unittest.TestCase):
     def setUp(self):
         self.messages = [
             {
                 "original": "Notice is given under section 1 of the Statistics of Trade Act 1947."
             },
             {
-                "answer_id": "feeling-answer",
-                "context": "Answer for: Who are you answering for??",
                 "original": "Answering for this person",
+                "context": "Answer for: Who are you answering for??",
             },
             {
-                "answer_id": "feeling-answer",
-                "context": "Answer for: Who are you answering for??",
                 "original": "Answering myself",
+                "context": "Answer for: Who are you answering for??",
+            },
+            {
+                "original": (
+                    "{number_of_people} person lives here, is this correct?",
+                    "{number_of_people} people live here, is this correct?",
+                ),
+            },
+            {
+                "original": (
+                    "Yes, {number_of_people} person lives here",
+                    "Yes, {number_of_people} people live here",
+                ),
+                "context": "Answer for: {number_of_people} people live here, is this correct?",
             },
         ]
 
         catalog = Catalog()
 
         catalog.add(
-            "Notice is given under section 1 of the Statistics of Trade Act 1947.",
-            "WELSH - Notice is given under section 1 of the Statistics of Trade Act 1947.",
+            id="Notice is given under section 1 of the Statistics of Trade Act 1947.",
+            string="WELSH - Notice is given under section 1 of the Statistics of Trade Act 1947.",
         )
 
         catalog.add(
-            "Answering for this person",
-            "WELSH - Answering for this person",
-            auto_comments=["answer-id: feeling-answer"],
+            id="Answering for this person",
+            string="WELSH - Answering for this person",
             context="Answer for: Who are you answering for??",
         )
 
         catalog.add(
-            "Answering myself",
-            "WELSH - Answering myself",
-            auto_comments=["answer-id: feeling-answer"],
+            id="Answering myself",
+            string="WELSH - Answering myself",
             context="Answer for: Who are you answering for??",
+        )
+
+        catalog.add(
+            id=(
+                "{number_of_people} person lives here, is this correct?",
+                "{number_of_people} people live here, is this correct?",
+            ),
+            string=("WELSH - one", "WELSH - other", "WELSH - many"),
+        )
+
+        catalog.add(
+            id=(
+                "Yes, {number_of_people} person lives here",
+                "Yes, {number_of_people} people live here",
+            ),
+            string=("WELSH - one", "WELSH - other", "WELSH - many"),
+            context="Answer for: {number_of_people} people live here, is this correct?",
         )
 
         self.translator = SchemaTranslation(catalog)
 
-    def test_translate_message(self):
-        result = self.translator.translate_message(self.messages[0]["original"])
-
-        assert result == "WELSH - {}".format(self.messages[0]["original"])
-
     def test_translate_unknown_message(self):
-        result = self.translator.translate_message("Some string")
+        result = self.translator.get_translation(message_id="Some string")
 
         assert result is None
 
-    def test_translate_context_message(self):
-        result = self.translator.translate_message(
-            self.messages[1]["original"], self.messages[1]["answer_id"]
+    def test_translate_non_pluralizable_message(self):
+        result = self.translator.get_translation(
+            message_id=self.messages[0]["original"]
         )
 
-        assert result == "WELSH - {}".format(self.messages[1]["original"])
+        assert result == f"WELSH - {self.messages[0]['original']}"
+
+    def test_translate_pluralizable_message(self):
+        result = self.translator.get_translation(
+            message_id=self.messages[3]["original"]
+        )
+
+        assert result == ("WELSH - one", "WELSH - other", "WELSH - many")
+
+    def test_translate_non_pluralizable_message_with_context(self):
+        result = self.translator.get_translation(
+            message_id=self.messages[1]["original"],
+            context=self.messages[1]["context"],
+        )
+
+        assert result == f"WELSH - {self.messages[1]['original']}"
+
+    def test_translate_pluralizable_message_with_context(self):
+        result = self.translator.get_translation(
+            message_id=self.messages[4]["original"],
+            context=self.messages[4]["context"],
+        )
+
+        assert result == ("WELSH - one", "WELSH - other", "WELSH - many")
 
     def test_translate_context_message_mismatch(self):
-        result = self.translator.translate_message(
-            self.messages[1]["original"], "some-random-id"
+        result = self.translator.get_translation(
+            message_id=self.messages[1]["original"], context="some-random-context",
         )
 
         assert result is None
 
-    def test_translate_context_message_failure(self):
-        result = self.translator.translate_message(self.messages[1]["original"])
+    def test_translate_context_message_with_no_context(self):
+        result = self.translator.get_translation(
+            message_id=self.messages[1]["original"], context=None
+        )
 
         assert result is None
-
-    def test_translate_dumb_quotes(self):
-
-        catalog = Catalog()
-        catalog.add(
-            "What is 'this persons' date of birth?", "Beth yw dyddiad geni 'pobl hyn'?"
-        )
-
-        translator = SchemaTranslation(catalog)
-
-        translated = translator.translate_message(
-            "What is 'this persons' date of birth?"
-        )
-
-        assert translated == "Beth yw dyddiad geni ‘pobl hyn’?"
-
-    def test_multiple_answer_ids(self):
-
-        catalog = Catalog()
-
-        catalog.add(
-            "Answering for this person",
-            "WELSH - Answering for this person",
-            auto_comments=[
-                "answer-id: feeling-answer",
-                "answer-id: feeling-answer-proxy",
-            ],
-            context="Answer for: Who are you answering for??",
-        )
-
-        translator = SchemaTranslation(catalog)
-
-        translation_a = translator.translate_message(
-            "Answering for this person", answer_id="feeling-answer"
-        )
-        translation_b = translator.translate_message(
-            "Answering for this person", answer_id="feeling-answer-proxy"
-        )
-
-        assert translation_a == "WELSH - Answering for this person"
-        assert translation_b == "WELSH - Answering for this person"

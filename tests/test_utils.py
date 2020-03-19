@@ -1,16 +1,30 @@
 from eq_translations.utils import (
-    get_parent_pointer,
     find_pointers_containing,
     find_pointers_to,
     list_pointers,
-    compare_schemas,
+    get_message_id,
 )
+
+
+def test_get_message_id():
+    pointer_content = "A test title"
+
+    assert get_message_id(pointer_content) == pointer_content
+
+
+def test_get_message_id_for_plurals():
+    pointer_contents = {"one": "Singular text", "other": "Plural text"}
+
+    singular_form = pointer_contents["one"]
+    plural_form = pointer_contents["other"]
+
+    assert get_message_id(pointer_contents) == (singular_form, plural_form)
 
 
 def test_find_pointers_containing_root():
     schema = {"test": ""}
 
-    pointers = [p for p in find_pointers_containing(schema, "test")]
+    pointers = list(find_pointers_containing(schema, "test"))
 
     assert pointers == []
 
@@ -85,14 +99,6 @@ def test_find_pointers_to_list():
     assert "/a/test/4/item" in pointers
 
 
-def test_get_parent_pointer():
-    option_parent_pointer = get_parent_pointer("/questions/0/answers/0/options/0/label")
-    answer_parent_pointer = get_parent_pointer("/questions/0/answers/0/label")
-
-    assert option_parent_pointer == "/questions/0/answers/0/options/0"
-    assert answer_parent_pointer == "/questions/0/answers/0"
-
-
 def test_list_pointers():
     schema = {
         "this": "is",
@@ -130,58 +136,3 @@ def test_list_pointers():
     assert "/a/key/0/x/2" in pointers
     assert "/a/key/1" in pointers
     assert "/a/key/2" in pointers
-
-
-def test_compare_source_schema():
-    source_schema = {
-        "this": "is",
-        "a": {
-            "test": [
-                {"item": {}},
-                {"item": {}},
-                {"item": {}},
-                {"item": {}},
-                {"item": {}},
-            ]
-        },
-    }
-
-    target_schema = {"this": "is", "a": {"test": [{"item": {}}, {"item": {}}]}}
-
-    differences = compare_schemas(source_schema, target_schema)
-
-    assert "/a/test/2" in differences
-    assert "/a/test/3" in differences
-    assert "/a/test/4" in differences
-    assert "/a/test/2/item" in differences
-    assert "/a/test/3/item" in differences
-    assert "/a/test/4/item" in differences
-
-    assert len(differences) == 6
-
-
-def test_compare_target_schema():
-
-    source_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
-
-    target_schema = {
-        "this": "is",
-        "a": {
-            "test": [{"item": {}}, {"item": {}}, {"item": {}}],
-            "key": [{"x": {"2": 3}}, "y", "z"],
-        },
-    }
-
-    differences = compare_schemas(source_schema, target_schema)
-
-    assert "/this" in differences
-    assert "/a/test/2" in differences
-    assert "/a/test/2/item" in differences
-    assert "/a/key" in differences
-    assert "/a/key/0" in differences
-    assert "/a/key/0/x" in differences
-    assert "/a/key/0/x/2" in differences
-    assert "/a/key/1" in differences
-    assert "/a/key/2" in differences
-
-    assert len(differences) == 9

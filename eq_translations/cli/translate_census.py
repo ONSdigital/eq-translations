@@ -19,7 +19,7 @@ def main():
         sys.exit(1)
 
     parser = argparse.ArgumentParser(
-        description="Translate the census survey using crowdin"
+        description="Translate the Census survey using Crowdin"
     )
 
     parser.add_argument(
@@ -40,20 +40,15 @@ def main():
     file_prefix = "individual" if "individual" in args.SCHEMA_PATH else "household"
     template_file = f"census_{file_prefix}.pot"
     output_file = f"census_{file_prefix}-cy.po"
+    project_api_key = os.getenv("CROWDIN_PROJECT_API_KEY")
+    download_url = f"https://api.crowdin.com/api/project/{project_id}/export-file?key={project_api_key}&file={template_file}&language=cy"
 
-    download_url = "https://api.crowdin.com/api/project/{project_id}/export-file?key={project_api_key}&file={file}&language={language}".format(
-        project_id=project_id,
-        project_api_key=os.getenv("CROWDIN_PROJECT_API_KEY"),
-        file=template_file,
-        language="cy",
-    )
-
-    print("Fetching translation file from crowdin")
+    print("Fetching translation file from Crowdin")
 
     response = requests.get(download_url, stream=True)
 
     if not response:
-        print("Empty response from crowdin")
+        print("Empty response from Crowdin")
         sys.exit(1)
 
     output_path = os.path.join(args.OUTPUT_DIRECTORY, output_file)
@@ -70,6 +65,8 @@ def main():
     translation.load(output_path)
 
     translated_schema = schema.translate(translation)
+    translated_schema.language = translation.language
+
     translated_schema.save(os.path.join(args.OUTPUT_DIRECTORY, schema_name))
 
 
