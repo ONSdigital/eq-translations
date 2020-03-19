@@ -59,5 +59,5 @@ def handle_compare_schemas(source_schema, target_schema):
 
     if not (missing_pointers and missing_plural_forms):
         print(
-            colored("\nNo Structural Difference Between Source/Target Schema", "green")
+            colored("\nNo structural difference between source/target schema", "green")
         )
