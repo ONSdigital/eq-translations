@@ -3,6 +3,7 @@ import json
 
 from babel.messages import Catalog
 from jsonpointer import resolve_pointer, set_pointer
+from termcolor import colored
 
 from eq_translations.translatable_item import TranslatableItem
 from eq_translations.utils import (
@@ -213,14 +214,23 @@ class SurveySchema:
                         dumb_to_smart_quotes(translation),
                     )
             else:
-                print(
-                    f"Missing translation at {translatable_item.pointer}: '{translatable_item.value}'"
-                )
                 missing_translations += 1
+
+                if missing_translations == 1:
+                    print("Missing translation at:")
+
+                print(
+                    colored(
+                        f"  - {translatable_item.pointer}: '{translatable_item.value}'",
+                        "yellow",
+                    )
+                )
 
         print(f"\nTotal Translatable Items: {len(translatable_items)}")
 
         if missing_translations:
-            print(f"Total Missing Translations: {missing_translations}")
+            print(
+                colored(f"Total Missing Translations: {missing_translations}", "yellow")
+            )
 
         return SurveySchema(translated_schema)
