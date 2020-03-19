@@ -520,3 +520,17 @@ def test_translate_sets_language():
     translated_schema = schema.translate(schema_translation)
 
     assert translated_schema.language == "cy"
+
+
+def test_locale_on_load_welsh():
+    translation = SchemaTranslation()
+    translation.load("tests/schemas/test_language-cy.po")
+
+    assert translation.language == "cy"
+
+
+def test_locale_on_load_ulster_scots():
+    translation = SchemaTranslation()
+    translation.load("tests/schemas/test_language-eo.po")
+
+    assert translation.language == "eo"

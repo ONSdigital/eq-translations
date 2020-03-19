@@ -67,7 +67,9 @@ def compare_schemas(source_schema, target_schema):
 
     else:
         print(
-            colored("\nNo missing non-plural pointers in source or target schema", "green")
+            colored(
+                "\nNo missing non-plural pointers in source or target schema", "green"
+            )
         )
 
     return missing_pointers

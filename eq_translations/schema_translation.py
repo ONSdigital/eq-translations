@@ -1,3 +1,4 @@
+from babel import Locale
 from babel.messages import pofile
 
 
@@ -9,10 +10,11 @@ class SchemaTranslation:
         self.catalog = catalog or self.catalog
 
     def load(self, translation_file_path):
-        with open(
-            translation_file_path, encoding="utf8"
-        ) as translation_file:  # pragma: no cover
-            self.catalog = pofile.read_po(translation_file)  # pragma: no cover
+        with open(translation_file_path, encoding="utf8") as translation_file:
+            self.catalog = pofile.read_po(translation_file)
+
+            if self.catalog.locale_identifier == "sco_ulster":
+                self.catalog.locale = Locale("eo")
 
     def save(self, translation_file_path):
         with open(translation_file_path, "w+b") as translation_file:  # pragma: no cover
