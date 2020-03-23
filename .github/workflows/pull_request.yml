@@ -39,18 +39,18 @@ jobs:
         with:
           python-version: 3.7
       - name: Install Pipenv
-          run: pip install pipenv==2018.11.26
+        run: pip install pipenv==2018.11.26
       - name: Cache virtualenv
-          id: cache-virtualenv
-          uses: actions/cache@v1
-          with:
-            path: ~/.local/share/virtualenvs/
-            key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
+        id: cache-virtualenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs/
+          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
       - name: Install virtual environment
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
       - name: Run tests
-          run: pipenv run pytest --cov-config=.coveragerc --cov --cov-report html
+        run: pipenv run pytest --cov-config=.coveragerc --cov --cov-report html
   docker-push:
     runs-on: ubuntu-latest
     steps:
