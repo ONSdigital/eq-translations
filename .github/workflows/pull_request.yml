@@ -22,8 +22,8 @@ jobs:
           path: ~/.local/share/virtualenvs/
           key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
       - name: Install virtual environment
-          if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-          run: pipenv install --dev
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+        run: pipenv install --dev
       - name: Security Check
         run: pipenv check ./eq_translations ./tests
       - name: Lint Python
@@ -47,8 +47,8 @@ jobs:
             path: ~/.local/share/virtualenvs/
             key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
       - name: Install virtual environment
-          if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-          run: pipenv install --dev
+        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
+        run: pipenv install --dev
       - name: Run tests
           run: pipenv run pytest --cov-config=.coveragerc --cov --cov-report html
   docker-push:
