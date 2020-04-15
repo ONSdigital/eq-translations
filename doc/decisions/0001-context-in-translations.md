@@ -17,7 +17,7 @@ For some translatable strings we create a message context (`msgctxt`) that conta
   |-----------|------|-------|
   | `$.title` | Questionnaire title | |
   | `$.legal_basis` | Questionnaire legal basis | |
-  | `$.messages` | Global answer error message | |
+  | `$.messages` | Global answer error message | `message` rather than `messages` as each message is an individual translation |
   | `$.sections[*].title` | Section title | Used for section summaries, final summary and the hub |
   | `$.sections[*].repeat.title` | Section title (repeating section) | |
   | `$.sections[*].summary.items[*].title` | Custom section summary item title | |
