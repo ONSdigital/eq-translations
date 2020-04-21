@@ -2,10 +2,10 @@
 
 ## Context
 
-For some translatable strings we create a message context (`msgctxt`) that contains the question text. This means strings can be translated in the context of the question being asked. There are two issues with this approach:
+For some translatable strings, we create a message context (`msgctxt`) that contains the question text. This means strings can be translated in the context of the question being asked. There are two issues with this approach:
 
 - For some elements the context is incorrect. For example, the context for an answer guidance title is `"Answer for: {question_text}"`.
-- Most translatable strings at the question level and below don't have context. This causes problems when the English text doesn't vary between question variants but the translated text needs to - https://trello.com/c/JEdbgtlT/3538-e-translations-add-context-to-all-child-elements-of-a-question-m
+- Most translatable strings at the question level and below don't have context. This causes problems when the English text doesn't vary between question variants, but the translated text needs to - https://trello.com/c/JEdbgtlT/3538-e-translations-add-context-to-all-child-elements-of-a-question-m
 
 ## Decision
 
