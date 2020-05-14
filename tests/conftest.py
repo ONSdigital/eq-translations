@@ -64,6 +64,40 @@ def schema_with_question_variants():
 
 
 @pytest.fixture
+def schema_with_content_variants():
+    return {
+        "content_variants": [
+            {
+                "content": {
+                    "contents": [
+                        {
+                            "description": "We will now ask you questions about your main job",
+                        }
+                    ],
+                    "title": "Main job",
+                },
+                "when": [{"condition": "equals", "list": "household", "value": 0}],
+            },
+            {
+                "content": {
+                    "contents": [
+                        {
+                            "description": "We will now ask you questions about your last main job",
+                        }
+                    ],
+                    "title": "Last main job",
+                },
+                "when": [
+                    {"condition": "greater than", "list": "household", "value": 0}
+                ],
+            },
+        ],
+        "id": "main-job",
+        "type": "Interstitial",
+    }
+
+
+@pytest.fixture
 def schema_with_plurals():
     return {
         "id": "name",

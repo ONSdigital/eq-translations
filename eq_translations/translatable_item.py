@@ -12,5 +12,7 @@ class TranslatableItem:
     """
 
     pointer: str
+    description: str
     value: Union[str, dict]
     context: Optional[str] = None
+    additional_context: str = None

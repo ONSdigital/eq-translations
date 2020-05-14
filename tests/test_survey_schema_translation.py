@@ -13,13 +13,13 @@ def test_translate():
     catalog.add(
         "Answering for this person",
         "WELSH - Answering for this person",
-        context="Answer for: Who are you answering for??",
+        context="Who are you answering for??",
     )
 
     catalog.add(
         "Answering myself",
         "WELSH - Answering myself",
-        context="Answer for: Who are you answering for??",
+        context="Who are you answering for??",
     )
 
     schema_translation.catalog = catalog
@@ -31,6 +31,7 @@ def test_translate():
                     "question": {
                         "title": "Who are you answering for??",
                         "description": "",
+                        "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                         "answers": [
                             {
                                 "type": "Radio",
@@ -56,14 +57,13 @@ def test_translate():
                                 "guidance": {
                                     "hide_guidance": "Hide feeling answer help",
                                     "show_guidance": "Show feeling answer help",
-                                    "content": [
+                                    "contents": [
                                         {
                                             "title": "Feeling answer",
                                             "description": "This should be answered to see if you are answering on behalf of someone else",
                                         }
                                     ],
                                 },
-                                "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                             }
                         ],
                     }
@@ -79,6 +79,7 @@ def test_translate():
                 "question": {
                     "title": "Who are you answering for??",
                     "description": "",
+                    "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                     "answers": [
                         {
                             "type": "Radio",
@@ -104,14 +105,13 @@ def test_translate():
                             "guidance": {
                                 "hide_guidance": "Hide feeling answer help",
                                 "show_guidance": "Show feeling answer help",
-                                "content": [
+                                "contents": [
                                     {
                                         "title": "Feeling answer",
                                         "description": "This should be answered to see if you are answering on behalf of someone else",
                                     }
                                 ],
                             },
-                            "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                         }
                     ],
                 }
@@ -130,6 +130,7 @@ def test_get_catalog():
                 "question": {
                     "title": "Please confirm the number of people who live at this household",
                     "description": "",
+                    "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                     "answers": [
                         {
                             "type": "Radio",
@@ -174,14 +175,13 @@ def test_get_catalog():
                             "guidance": {
                                 "hide_guidance": "Hide feeling answer help",
                                 "show_guidance": "Show feeling answer help",
-                                "content": [
+                                "contents": [
                                     {
                                         "title": "Feeling answer",
                                         "description": "This should be answered to see if you are answering on behalf of someone else",
                                     }
                                 ],
                             },
-                            "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                         }
                     ],
                 }
@@ -219,21 +219,18 @@ def test_get_catalog():
         in actual_items
     )
     assert (
-        schema_data["sections"][0]["question"]["answers"][0]["guidance"]["content"][0][
+        schema_data["sections"][0]["question"]["answers"][0]["guidance"]["contents"][0][
             "title"
         ]
         in actual_items
     )
     assert (
-        schema_data["sections"][0]["question"]["answers"][0]["guidance"]["content"][0][
+        schema_data["sections"][0]["question"]["answers"][0]["guidance"]["contents"][0][
             "description"
         ]
         in actual_items
     )
-    assert (
-        schema_data["sections"][0]["question"]["answers"][0]["instruction"]
-        in actual_items
-    )
+    assert schema_data["sections"][0]["question"]["instruction"] in actual_items
 
     singular = schema_data["sections"][0]["question"]["answers"][0]["options"][0][
         "label"
@@ -252,8 +249,9 @@ def test_get_placeholder_pointers(schema_with_placeholders):
     assert (
         TranslatableItem(
             pointer="/question/answers/0/options/0/label/text",
+            description="Answer option",
             value="{address}",
-            context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
+            context="During term time, where does <em>{person_name}</em> usually live?",
         )
         in translatable_items
     )
@@ -261,8 +259,9 @@ def test_get_placeholder_pointers(schema_with_placeholders):
     assert (
         TranslatableItem(
             pointer="/question/answers/0/options/1/label/text",
+            description="Answer option",
             value="The address in {country}",
-            context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
+            context="During term time, where does <em>{person_name}</em> usually live?",
         )
         in translatable_items
     )
@@ -270,6 +269,7 @@ def test_get_placeholder_pointers(schema_with_placeholders):
     assert (
         TranslatableItem(
             pointer="/question/title/text",
+            description="Question text",
             value="During term time, where does <em>{person_name}</em> usually live?",
         )
         in translatable_items
@@ -281,39 +281,11 @@ def test_placeholder_catalog_context(schema_with_placeholders):
 
     message = schema.catalog.get(
         id="{address}",
-        context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
+        context="During term time, where does <em>{person_name}</em> usually live?",
     )
     assert (
         message.context
-        == "Answer for: During term time, where does <em>{person_name}</em> usually live?"
-    )
-
-
-def test_get_text_plural_pointers(schema_with_plurals):
-    schema = SurveySchema(schema_with_plurals)
-    translatable_items = list(schema.translatable_items)
-
-    assert (
-        TranslatableItem(
-            pointer="/question/answers/0/options/0/label/text_plural/forms",
-            value={
-                "one": "Yes, {number_of_people} person lives here",
-                "other": "Yes, {number_of_people} people live here",
-            },
-            context="Answer for: {number_of_people} people live here, is this correct?",
-        )
-        in translatable_items
-    )
-
-    assert (
-        TranslatableItem(
-            pointer="/question/title/text_plural/forms",
-            value={
-                "one": "{number_of_people} person lives here, is this correct?",
-                "other": "{number_of_people} people live here, is this correct?",
-            },
-        )
-        in translatable_items
+        == "During term time, where does <em>{person_name}</em> usually live?"
     )
 
 
@@ -330,13 +302,13 @@ def test_placeholder_translation(schema_with_placeholders):
     catalog.add(
         id="{address}",
         string="WELSH - {address}",
-        context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
+        context="During term time, where does <em>{person_name}</em> usually live?",
     )
 
     catalog.add(
         id="The address in {country}",
         string="WELSH - The address in {country}",
-        context="Answer for: During term time, where does <em>{person_name}</em> usually live?",
+        context="During term time, where does <em>{person_name}</em> usually live?",
     )
 
     schema_translation.catalog = catalog
@@ -420,13 +392,11 @@ def test_variant_translation(schema_with_question_variants):
     catalog = Catalog()
 
     catalog.add(
-        "First name", "WELSH - First name", context="Answer for: What is your name?",
+        "First name", "WELSH - First name", context="What is your name?",
     )
 
     catalog.add(
-        "First name",
-        "WELSH - First name - Proxy",
-        context="Answer for: What is their name?",
+        "First name", "WELSH - First name - Proxy", context="What is their name?",
     )
 
     schema_translation.catalog = catalog
@@ -478,7 +448,7 @@ def test_plural_translation(schema_with_plurals):
             "WELSH - many",
             "WELSH - other",
         ),
-        context="Answer for: {number_of_people} people live here, is this correct?",
+        context="{number_of_people} people live here, is this correct?",
     )
 
     schema_translation.catalog = catalog

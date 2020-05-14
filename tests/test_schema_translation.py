@@ -13,12 +13,9 @@ class TestGetTranslation(unittest.TestCase):
             },
             {
                 "original": "Answering for this person",
-                "context": "Answer for: Who are you answering for??",
+                "context": "Who are you answering for??",
             },
-            {
-                "original": "Answering myself",
-                "context": "Answer for: Who are you answering for??",
-            },
+            {"original": "Answering myself", "context": "Who are you answering for??"},
             {
                 "original": (
                     "{number_of_people} person lives here, is this correct?",
@@ -30,7 +27,7 @@ class TestGetTranslation(unittest.TestCase):
                     "Yes, {number_of_people} person lives here",
                     "Yes, {number_of_people} people live here",
                 ),
-                "context": "Answer for: {number_of_people} people live here, is this correct?",
+                "context": "{number_of_people} people live here, is this correct?",
             },
         ]
 
@@ -44,13 +41,13 @@ class TestGetTranslation(unittest.TestCase):
         catalog.add(
             id="Answering for this person",
             string="WELSH - Answering for this person",
-            context="Answer for: Who are you answering for??",
+            context="Who are you answering for??",
         )
 
         catalog.add(
             id="Answering myself",
             string="WELSH - Answering myself",
-            context="Answer for: Who are you answering for??",
+            context="Who are you answering for??",
         )
 
         catalog.add(
@@ -67,7 +64,7 @@ class TestGetTranslation(unittest.TestCase):
                 "Yes, {number_of_people} people live here",
             ),
             string=("WELSH - one", "WELSH - other", "WELSH - many"),
-            context="Answer for: {number_of_people} people live here, is this correct?",
+            context="{number_of_people} people live here, is this correct?",
         )
 
         self.translator = SchemaTranslation(catalog)

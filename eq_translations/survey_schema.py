@@ -2,34 +2,23 @@ import copy
 import json
 
 from babel.messages import Catalog
-from jsonpointer import resolve_pointer, set_pointer
+from jsonpath_rw import parse
+from jsonpointer import set_pointer
 from termcolor import colored
 
+from eq_translations.extractable_strings import EXTRACTABLE_STRINGS, CONTEXT_DEFINITIONS
 from eq_translations.translatable_item import TranslatableItem
 from eq_translations.utils import (
-    find_pointers_to,
+    json_path_to_json_pointer,
     get_message_id,
     dumb_to_smart_quotes,
     get_plural_forms_for_language,
+    get_parent_schema_object,
 )
 
 
 class SurveySchema:
     schema = {}
-    keys_with_context = ["playback", "title", "label"]
-    keys_to_translate = [
-        "show_guidance",
-        "hide_guidance",
-        "description",
-        "legal_basis",
-        "item_title",
-        "add_link_text",
-        "empty_list_text",
-        "instruction",
-        "cancel_text",
-        "list",
-        "messages",
-    ] + keys_with_context
 
     def __init__(self, schema_data=None):
         self.schema = schema_data
@@ -52,101 +41,74 @@ class SurveySchema:
         :yield: A TranslatableItem
         :return: A generator
         """
+        for extractable_string in EXTRACTABLE_STRINGS:
+            json_path = parse(extractable_string["json_path"])
 
-        for key in self.keys_to_translate:
-            with_context = key in self.keys_with_context
-
-            for pointer in find_pointers_to(self.schema, key):
-                # The 'list' property is used by both 'contents' and 'when' blocks.
-                if "/when/" in pointer:
-                    continue
-
-                schema_element = resolve_pointer(self.schema, pointer)
-                if isinstance(schema_element, dict):
-                    yield from self._get_translatable_items_from_dict_element(
-                        pointer, schema_element, with_context
-                    )
-
-                elif isinstance(schema_element, list):
-                    yield from self._get_translatable_items_from_list_element(
-                        pointer, schema_element, with_context
-                    )
-
-                else:
-                    yield self._get_translatable_item(
-                        pointer, schema_element, with_context
-                    )
-
-    def _get_translatable_items_from_dict_element(
-        self, pointer, schema_element, with_context
-    ):
-        plural_forms = schema_element.get("text_plural", {}).get("forms")
-        if plural_forms:
-            plural_forms_pointer = f"{pointer}/text_plural/forms"
-            yield self._get_translatable_item(
-                plural_forms_pointer, plural_forms, with_context
-            )
-        elif "text" in schema_element:
-            placeholder_pointer = f"{pointer}/text"
-            yield self._get_translatable_item(
-                placeholder_pointer, schema_element["text"], with_context
-            )
-        else:
-            for element, value in schema_element.items():
-                element_pointer = f"{pointer}/{element}"
-                yield self._get_translatable_item(element_pointer, value, with_context)
-
-    def _get_translatable_items_from_list_element(
-        self, pointer, schema_element, with_context
-    ):
-
-        for index, element in enumerate(schema_element):
-            if isinstance(element, dict):
-                yield from self._get_translatable_items_from_dict_element(
-                    pointer, element, with_context
+            for match in json_path.find(self.schema):
+                json_pointer, string_value = self._get_json_pointer_and_string_value(
+                    str(match.full_path), match.value
                 )
-            else:
-                list_item_pointer = f"{pointer}/{index}"
-                yield self._get_translatable_item(
-                    list_item_pointer, element, with_context
+                yield TranslatableItem(
+                    pointer=json_pointer,
+                    description=extractable_string["description"],
+                    value=string_value,
+                    context=self._get_context_for_pointer(
+                        json_pointer, extractable_string.get("context")
+                    ),
+                    additional_context=self._get_context_for_pointer(
+                        json_pointer, extractable_string.get("additional_context"),
+                    ),
                 )
-
-    def _get_translatable_item(self, pointer, value=None, with_context=False):
-        """
-        :param with_context: Boolean flag to signify whether this pointer should have the question title as context.
-        :return: A TranslatableItem
-        """
-        context = (
-            self._get_context_from_pointer(pointer)
-            if with_context and "/answers/" in pointer
-            else None
-        )
-
-        return TranslatableItem(pointer, value, context)
 
     @staticmethod
-    def _get_parent_question_pointer(pointer):
-        pointer_parts = pointer.split("/")
+    def _get_json_pointer_and_string_value(json_path, schema_object):
+        """
+        Resolves the given schema_object to a json pointer and value
+        :return: json pointer, string value
+        """
+        json_pointer = json_path_to_json_pointer(json_path)
+        if isinstance(schema_object, dict):
+            plural_forms = schema_object.get("text_plural", {}).get("forms")
+            if plural_forms:
+                return f"{json_pointer}/text_plural/forms", plural_forms
+            return f"{json_pointer}/text", schema_object["text"]
 
-        if "question" in pointer_parts:
-            pointer_index = pointer_parts.index("question")
-            return "/".join(pointer_parts[: pointer_index + 1])
+        return json_pointer, schema_object
 
-    def get_parent_question(self, pointer):
-        question_pointer = self._get_parent_question_pointer(pointer)
-        return resolve_pointer(self.schema, question_pointer + "/title")
+    @staticmethod
+    def _get_single_string_value(schema_object):
+        """
+        Resolves an identifying string value for the schema_object. If plural the `other` form is returned.
+        :return: string value
+        """
+        if isinstance(schema_object, dict):
+            if "text_plural" in schema_object:
+                return schema_object["text_plural"]["forms"]["other"]
+            return schema_object["text"]
+        return schema_object
 
-    def _get_context_from_pointer(self, pointer):
-        question = self.get_parent_question(pointer)
+    def _get_context_for_pointer(self, pointer, context_type):
+        context_definition = CONTEXT_DEFINITIONS.get(context_type)
+        if context_definition:
+            parent_schema_object = get_parent_schema_object(
+                self.schema, pointer, context_definition["parent_schema_property"]
+            )
 
-        if "text_plural" in question:
-            context = question["text_plural"]["forms"]["other"]
-        elif "placeholders" in question:
-            context = question["text"]
-        else:
-            context = question
+            context = None
+            if context_definition["context"]["property"] in parent_schema_object:
+                context = context_definition["context"]
+            elif (
+                "secondary_context" in context_definition
+                and context_definition["secondary_context"]["property"]
+                in parent_schema_object
+            ):
+                context = context_definition["secondary_context"]
 
-        return f"Answer for: {context}"
+            if context:
+                context_string = self._get_single_string_value(
+                    parent_schema_object[context["property"]]
+                )
+                return context["text"].format(context=context_string)
 
     @property
     def catalog(self):
@@ -162,8 +124,13 @@ class SurveySchema:
                 continue
 
             message_id = get_message_id(translatable_item.value)
+            auto_comments = [translatable_item.description]
+            if translatable_item.additional_context:
+                auto_comments.append(translatable_item.additional_context)
             catalog.add(
-                id=message_id, context=translatable_item.context,
+                id=message_id,
+                context=translatable_item.context,
+                auto_comments=auto_comments,
             )
 
         print(f"Total Translatable Items: {len(translatable_items)}")
