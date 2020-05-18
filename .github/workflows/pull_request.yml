@@ -22,8 +22,6 @@ jobs:
       - name: Install virtual environment
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
-      - name: Security Check
-        run: pipenv check ./eq_translations ./tests
       - name: Lint Python
         run: pipenv run pylint eq_translations ./tests
       - name: Black
