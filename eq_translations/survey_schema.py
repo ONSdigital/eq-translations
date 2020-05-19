@@ -118,7 +118,7 @@ class SurveySchema:
         """
         context = (
             self._get_context_from_pointer(pointer)
-            if with_context and f"/answers/" in pointer
+            if with_context and "/answers/" in pointer
             else None
         )
 
