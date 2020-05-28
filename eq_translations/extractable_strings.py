@@ -53,7 +53,7 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..content.contents[*].list[*]",
         "description": "Content page list item",
         "context": "Content",
-        "additional_context": "List",
+        "additional_context": ["ListHeading", "ListDescription"],
     },
     {"json_path": "$..question.title", "description": "Question text"},
     {
@@ -85,6 +85,7 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..question.definitions[*].contents[*].list[*]",
         "description": "Question definition list item",
         "context": "Question",
+        "additional_context": ["ListHeading", "ListDescription"],
     },
     {
         "json_path": "$..question.guidance.contents[*].title",
@@ -100,7 +101,7 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..question.guidance.contents[*].list[*]",
         "description": "Question guidance list item",
         "context": "Question",
-        "additional_context": "List",
+        "additional_context": ["ListHeading", "ListDescription"],
     },
     {
         "json_path": "$..question.calculation.title",
@@ -121,7 +122,7 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..answers[*].description",
         "description": "Answer description",
         "context": "Question",
-        "additional_context": "Answer",
+        "additional_context": ["Answer"],
     },
     {
         "json_path": "$..answers[*].playback",
@@ -137,19 +138,19 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..answers[*].options[*].description",
         "description": "Answer option description",
         "context": "Question",
-        "additional_context": "AnswerOption",
+        "additional_context": ["AnswerOption"],
     },
     {
         "json_path": "$..answers[*].options[*].detail_answer.label",
         "description": "Detail answer label",
         "context": "Question",
-        "additional_context": "AnswerOption",
+        "additional_context": ["AnswerOption"],
     },
     {
         "json_path": "$..answers[*].options[*].detail_answer.description",
         "description": "Detail answer description",
         "context": "Question",
-        "additional_context": "AnswerOption",
+        "additional_context": ["AnswerOption"],
     },
     {
         "json_path": "$..answers[*].options[*].title",
@@ -185,29 +186,39 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..answers[*].guidance.contents[*].list[*]",
         "description": "Answer guidance list item",
         "context": "Question",
+        "additional_context": ["ListHeading", "ListDescription"],
     },
 ]
 
 CONTEXT_DEFINITIONS = {
     "Question": {
         "parent_schema_property": "question",
-        "context": {"property": "title", "text": "{context}"},
+        "property": "title",
+        "text": "{context}",
     },
     "Content": {
         "parent_schema_property": "content",
-        "context": {"property": "title", "text": "{context}"},
+        "property": "title",
+        "text": "{context}",
     },
     "Answer": {
         "parent_schema_property": "answers",
-        "context": {"property": "label", "text": "For answer: {context}"},
+        "property": "label",
+        "text": "For answer: {context}",
     },
     "AnswerOption": {
         "parent_schema_property": "options",
-        "context": {"property": "label", "text": "For answer option: {context}"},
+        "property": "label",
+        "text": "For answer option: {context}",
     },
-    "List": {
+    "ListHeading": {
         "parent_schema_property": "contents",
-        "context": {"property": "description", "text": "For description: {context}"},
-        "secondary_context": {"property": "title", "text": "For heading: {context}"},
+        "property": "title",
+        "text": "For heading: {context}",
+    },
+    "ListDescription": {
+        "parent_schema_property": "contents",
+        "property": "description",
+        "text": "For description: {context}",
     },
 }

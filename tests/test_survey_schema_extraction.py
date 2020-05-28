@@ -314,7 +314,7 @@ def test_answer_additional_context():
             description="Answer description",
             value="Describe how you're feeling",
             context="How are you feeling?",
-            additional_context="For answer: Feeling",
+            additional_context=["For answer: Feeling"],
         )
         in translatable_items
     )
@@ -359,7 +359,7 @@ def test_answer_option_additional_context():
             description="Answer option description",
             value="Select this if you're happy",
             context="Are you happy?",
-            additional_context="For answer option: Yes",
+            additional_context=["For answer option: Yes"],
         )
         in translatable_items
     )
@@ -405,7 +405,7 @@ def test_content_list_additional_context():
             description="Content page list item",
             value="list with title",
             context="Content title",
-            additional_context="For heading: list title",
+            additional_context=["For heading: list title"],
         )
         in translatable_items
     )
@@ -416,7 +416,7 @@ def test_content_list_additional_context():
             description="Content page list item",
             value="list with description",
             context="Content title",
-            additional_context="For description: list description",
+            additional_context=["For description: list description"],
         )
         in translatable_items
     )
@@ -427,7 +427,10 @@ def test_content_list_additional_context():
             description="Content page list item",
             value="list with title and description",
             context="Content title",
-            additional_context="For description: list description",
+            additional_context=[
+                "For heading: list title",
+                "For description: list description",
+            ],
         )
         in translatable_items
     )

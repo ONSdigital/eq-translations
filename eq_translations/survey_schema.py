@@ -48,6 +48,12 @@ class SurveySchema:
                 json_pointer, string_value = self._get_json_pointer_and_string_value(
                     str(match.full_path), match.value
                 )
+                additional_context = []
+                for context_type in extractable_string.get("additional_context", []):
+                    context = self._get_context_for_pointer(json_pointer, context_type)
+                    if context:
+                        additional_context.append(context)
+
                 yield TranslatableItem(
                     pointer=json_pointer,
                     description=extractable_string["description"],
@@ -55,9 +61,7 @@ class SurveySchema:
                     context=self._get_context_for_pointer(
                         json_pointer, extractable_string.get("context")
                     ),
-                    additional_context=self._get_context_for_pointer(
-                        json_pointer, extractable_string.get("additional_context"),
-                    ),
+                    additional_context=additional_context or None,
                 )
 
     @staticmethod
@@ -93,22 +97,11 @@ class SurveySchema:
             parent_schema_object = get_parent_schema_object(
                 self.schema, pointer, context_definition["parent_schema_property"]
             )
-
-            context = None
-            if context_definition["context"]["property"] in parent_schema_object:
-                context = context_definition["context"]
-            elif (
-                "secondary_context" in context_definition
-                and context_definition["secondary_context"]["property"]
-                in parent_schema_object
-            ):
-                context = context_definition["secondary_context"]
-
-            if context:
+            if context_definition["property"] in parent_schema_object:
                 context_string = self._get_single_string_value(
-                    parent_schema_object[context["property"]]
+                    parent_schema_object[context_definition["property"]]
                 )
-                return context["text"].format(context=context_string)
+                return context_definition["text"].format(context=context_string)
 
     @property
     def catalog(self):
@@ -126,7 +119,7 @@ class SurveySchema:
             message_id = get_message_id(translatable_item.value)
             auto_comments = [translatable_item.description]
             if translatable_item.additional_context:
-                auto_comments.append(translatable_item.additional_context)
+                auto_comments += translatable_item.additional_context
             catalog.add(
                 id=message_id,
                 context=translatable_item.context,
