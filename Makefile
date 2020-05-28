@@ -6,4 +6,4 @@ lint:
 	pipenv run black --check eq_translations tests
 
 test:
-	pipenv run pytest --cov-config=.coveragerc --cov --cov-report html
+	pipenv run pytest --cov-config=.coveragerc --cov --cov-report html tests
