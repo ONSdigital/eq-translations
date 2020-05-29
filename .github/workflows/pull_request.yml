@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v1
         with:
-          python-version: 3.8.2
+          python-version: 3.8
       - name: Install Pipenv
         run: pip install pipenv==2018.11.26
       - name: Cache virtualenv
@@ -23,15 +23,17 @@ jobs:
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
       - name: Lint Python
-        run: make lint
+        run: pipenv run pylint eq_translations ./tests
+      - name: Black
+        run: pipenv run black --check .
   test:
     needs: lint
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v1
         with:
-          python-version: 3.8.2
+          python-version: 3.8
       - name: Install Pipenv
         run: pip install pipenv==2018.11.26
       - name: Cache virtualenv
@@ -44,7 +46,7 @@ jobs:
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
       - name: Run tests
-        run: make test
+        run: pipenv run pytest --cov-config=.coveragerc --cov --cov-report html
   docker-push:
     runs-on: ubuntu-18.04
     steps:

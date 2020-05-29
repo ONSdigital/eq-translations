@@ -3,7 +3,7 @@ build:
 
 lint:
 	pipenv run pylint eq_translations ./tests
-	pipenv run black --check eq_translations tests
+	pipenv run black --check .
 
 test:
-	pipenv run pytest --cov-config=.coveragerc --cov --cov-report html tests
+	pipenv run pytest --cov-config=.coveragerc --cov --cov-report html
