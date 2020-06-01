@@ -16,24 +16,23 @@ msgstr ""
 "X-Crowdin-File: test_language.pot\n"
 "Language: cy_GB\n"
 
-msgid "A questionnaire to demonstrate language switching"
-msgstr "Holiadur i ddangos newid iaith"
-
-msgid "Enter your date of birth"
-msgstr "Rhowch eich dyddiad geni"
-
+#. Questionnaire title
 msgid "Test Language Survey"
 msgstr "Arolwg Iaith Prawf"
 
+#. Question text
 msgid "Please enter a name"
 msgstr "Rhowch enw"
 
+#. Question text
 msgid "What is {person_name_possessive} date of birth?"
 msgstr "Beth yw dyddiad geni {person_name_possessive}?"
 
+#. Question text
 msgid "How many people live at your household?"
 msgstr "Faint o bobl sy'n byw ar eich cartref?"
 
+#. Question text
 msgid "{number_of_people} person lives here, is this correct?"
 msgid_plural "{number_of_people} people live here, is this correct?"
 msgstr[0] "Mae {number_of_people} person yn byw yma, ydy hyn yn gywir? (zero)"
@@ -43,23 +42,34 @@ msgstr[3] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (few)"
 msgstr[4] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (many)"
 msgstr[5] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (other)"
 
-msgctxt "Answer for: Please enter a name"
+#. Answer
+msgctxt "Please enter a name"
 msgid "First Name"
 msgstr "Enw cyntaf"
 
-msgctxt "Answer for: Please enter a name"
+#. Answer
+msgctxt "Please enter a name"
 msgid "Last Name"
 msgstr "Enw olaf"
 
-msgctxt "Answer for: What is {person_name_possessive} date of birth?"
+#. Answer
+msgctxt "What is {person_name_possessive} date of birth?"
 msgid "Date of Birth"
 msgstr "Dyddiad Geni"
 
-msgctxt "Answer for: How many people live at your household?"
+#. Answer
+msgctxt "How many people live at your household?"
 msgid "Number of household residents"
 msgstr "Nifer o breswylwyr yn y cartref"
 
-msgctxt "Answer for: {number_of_people} people live here, is this correct?"
+#. Answer description
+#. For answer: Date of Birth
+msgctxt "What is {person_name_possessive} date of birth?"
+msgid "Enter your date of birth"
+msgstr "Rhowch eich dyddiad geni"
+
+#. Answer option
+msgctxt "{number_of_people} people live here, is this correct?"
 msgid "Yes, {number_of_people} person lives here"
 msgid_plural "Yes, {number_of_people} people live here"
 msgstr[0] "Ydy, mae {number_of_people} person yn byw yma (zero)"
@@ -69,6 +79,7 @@ msgstr[3] "Ydy, mae {number_of_people} pherson yn byw yma (few)"
 msgstr[4] "Ydy, mae {number_of_people} pherson yn byw yma (many)"
 msgstr[5] "Ydy, mae {number_of_people} pherson yn byw yma (other)"
 
-msgctxt "Answer for: {number_of_people} people live here, is this correct?"
+#. Answer option
+msgctxt "{number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr "Na"

@@ -1,5 +1,7 @@
 import re
 
+from jsonpointer import resolve_pointer
+
 
 def list_pointers(input_data, pointer=None):
     """
@@ -48,6 +50,34 @@ def find_pointers_to(input_data, search_key):
     root_pointers = [f"/{search_key}"] if search_key in input_data else []
     pointer_iterator = find_pointers_containing(input_data, search_key)
     return root_pointers + [f"{pointer}/{search_key}" for pointer in pointer_iterator]
+
+
+def get_parent_schema_object(input_data, json_pointer, parent_property):
+    """
+    Get the parent schema object identified by parent_property in the json pointer.
+    If the parent schema object is an array then the matching array item is returned.
+    :param input_data: the input data to search
+    :param json_pointer: the pointer being searched
+    :param parent_property: the parent property to search for
+    :return: schema object identified by parent_property
+    """
+    pointer_parts = json_pointer.split("/")
+    pointer_index = pointer_parts.index(parent_property)
+    parent_pointer = "/".join(pointer_parts[: pointer_index + 1])
+    schema_object = resolve_pointer(input_data, parent_pointer)
+    if isinstance(schema_object, list):
+        return schema_object[int(pointer_parts[pointer_index + 1])]
+    return schema_object
+
+
+def json_path_to_json_pointer(json_path):
+    """
+    Convert a json path string into a json pointer string.
+    :param json_path: the input data to search
+    :return: json pointer equivalent to the json path
+    """
+    json_pointer = json_path.replace("[", "").replace("]", "").replace(".", "/")
+    return f"/{json_pointer}"
 
 
 def dumb_to_smart_quotes(string):

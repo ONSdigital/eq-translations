@@ -1,8 +1,10 @@
 from eq_translations.utils import (
     find_pointers_containing,
     find_pointers_to,
+    json_path_to_json_pointer,
     list_pointers,
     get_message_id,
+    get_parent_schema_object,
 )
 
 
@@ -136,3 +138,52 @@ def test_list_pointers():
     assert "/a/key/0/x/2" in pointers
     assert "/a/key/1" in pointers
     assert "/a/key/2" in pointers
+
+
+def test_get_parent_schema_object():
+    question_schema = {
+        "question": {
+            "answers": [
+                {
+                    "id": "confirm-feeling-answer",
+                    "type": "Radio",
+                    "label": "confirm",
+                    "mandatory": True,
+                    "options": [
+                        {"value": "Yes", "label": "Yes"},
+                        {"value": "No", "label": "No"},
+                    ],
+                }
+            ]
+        },
+        "title": "text",
+    }
+
+    parent_question = get_parent_schema_object(
+        question_schema, "/question/answers/0/options/0/label", "question"
+    )
+    assert parent_question == question_schema["question"]
+
+    parent_answer = get_parent_schema_object(
+        question_schema, "/question/answers/0/options/0/label", "answers"
+    )
+    assert parent_answer == question_schema["question"]["answers"][0]
+
+    parent_answer_option = get_parent_schema_object(
+        question_schema, "/question/answers/0/options/0/label", "options"
+    )
+    assert (
+        parent_answer_option == question_schema["question"]["answers"][0]["options"][0]
+    )
+
+
+def test_json_path_to_json_pointer():
+    tests = [
+        ("foo", "/foo"),
+        ("foo.baz", "/foo/baz"),
+        ("foo.[0].baz", "/foo/0/baz"),
+        ("foo.[0].baz.qux", "/foo/0/baz/qux"),
+        ("foo.[0].baz.[1].qux", "/foo/0/baz/1/qux"),
+    ]
+    for test in tests:
+        assert test[1] == json_path_to_json_pointer(test[0])

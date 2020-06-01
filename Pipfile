@@ -9,6 +9,7 @@ jsonpointer = "*"
 tqdm = "*"
 requests = "*"
 termcolor = "*"
+jsonpath-rw = "*"
 
 [dev-packages]
 pylint = "*"
@@ -16,6 +17,7 @@ pytest = "*"
 pylint-quotes = "*"
 black = "==19.10b0"
 pytest-cov = "*"
+typed-ast = "*"
 
 [requires]
 python_version = "3.8"

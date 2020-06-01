@@ -16,5 +16,6 @@ msgstr ""
 "X-Crowdin-File: test_language.pot\n"
 "Language: sco_ulster\n"
 
+#. Question text
 msgid "Please enter a name"
 msgstr "Rhowch enw"
