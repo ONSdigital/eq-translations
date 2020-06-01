@@ -119,6 +119,7 @@
                                     }
                                 ],
                                 "description": "",
+                                "warning": "Mae hwn yn gwestiwn pwysig iawn",
                                 "id": "number-of-people-question",
                                 "title": "Faint o bobl sy\u2019n byw ar eich cartref?",
                                 "type": "General"

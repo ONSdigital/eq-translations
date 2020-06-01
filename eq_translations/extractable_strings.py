@@ -67,6 +67,11 @@ EXTRACTABLE_STRINGS = [
         "context": "Question",
     },
     {
+        "json_path": "$..question.warning",
+        "description": "Question warning",
+        "context": "Question",
+    },
+    {
         "json_path": "$..question.definitions[*].title",
         "description": "Question definition link",
         "context": "Question",

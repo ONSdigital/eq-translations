@@ -42,6 +42,11 @@ msgstr[3] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (few)"
 msgstr[4] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (many)"
 msgstr[5] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (other)"
 
+#. Question warning
+msgctxt "How many people live at your household?"
+msgid "This is a very important question"
+msgstr "Mae hwn yn gwestiwn pwysig iawn"
+
 #. Answer
 msgctxt "Please enter a name"
 msgid "First Name"
