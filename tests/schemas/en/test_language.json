@@ -116,6 +116,7 @@
                                     }
                                 ],
                                 "description": "",
+                                "warning": "This is a very important question",
                                 "id": "number-of-people-question",
                                 "title": "How many people live at your household?",
                                 "type": "General"
