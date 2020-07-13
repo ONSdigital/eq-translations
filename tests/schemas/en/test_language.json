@@ -29,7 +29,9 @@
                             "type": "Question",
                             "id": "name-block",
                             "question": {
-                                "description": "",
+                                "description": [
+                                    "The full name of the person"
+                                ],
                                 "id": "name-question",
                                 "title": "Please enter a name",
                                 "type": "General",
@@ -55,7 +57,9 @@
                             "type": "Question",
                             "id": "dob-block",
                             "question": {
-                                "description": "",
+                                "description": [
+                                    "{person_name_possessive} date of birth"
+                                ],
                                 "id": "dob-question",
                                 "title": {
                                     "text": "What is {person_name_possessive} date of birth?",
@@ -115,7 +119,9 @@
                                         }
                                     }
                                 ],
-                                "description": "",
+                                "description": [
+                                    "The total number of people in the household"
+                                ],
                                 "warning": "This is a very important question",
                                 "id": "number-of-people-question",
                                 "title": "How many people live at your household?",
