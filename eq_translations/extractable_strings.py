@@ -58,7 +58,7 @@ EXTRACTABLE_STRINGS = [
     },
     {"json_path": "$..question.title", "description": "Question text"},
     {
-        "json_path": "$..question.description",
+        "json_path": "$..question.description[*]",
         "description": "Question description",
         "context": "Question",
     },

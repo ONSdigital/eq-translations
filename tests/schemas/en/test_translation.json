@@ -357,7 +357,9 @@
                                     }
                                 ],
                                 "title": "How many people live here?",
-                                "description": "",
+                                "description": [
+                                    "The total number of people in the property"
+                                ],
                                 "id": "number-of-people-question",
                                 "type": "General"
                             }
@@ -447,7 +449,9 @@
                                     }
                                 ],
                                 "title": "How many visitors have lived here?",
-                                "description": "",
+                                "description": [
+                                    "The total number of visitors who were in the property"
+                                ],
                                 "id": "number-of-visitors-question",
                                 "type": "General"
                             }
