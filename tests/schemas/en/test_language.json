@@ -58,7 +58,34 @@
                             "id": "dob-block",
                             "question": {
                                 "description": [
-                                    "{person_name_possessive} date of birth"
+                                    {
+                                        "text": "{person_name_possessive} date of birth",
+                                        "placeholders": [
+                                            {
+                                                "placeholder": "person_name_possessive",
+                                                "transforms": [
+                                                    {
+                                                        "arguments": {
+                                                            "delimiter": " ",
+                                                            "list_to_concatenate": {
+                                                                "identifier": ["first-name", "last-name"],
+                                                                "source": "answers"
+                                                            }
+                                                        },
+                                                        "transform": "concatenate_list"
+                                                    },
+                                                    {
+                                                        "arguments": {
+                                                            "string_to_format": {
+                                                                "source": "previous_transform"
+                                                            }
+                                                        },
+                                                        "transform": "format_possessive"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
                                 ],
                                 "id": "dob-question",
                                 "title": {
