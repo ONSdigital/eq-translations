@@ -39,7 +39,7 @@ EXTRACTABLE_STRINGS = [
         "description": "List collector add block cancel link",
     },
     {"json_path": "$..content.title", "description": "Content page main heading"},
-    {"json_path": "$..content.instruction", "description": "Content instruction"},
+    {"json_path": "$..content.instruction[*]", "description": "Content instruction"},
     {
         "json_path": "$..content.contents[*].title",
         "description": "Content page heading",
@@ -63,7 +63,7 @@ EXTRACTABLE_STRINGS = [
         "context": "Question",
     },
     {
-        "json_path": "$..question.instruction",
+        "json_path": "$..question.instruction[*]",
         "description": "Question instruction",
         "context": "Question",
     },
