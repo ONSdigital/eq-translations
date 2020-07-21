@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-07-13 11:06+0100\n"
+"POT-Creation-Date: 2020-07-21 10:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,6 +52,11 @@ msgstr ""
 #. Question description
 msgctxt "How many people live at your household?"
 msgid "The total number of people in the household"
+msgstr ""
+
+#. Question instruction
+msgctxt "Please enter a name"
+msgid "Enter the name of a person"
 msgstr ""
 
 #. Question warning

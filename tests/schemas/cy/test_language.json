@@ -29,6 +29,9 @@
                             "type": "Question",
                             "id": "name-block",
                             "question": {
+                                "instruction": [
+                                    "Rhowch enw person"
+                                ],
                                 "description": [
                                     "Enw llawn y person"
                                 ],
@@ -59,7 +62,7 @@
                             "question": {
                                 "description": [
                                     {
-                                        "text":"dyddiad geni {person_name_possessive}",
+                                        "text": "dyddiad geni {person_name_possessive}",
                                         "placeholders": [
                                             {
                                                 "placeholder": "person_name_possessive",
@@ -68,7 +71,10 @@
                                                         "arguments": {
                                                             "delimiter": " ",
                                                             "list_to_concatenate": {
-                                                                "identifier": ["first-name", "last-name"],
+                                                                "identifier": [
+                                                                    "first-name",
+                                                                    "last-name"
+                                                                ],
                                                                 "source": "answers"
                                                             }
                                                         },

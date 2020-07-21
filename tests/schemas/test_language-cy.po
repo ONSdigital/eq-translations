@@ -57,6 +57,11 @@ msgctxt "How many people live at your household?"
 msgid "The total number of people in the household"
 msgstr "Cyfanswm y bobl ar yr aelwyd"
 
+#. Question instruction
+msgctxt "Please enter a name"
+msgid "Enter the name of a person"
+msgstr "Rhowch enw person"
+
 #. Question warning
 msgctxt "How many people live at your household?"
 msgid "This is a very important question"
