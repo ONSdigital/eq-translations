@@ -29,7 +29,12 @@
                             "type": "Question",
                             "id": "name-block",
                             "question": {
-                                "description": "",
+                                "instruction": [
+                                    "Rhowch enw person"
+                                ],
+                                "description": [
+                                    "Enw llawn y person"
+                                ],
                                 "id": "name-question",
                                 "title": "Rhowch enw",
                                 "type": "General",
@@ -55,7 +60,39 @@
                             "type": "Question",
                             "id": "dob-block",
                             "question": {
-                                "description": "",
+                                "description": [
+                                    {
+                                        "text": "dyddiad geni {person_name_possessive}",
+                                        "placeholders": [
+                                            {
+                                                "placeholder": "person_name_possessive",
+                                                "transforms": [
+                                                    {
+                                                        "arguments": {
+                                                            "delimiter": " ",
+                                                            "list_to_concatenate": {
+                                                                "identifier": [
+                                                                    "first-name",
+                                                                    "last-name"
+                                                                ],
+                                                                "source": "answers"
+                                                            }
+                                                        },
+                                                        "transform": "concatenate_list"
+                                                    },
+                                                    {
+                                                        "arguments": {
+                                                            "string_to_format": {
+                                                                "source": "previous_transform"
+                                                            }
+                                                        },
+                                                        "transform": "format_possessive"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
                                 "id": "dob-question",
                                 "title": {
                                     "text": "Beth yw dyddiad geni {person_name_possessive}?",
@@ -118,7 +155,9 @@
                                         }
                                     }
                                 ],
-                                "description": "",
+                                "description": [
+                                    "Cyfanswm y bobl ar yr aelwyd"
+                                ],
                                 "warning": "Mae hwn yn gwestiwn pwysig iawn",
                                 "id": "number-of-people-question",
                                 "title": "Faint o bobl sy\u2019n byw ar eich cartref?",

@@ -29,7 +29,12 @@
                             "type": "Question",
                             "id": "name-block",
                             "question": {
-                                "description": "",
+                                "instruction": [
+                                    "Enter the name of a person"
+                                ],
+                                "description": [
+                                    "The full name of the person"
+                                ],
                                 "id": "name-question",
                                 "title": "Please enter a name",
                                 "type": "General",
@@ -55,7 +60,36 @@
                             "type": "Question",
                             "id": "dob-block",
                             "question": {
-                                "description": "",
+                                "description": [
+                                    {
+                                        "text": "{person_name_possessive} date of birth",
+                                        "placeholders": [
+                                            {
+                                                "placeholder": "person_name_possessive",
+                                                "transforms": [
+                                                    {
+                                                        "arguments": {
+                                                            "delimiter": " ",
+                                                            "list_to_concatenate": {
+                                                                "identifier": ["first-name", "last-name"],
+                                                                "source": "answers"
+                                                            }
+                                                        },
+                                                        "transform": "concatenate_list"
+                                                    },
+                                                    {
+                                                        "arguments": {
+                                                            "string_to_format": {
+                                                                "source": "previous_transform"
+                                                            }
+                                                        },
+                                                        "transform": "format_possessive"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
                                 "id": "dob-question",
                                 "title": {
                                     "text": "What is {person_name_possessive} date of birth?",
@@ -115,7 +149,9 @@
                                         }
                                     }
                                 ],
-                                "description": "",
+                                "description": [
+                                    "The total number of people in the household"
+                                ],
                                 "warning": "This is a very important question",
                                 "id": "number-of-people-question",
                                 "title": "How many people live at your household?",
