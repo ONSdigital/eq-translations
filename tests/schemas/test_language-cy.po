@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eq-language-testing\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-26 10:36+0000\n"
-"PO-Revision-Date: 2020-02-26 11:14\n"
+"POT-Creation-Date: 2020-07-25 08:26+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Welsh\n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,22 @@ msgstr ""
 #. Questionnaire title
 msgid "Test Language Survey"
 msgstr "Arolwg Iaith Prawf"
+
+#. Hub submission button
+msgid "Submission text"
+msgstr "Testun cyflwyno"
+
+#. Hub submission guidance
+msgid "Submission guidance"
+msgstr "Canllawiau cyflwyno"
+
+#. Hub submission title
+msgid "Title displayed on hub when complete"
+msgstr "Arddangosir y teitl ar y canolbwynt pan fydd wedi'i gwblhau"
+
+#. Hub submission warning
+msgid "Submission warning"
+msgstr "Rhybudd cyflwyno"
 
 #. Question text
 msgid "Please enter a name"

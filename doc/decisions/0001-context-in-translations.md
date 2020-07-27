@@ -18,6 +18,10 @@ For some translatable strings, we create a message context (`msgctxt`) that cont
   | `$.title` | Questionnaire title | |
   | `$.legal_basis` | Questionnaire legal basis | |
   | `$.messages` | Global answer error message | `message` rather than `messages` as each message is an individual translation |
+  | `$.hub.submission.button` | Custom hub submission button | |
+  | `$.hub.submission.guidance` | Custom hub submission guidance | |
+  | `$.hub.submission.title` | Custom hub submission title | |
+  | `$.hub.submission.warning` | Custom hub submission warning | |
   | `$.sections[*].title` | Section title | Used for section summaries, final summary and the hub |
   | `$.sections[*].repeat.title` | Section title (repeating section) | |
   | `$.sections[*].summary.items[*].title` | Custom section summary item title | |

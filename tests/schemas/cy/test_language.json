@@ -17,6 +17,15 @@
             "type": "string"
         }
     ],
+    "hub": {
+        "enabled": true,
+        "submission": {
+            "button": "Testun cyflwyno",
+            "guidance": "Canllawiau cyflwyno",
+            "title": "Arddangosir y teitl ar y canolbwynt pan fydd wedi'i gwblhau",
+            "warning": "Rhybudd cyflwyno"
+        }
+    },
     "sections": [
         {
             "id": "default-section",

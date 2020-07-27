@@ -2,6 +2,13 @@ EXTRACTABLE_STRINGS = [
     {"json_path": "$.title", "description": "Questionnaire title"},
     {"json_path": "$.legal_basis", "description": "Questionnaire legal basis"},
     {"json_path": "$.messages.*", "description": "Global answer error message"},
+    {"json_path": "$.hub.submission.button", "description": "Hub submission button"},
+    {
+        "json_path": "$.hub.submission.guidance",
+        "description": "Hub submission guidance",
+    },
+    {"json_path": "$.hub.submission.title", "description": "Hub submission title"},
+    {"json_path": "$.hub.submission.warning", "description": "Hub submission warning"},
     {"json_path": "$.sections[*].title", "description": "Section title"},
     {
         "json_path": "$.sections[*].repeat.title",
