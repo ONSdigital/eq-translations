@@ -30,7 +30,7 @@ msgstr "Canllawiau cyflwyno"
 
 #. Hub submission title
 msgid "Title displayed on hub when complete"
-msgstr "Arddangosir y teitl ar y canolbwynt pan fydd wedi'i gwblhau"
+msgstr "Arddangosir y teitl ar y canolbwynt pan fydd wedi’i gwblhau"
 
 #. Hub submission warning
 msgid "Submission warning"
