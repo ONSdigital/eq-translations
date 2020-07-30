@@ -13,8 +13,8 @@ class SchemaTranslation:
         with open(translation_file_path, encoding="utf8") as translation_file:
             self.catalog = pofile.read_po(translation_file)
 
-            if self.catalog.locale_identifier == "sco_ulster":
-                self.catalog.locale = Locale("eo")
+            if self.catalog.locale_identifier == "ga_IE":
+                self.catalog.locale = Locale("ga")
 
     def save(self, translation_file_path):
         with open(translation_file_path, "w+b") as translation_file:  # pragma: no cover
