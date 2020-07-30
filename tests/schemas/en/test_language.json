@@ -22,7 +22,7 @@
         "submission": {
             "button": "Submission text",
             "guidance": "Submission guidance",
-            "title": "Title displayed on hub when complete",
+            "title": "Submission title",
             "warning": "Submission warning"
         }
     },
