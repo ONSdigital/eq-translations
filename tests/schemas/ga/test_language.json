@@ -1,10 +1,10 @@
 {
     "mime_type": "application/json/ons/eq",
-    "language": "en",
+    "language": "ga",
     "schema_version": "0.0.1",
     "data_version": "0.0.3",
     "survey_id": "0",
-    "title": "Test Language Survey",
+    "title": "Suirbh\u00e9 Teanga T\u00e1st\u00e1la",
     "theme": "social",
     "description": "A questionnaire to demonstrate language switching",
     "metadata": [
@@ -20,16 +20,16 @@
     "hub": {
         "enabled": true,
         "submission": {
-            "button": "Submission text",
-            "guidance": "Submission guidance",
+            "button": "T\u00e9acs aighneachta",
+            "guidance": "Treoir maidir le haighneachta\u00ed",
             "title": "Title displayed on hub when complete",
-            "warning": "Submission warning"
+            "warning": "Rabhadh aighneachta"
         }
     },
     "sections": [
         {
             "id": "default-section",
-            "title": "Household details",
+            "title": "Sonra\u00ed t\u00ed",
             "groups": [
                 {
                     "id": "language-group",
@@ -40,26 +40,26 @@
                             "id": "name-block",
                             "question": {
                                 "instruction": [
-                                    "Enter the name of a person"
+                                    "Iontr\u00e1il ainm duine"
                                 ],
                                 "description": [
-                                    "The full name of the person"
+                                    "Ainm ioml\u00e1n an duine"
                                 ],
                                 "id": "name-question",
-                                "title": "Please enter a name",
+                                "title": "Iontr\u00e1il ainm",
                                 "type": "General",
                                 "answers": [
                                     {
                                         "id": "first-name",
                                         "description": "",
-                                        "label": "First Name",
+                                        "label": "Ainm",
                                         "mandatory": true,
                                         "type": "TextField"
                                     },
                                     {
                                         "id": "last-name",
                                         "description": "",
-                                        "label": "Last Name",
+                                        "label": "Ainm Deireanach",
                                         "mandatory": false,
                                         "type": "TextField"
                                     }
@@ -72,7 +72,7 @@
                             "question": {
                                 "description": [
                                     {
-                                        "text": "{person_name_possessive} date of birth",
+                                        "text": "d\u00e1ta breithe {person_name_possessive} \u201c",
                                         "placeholders": [
                                             {
                                                 "placeholder": "person_name_possessive",
@@ -81,7 +81,10 @@
                                                         "arguments": {
                                                             "delimiter": " ",
                                                             "list_to_concatenate": {
-                                                                "identifier": ["first-name", "last-name"],
+                                                                "identifier": [
+                                                                    "first-name",
+                                                                    "last-name"
+                                                                ],
                                                                 "source": "answers"
                                                             }
                                                         },
@@ -102,7 +105,7 @@
                                 ],
                                 "id": "dob-question",
                                 "title": {
-                                    "text": "What is {person_name_possessive} date of birth?",
+                                    "text": "Cad \u00e9 d\u00e1ta breithe {person_name_possessive}?",
                                     "placeholders": [
                                         {
                                             "placeholder": "person_name_possessive",
@@ -111,7 +114,10 @@
                                                     "arguments": {
                                                         "delimiter": " ",
                                                         "list_to_concatenate": {
-                                                            "identifier": ["first-name", "last-name"],
+                                                            "identifier": [
+                                                                "first-name",
+                                                                "last-name"
+                                                            ],
                                                             "source": "answers"
                                                         }
                                                     },
@@ -133,8 +139,8 @@
                                 "answers": [
                                     {
                                         "id": "date-of-birth-answer",
-                                        "description": "Enter your date of birth",
-                                        "label": "Date of Birth",
+                                        "description": "Cuir isteach do dh\u00e1ta breithe",
+                                        "label": "D\u00e1ta breithe",
                                         "mandatory": true,
                                         "type": "Date"
                                     }
@@ -148,7 +154,7 @@
                                 "answers": [
                                     {
                                         "id": "number-of-people-answer",
-                                        "label": "Number of household residents",
+                                        "label": "L\u00edon c\u00f3naitheoir\u00ed t\u00ed",
                                         "mandatory": true,
                                         "type": "Number",
                                         "minimum": {
@@ -160,11 +166,11 @@
                                     }
                                 ],
                                 "description": [
-                                    "The total number of people in the household"
+                                    "L\u00edon ioml\u00e1n na ndaoine sa teaghlach"
                                 ],
-                                "warning": "This is a very important question",
+                                "warning": "Is ceist an-t\u00e1bhachtach \u00ed seo",
                                 "id": "number-of-people-question",
-                                "title": "How many people live at your household?",
+                                "title": "C\u00e9 mh\u00e9ad duine at\u00e1 ina gc\u00f3na\u00ed i do theaghlach?",
                                 "type": "General"
                             }
                         },
@@ -177,8 +183,11 @@
                                 "title": {
                                     "text_plural": {
                                         "forms": {
-                                            "one": "{number_of_people} person lives here, is this correct?",
-                                            "other": "{number_of_people} people live here, is this correct?"
+                                            "one": "Gaelic (zero)",
+                                            "other": "Gaelic (many)",
+                                            "two": "Gaelic (one)",
+                                            "few": "Gaelic (two)",
+                                            "many": "Gaelic (few)"
                                         },
                                         "count": {
                                             "source": "answers",
@@ -205,8 +214,11 @@
                                                 "label": {
                                                     "text_plural": {
                                                         "forms": {
-                                                            "one": "Yes, {number_of_people} person lives here",
-                                                            "other": "Yes, {number_of_people} people live here"
+                                                            "one": "Gaelic (zero)",
+                                                            "other": "Gaelic (many)",
+                                                            "two": "Gaelic (one)",
+                                                            "few": "Gaelic (two)",
+                                                            "many": "Gaelic (few)"
                                                         },
                                                         "count": {
                                                             "source": "answers",
@@ -226,7 +238,7 @@
                                                 "value": "Yes"
                                             },
                                             {
-                                                "label": "No",
+                                                "label": "N\u00edl",
                                                 "value": "No"
                                             }
                                         ]

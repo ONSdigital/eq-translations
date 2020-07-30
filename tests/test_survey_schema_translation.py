@@ -499,8 +499,8 @@ def test_locale_on_load_welsh():
     assert translation.language == "cy"
 
 
-def test_locale_on_load_ulster_scots():
+def test_locale_on_load_gaelic():
     translation = SchemaTranslation()
-    translation.load("tests/schemas/test_language-eo.po")
+    translation.load("tests/schemas/test_language-ga.po")
 
-    assert translation.language == "eo"
+    assert translation.language == "ga"

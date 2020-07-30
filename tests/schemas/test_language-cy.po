@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eq-language-testing\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-07-25 08:26+0000\n"
+"POT-Creation-Date: 2020-07-30 13:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Welsh\n"
@@ -29,12 +29,16 @@ msgid "Submission guidance"
 msgstr "Canllawiau cyflwyno"
 
 #. Hub submission title
-msgid "Title displayed on hub when complete"
-msgstr "Arddangosir y teitl ar y canolbwynt pan fydd wedi’i gwblhau"
+msgid "Submission Title"
+msgstr "Teitl cyflwyno"
 
 #. Hub submission warning
 msgid "Submission warning"
 msgstr "Rhybudd cyflwyno"
+
+#. Section title
+msgid "Household details"
+msgstr "Manylion y cartref"
 
 #. Question text
 msgid "Please enter a name"
