@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eq-census-nisra\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-07-30 13:27+0100\n"
+"POT-Creation-Date: 2019-07-31 09:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: ONS_Census\n"
 "Language-Team: Irish\n"
@@ -21,19 +21,23 @@ msgstr ""
 msgid "Test Language Survey"
 msgstr "Suirbhé Teanga Tástála"
 
-#. Hub submission button
+#. Questionnaire description
+msgid "A questionnaire to demonstrate language switching"
+msgstr "Ceistneoir chun athrú teanga a léiriú"
+
+#. Submission button
 msgid "Submission text"
 msgstr "Téacs aighneachta"
 
-#. Hub submission guidance
+#. Submission guidance
 msgid "Submission guidance"
 msgstr "Treoir maidir le haighneachtaí"
 
-#. Hub submission title
-msgid "Submission Title"
+#. Submission title
+msgid "Submission title"
 msgstr "Teideal Aighneachta"
 
-#. Hub submission warning
+#. Submission warning
 msgid "Submission warning"
 msgstr "Rabhadh aighneachta"
 
