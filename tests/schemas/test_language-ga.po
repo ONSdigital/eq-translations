@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eq-census-nisra\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-07-31 09:27+0100\n"
+"POT-Creation-Date: 2019-08-04 12:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: ONS_Census\n"
 "Language-Team: Irish\n"
@@ -20,10 +20,6 @@ msgstr ""
 #. Questionnaire title
 msgid "Test Language Survey"
 msgstr "Suirbhé Teanga Tástála"
-
-#. Questionnaire description
-msgid "A questionnaire to demonstrate language switching"
-msgstr "Ceistneoir chun athrú teanga a léiriú"
 
 #. Submission button
 msgid "Submission text"

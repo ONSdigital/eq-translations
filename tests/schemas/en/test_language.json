@@ -17,8 +17,11 @@
             "type": "string"
         }
     ],
+    "hub": {
+        "enabled": true
+    },
     "submission": {
-        "button": "Submission text",
+        "button": "Submission button",
         "guidance": "Submission guidance",
         "title": "Submission title",
         "warning": "Submission warning"
@@ -35,12 +38,8 @@
                             "type": "Question",
                             "id": "name-block",
                             "question": {
-                                "instruction": [
-                                    "Enter the name of a person"
-                                ],
-                                "description": [
-                                    "The full name of the person"
-                                ],
+                                "instruction": ["Enter the name of a person"],
+                                "description": ["The full name of the person"],
                                 "id": "name-question",
                                 "title": "Please enter a name",
                                 "type": "General",
@@ -153,9 +152,7 @@
                                         }
                                     }
                                 ],
-                                "description": [
-                                    "The total number of people in the household"
-                                ],
+                                "description": ["The total number of people in the household"],
                                 "warning": "This is a very important question",
                                 "id": "number-of-people-question",
                                 "title": "How many people live at your household?",
