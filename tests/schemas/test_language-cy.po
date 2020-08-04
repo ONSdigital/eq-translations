@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eq-language-testing\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-04 12:59+0000\n"
+"POT-Creation-Date: 2020-08-04 16:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Welsh\n"
@@ -22,7 +22,7 @@ msgstr "Arolwg Iaith Prawf"
 
 #. Submission button
 msgid "Submission text"
-msgstr "Testun cyflwyno"
+msgstr "Botwm cyflwyno"
 
 #. Submission guidance
 msgid "Submission guidance"
