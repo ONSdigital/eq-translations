@@ -697,14 +697,14 @@ def test_summary_without_placeholder_extraction():
 
 def test_get_schema_language():
     survey_schema = SurveySchema()
-    survey_schema.load("tests/schemas/en/test_translation.json")
+    survey_schema.load("tests/schemas/en/test_language.json")
 
     assert survey_schema.language == "en"
 
 
 def test_all_pointers_resolve_to_correct_instance():
     survey_schema = SurveySchema()
-    survey_schema.load("tests/schemas/en/test_translation.json")
+    survey_schema.load("tests/schemas/en/test_language.json")
 
     for translatable_item in survey_schema.translatable_items:
         if not translatable_item.value:
