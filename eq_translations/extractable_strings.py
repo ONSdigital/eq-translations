@@ -7,6 +7,7 @@ EXTRACTABLE_STRINGS = [
     {"json_path": "$.submission.title", "description": "Submission title"},
     {"json_path": "$.submission.warning", "description": "Submission warning"},
     {"json_path": "$.sections[*].title", "description": "Section title"},
+    {"json_path": "$..page_title", "description": "Custom page title"},
     {
         "json_path": "$.sections[*].repeat.title",
         "description": "Section title (repeating section)",
