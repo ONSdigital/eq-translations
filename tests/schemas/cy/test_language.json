@@ -30,6 +30,7 @@
         {
             "id": "default-section",
             "title": "Manylion y cartref",
+            "page_title": "Teitl tudalen arferiad",
             "groups": [
                 {
                     "id": "language-group",
