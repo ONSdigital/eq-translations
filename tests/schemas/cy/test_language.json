@@ -30,7 +30,7 @@
         {
             "id": "default-section",
             "title": "Manylion y cartref",
-            "page_title": "Teitl tudalen arferiad",
+            "page_title": "Teitl tudalen adran Custom",
             "groups": [
                 {
                     "id": "language-group",
@@ -38,9 +38,14 @@
                         {
                             "type": "Question",
                             "id": "name-block",
+                            "page_title": "Teitl tudalen cwestiwn wedi\u2019i deilwra",
                             "question": {
-                                "instruction": ["Rhowch enw person"],
-                                "description": ["Enw llawn y person"],
+                                "instruction": [
+                                    "Rhowch enw person"
+                                ],
+                                "description": [
+                                    "Enw llawn y person"
+                                ],
                                 "id": "name-question",
                                 "title": "Rhowch enw",
                                 "type": "General",
@@ -75,7 +80,10 @@
                                                         "arguments": {
                                                             "delimiter": " ",
                                                             "list_to_concatenate": {
-                                                                "identifier": ["first-name", "last-name"],
+                                                                "identifier": [
+                                                                    "first-name",
+                                                                    "last-name"
+                                                                ],
                                                                 "source": "answers"
                                                             }
                                                         },
@@ -105,7 +113,10 @@
                                                     "arguments": {
                                                         "delimiter": " ",
                                                         "list_to_concatenate": {
-                                                            "identifier": ["first-name", "last-name"],
+                                                            "identifier": [
+                                                                "first-name",
+                                                                "last-name"
+                                                            ],
                                                             "source": "answers"
                                                         }
                                                     },
@@ -153,7 +164,9 @@
                                         }
                                     }
                                 ],
-                                "description": ["Cyfanswm y bobl ar yr aelwyd"],
+                                "description": [
+                                    "Cyfanswm y bobl ar yr aelwyd"
+                                ],
                                 "warning": "Mae hwn yn gwestiwn pwysig iawn",
                                 "id": "number-of-people-question",
                                 "title": "Faint o bobl sy\u2019n byw ar eich cartref?",

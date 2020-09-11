@@ -21,7 +21,7 @@ msgid "Test Language Survey"
 msgstr "Arolwg Iaith Prawf"
 
 #. Submission button
-msgid "Submission text"
+msgid "Submission button"
 msgstr "Botwm cyflwyno"
 
 #. Submission guidance
@@ -39,6 +39,14 @@ msgstr "Rhybudd cyflwyno"
 #. Section title
 msgid "Household details"
 msgstr "Manylion y cartref"
+
+#. Custom page title
+msgid "Custom section page title"
+msgstr "Teitl tudalen adran Custom"
+
+#. Custom page title
+msgid "Custom question page title"
+msgstr "Teitl tudalen cwestiwn wedi'i deilwra"
 
 #. Question text
 msgid "Please enter a name"
