@@ -40,11 +40,11 @@ msgstr "Rhybudd cyflwyno"
 msgid "Household details"
 msgstr "Manylion y cartref"
 
-#. Custom page title
+#. Page title
 msgid "Custom section page title"
-msgstr "Teitl tudalen adran Custom"
+msgstr "Teitl tudalen adran custom"
 
-#. Custom page title
+#. Page title
 msgid "Custom question page title"
 msgstr "Teitl tudalen cwestiwn wedi'i deilwra"
 

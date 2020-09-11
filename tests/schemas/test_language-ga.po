@@ -41,11 +41,11 @@ msgstr "Rabhadh aighneachta"
 msgid "Household details"
 msgstr "Sonraí tí"
 
-#. Custom page title
+#. Page title
 msgid "Custom section page title"
 msgstr "Teideal leathanach alt saincheaptha"
 
-#. Custom page title
+#. Page title
 msgid "Custom question page title"
 msgstr "Teideal leathanach na ceiste saincheaptha"
 

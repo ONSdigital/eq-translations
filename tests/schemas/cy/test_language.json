@@ -30,7 +30,7 @@
         {
             "id": "default-section",
             "title": "Manylion y cartref",
-            "page_title": "Teitl tudalen adran Custom",
+            "page_title": "Teitl tudalen adran custom",
             "groups": [
                 {
                     "id": "language-group",
