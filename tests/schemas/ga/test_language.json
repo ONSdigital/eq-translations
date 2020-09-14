@@ -30,6 +30,7 @@
         {
             "id": "default-section",
             "title": "Sonra\u00ed t\u00ed",
+            "page_title": "Teideal leathanach alt saincheaptha",
             "groups": [
                 {
                     "id": "language-group",
@@ -37,9 +38,14 @@
                         {
                             "type": "Question",
                             "id": "name-block",
+                            "page_title": "Teideal leathanach na ceiste saincheaptha",
                             "question": {
-                                "instruction": ["Iontr\u00e1il ainm duine"],
-                                "description": ["Ainm ioml\u00e1n an duine"],
+                                "instruction": [
+                                    "Iontr\u00e1il ainm duine"
+                                ],
+                                "description": [
+                                    "Ainm ioml\u00e1n an duine"
+                                ],
                                 "id": "name-question",
                                 "title": "Iontr\u00e1il ainm",
                                 "type": "General",
@@ -74,7 +80,10 @@
                                                         "arguments": {
                                                             "delimiter": " ",
                                                             "list_to_concatenate": {
-                                                                "identifier": ["first-name", "last-name"],
+                                                                "identifier": [
+                                                                    "first-name",
+                                                                    "last-name"
+                                                                ],
                                                                 "source": "answers"
                                                             }
                                                         },
@@ -104,7 +113,10 @@
                                                     "arguments": {
                                                         "delimiter": " ",
                                                         "list_to_concatenate": {
-                                                            "identifier": ["first-name", "last-name"],
+                                                            "identifier": [
+                                                                "first-name",
+                                                                "last-name"
+                                                            ],
                                                             "source": "answers"
                                                         }
                                                     },
@@ -152,7 +164,9 @@
                                         }
                                     }
                                 ],
-                                "description": ["L\u00edon ioml\u00e1n na ndaoine sa teaghlach"],
+                                "description": [
+                                    "L\u00edon ioml\u00e1n na ndaoine sa teaghlach"
+                                ],
                                 "warning": "Is ceist an-t\u00e1bhachtach \u00ed seo",
                                 "id": "number-of-people-question",
                                 "title": "C\u00e9 mh\u00e9ad duine at\u00e1 ina gc\u00f3na\u00ed i do theaghlach?",

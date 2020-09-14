@@ -22,7 +22,7 @@ msgid "Test Language Survey"
 msgstr "Suirbhé Teanga Tástála"
 
 #. Submission button
-msgid "Submission text"
+msgid "Submission button"
 msgstr "Téacs aighneachta"
 
 #. Submission guidance
@@ -40,6 +40,14 @@ msgstr "Rabhadh aighneachta"
 #. Section title
 msgid "Household details"
 msgstr "Sonraí tí"
+
+#. Page title
+msgid "Custom section page title"
+msgstr "Teideal leathanach alt saincheaptha"
+
+#. Page title
+msgid "Custom question page title"
+msgstr "Teideal leathanach na ceiste saincheaptha"
 
 #. Question text
 msgid "Please enter a name"

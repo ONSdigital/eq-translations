@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-04 12:38+0100\n"
+"POT-Creation-Date: 2020-09-11 14:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgid "Test Language Survey"
 msgstr ""
 
 #. Submission button
-msgid "Submission text"
+msgid "Submission button"
 msgstr ""
 
 #. Submission guidance
@@ -30,7 +30,7 @@ msgid "Submission guidance"
 msgstr ""
 
 #. Submission title
-msgid "Title displayed on hub when complete"
+msgid "Submission title"
 msgstr ""
 
 #. Submission warning
@@ -39,6 +39,14 @@ msgstr ""
 
 #. Section title
 msgid "Household details"
+msgstr ""
+
+#. Page title
+msgid "Custom section page title"
+msgstr ""
+
+#. Page title
+msgid "Custom question page title"
 msgstr ""
 
 #. Question text

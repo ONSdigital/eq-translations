@@ -30,6 +30,7 @@
         {
             "id": "default-section",
             "title": "Household details",
+            "page_title": "Custom section page title",
             "groups": [
                 {
                     "id": "language-group",
@@ -37,6 +38,7 @@
                         {
                             "type": "Question",
                             "id": "name-block",
+                            "page_title": "Custom question page title",
                             "question": {
                                 "instruction": ["Enter the name of a person"],
                                 "description": ["The full name of the person"],
@@ -74,7 +76,10 @@
                                                         "arguments": {
                                                             "delimiter": " ",
                                                             "list_to_concatenate": {
-                                                                "identifier": ["first-name", "last-name"],
+                                                                "identifier": [
+                                                                    "first-name",
+                                                                    "last-name"
+                                                                ],
                                                                 "source": "answers"
                                                             }
                                                         },
@@ -104,7 +109,10 @@
                                                     "arguments": {
                                                         "delimiter": " ",
                                                         "list_to_concatenate": {
-                                                            "identifier": ["first-name", "last-name"],
+                                                            "identifier": [
+                                                                "first-name",
+                                                                "last-name"
+                                                            ],
                                                             "source": "answers"
                                                         }
                                                     },
@@ -152,7 +160,9 @@
                                         }
                                     }
                                 ],
-                                "description": ["The total number of people in the household"],
+                                "description": [
+                                    "The total number of people in the household"
+                                ],
                                 "warning": "This is a very important question",
                                 "id": "number-of-people-question",
                                 "title": "How many people live at your household?",

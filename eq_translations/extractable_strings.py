@@ -7,21 +7,22 @@ EXTRACTABLE_STRINGS = [
     {"json_path": "$.submission.title", "description": "Submission title"},
     {"json_path": "$.submission.warning", "description": "Submission warning"},
     {"json_path": "$.sections[*].title", "description": "Section title"},
+    {"json_path": "$..page_title", "description": "Page title"},
     {
         "json_path": "$.sections[*].repeat.title",
         "description": "Section title (repeating section)",
     },
     {
         "json_path": "$.sections[*].summary.items[*].title",
-        "description": "Custom section summary item title",
+        "description": "Section summary item title",
     },
     {
         "json_path": "$.sections[*].summary.items[*].add_link_text",
-        "description": "Custom section summary list add link",
+        "description": "Section summary list add link",
     },
     {
         "json_path": "$.sections[*].summary.items[*].empty_list_text",
-        "description": "Custom section summary empty list text",
+        "description": "Section summary empty list text",
     },
     {"json_path": "$..groups[*].title", "description": "Group title"},
     {"json_path": "$..blocks[*].title", "description": "Block title"},
