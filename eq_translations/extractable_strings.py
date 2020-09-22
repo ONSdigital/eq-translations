@@ -13,6 +13,10 @@ EXTRACTABLE_STRINGS = [
         "description": "Section title (repeating section)",
     },
     {
+        "json_path": "$.sections[*].repeat.page_title",
+        "description": "Section page title suffix (repeating section)",
+    },
+    {
         "json_path": "$.sections[*].summary.items[*].title",
         "description": "Section summary item title",
     },
