@@ -9,10 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo "::set-env name=PYTHON_VERSION::$(cat .python-version)"
+          echo "PYTHON_VERSION=$(cat .python-version)" >> $GITHUB_ENV
       - uses: actions/setup-python@v2
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: $PYTHON_VERSION
       - name: Install Pipenv
         run: pip install pipenv==2018.11.26
       - name: Cache virtualenv
@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.local/share/virtualenvs/
-          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
+          key: ${{ runner.os }}-$PYTHON_VERSION-virtualenvs-${{ hashFiles('Pipfile.lock') }}
       - name: Install virtual environment
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
@@ -32,10 +32,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo "::set-env name=PYTHON_VERSION::$(cat .python-version)"
+          echo "PYTHON_VERSION=$(cat .python-version)" >> $GITHUB_ENV
       - uses: actions/setup-python@v2
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: $PYTHON_VERSION
       - name: Install Pipenv
         run: pip install pipenv==2018.11.26
       - name: Cache virtualenv
@@ -43,7 +43,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.local/share/virtualenvs/
-          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
+          key: ${{ runner.os }}-$PYTHON_VERSION-virtualenvs-${{ hashFiles('Pipfile.lock') }}
       - name: Install virtual environment
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
