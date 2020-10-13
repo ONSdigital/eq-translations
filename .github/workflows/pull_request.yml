@@ -12,7 +12,7 @@ jobs:
           echo 'python=3.9.0' >> $env.GITHUB_ENV
       - uses: actions/setup-python@v2
         with:
-          python-version: ${python}
+          python-version: $python
       - name: Install Pipenv
         run: pip install pipenv==2018.11.26
       - name: Cache virtualenv
@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.local/share/virtualenvs/
-          key: ${{ runner.os }}-${python}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
+          key: ${{ runner.os }}-$python-virtualenvs-${{ hashFiles('Pipfile.lock') }}
       - name: Install virtual environment
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
@@ -35,7 +35,7 @@ jobs:
           echo 'python=3.9.0' >> $GITHUB_ENV
       - uses: actions/setup-python@v2
         with:
-          python-version: ${python}
+          python-version: $python
       - name: Install Pipenv
         run: pip install pipenv==2018.11.26
       - name: Cache virtualenv
@@ -43,7 +43,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.local/share/virtualenvs/
-          key: ${{ runner.os }}-${python}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
+          key: ${{ runner.os }}-$python-virtualenvs-${{ hashFiles('Pipfile.lock') }}
       - name: Install virtual environment
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: pipenv install --dev
