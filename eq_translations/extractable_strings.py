@@ -65,6 +65,16 @@ EXTRACTABLE_STRINGS = [
         "context": "Content",
         "additional_context": ["ListHeading", "ListDescription"],
     },
+    {
+        "json_path": "$..content.contents[*].definition.title",
+        "description": "Definition title",
+        "context": "Content",
+    },
+    {
+        "json_path": "$..content.contents[*].definition.contents[*].description",
+        "description": "Definition description",
+        "context": "Content",
+    },
     {"json_path": "$..question.title", "description": "Question text"},
     {
         "json_path": "$..question.description[*]",
