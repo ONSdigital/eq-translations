@@ -36,6 +36,28 @@
                     "id": "language-group",
                     "blocks": [
                         {
+                            "id": "interstitial-definition",
+                            "content": {
+                                "title": "Interstitial Definition",
+                                "contents": [
+                                    {
+                                        "description": "This questionnaire is going to ask you personal data"
+                                    },
+                                    {
+                                        "definition": {
+                                            "title": "Personal data",
+                                            "contents": [
+                                                {
+                                                    "description": "Personal data means any information relating to an identified or identifiable individual"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            "type": "Interstitial"
+                        },
+                        {
                             "type": "Question",
                             "id": "name-block",
                             "page_title": "Custom question page title",

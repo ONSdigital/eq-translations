@@ -36,6 +36,28 @@
                     "id": "language-group",
                     "blocks": [
                         {
+                            "id": "interstitial-definition",
+                            "content": {
+                                "title": "Diffiniad rhyngserol",
+                                "contents": [
+                                    {
+                                        "description": "Mae\u2019r holiadur hwn yn mynd i ofyn data personol i chi"
+                                    },
+                                    {
+                                        "definition": {
+                                            "title": "Data personol",
+                                            "contents": [
+                                                {
+                                                    "description": "Mae data personol yn golygu unrhyw wybodaeth syn ymwneud \u00e2 gwybodaeth a nodwyd neu unigolyn adnabyddadwy"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            "type": "Interstitial"
+                        },
+                        {
                             "type": "Question",
                             "id": "name-block",
                             "page_title": "Teitl tudalen cwestiwn wedi\u2019i deilwra",

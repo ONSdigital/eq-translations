@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eq-census-nisra\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-04 12:57+0100\n"
+"POT-Creation-Date: 2020-10-28 08:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: ONS_Census\n"
 "Language-Team: Irish\n"
@@ -48,6 +48,29 @@ msgstr "Teideal leathanach alt saincheaptha"
 #. Page title
 msgid "Custom question page title"
 msgstr "Teideal leathanach na ceiste saincheaptha"
+
+#. Content page main heading
+msgid "Interstitial Definition"
+msgstr "Mìneachadh eadar-roinneil"
+
+#. Content page description
+msgctxt "Interstitial Definition"
+msgid "This questionnaire is going to ask you personal data"
+msgstr "Tha an ceisteachan seo a ’dol a dh’ iarraidh dàta pearsanta dhut"
+
+#. Definition title
+msgctxt "Interstitial Definition"
+msgid "Personal data"
+msgstr "Dàta pearsanta"
+
+#. Definition description
+msgctxt "Interstitial Definition"
+msgid ""
+"Personal data means any information relating to an identified or "
+"identifiable individual"
+msgstr ""
+"Tha dàta pearsanta a ’ciallachadh fiosrachadh sam bith co-cheangailte ri neach a chaidh ainmeachadh no"
+"neach fa-leth aithneachadh
 
 #. Question text
 msgid "Please enter a name"

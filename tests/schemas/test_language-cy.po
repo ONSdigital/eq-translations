@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eq-language-testing\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-04 16:59+0000\n"
+"POT-Creation-Date: 2020-10-28 08:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Welsh\n"
@@ -47,6 +47,29 @@ msgstr "Teitl tudalen adran custom"
 #. Page title
 msgid "Custom question page title"
 msgstr "Teitl tudalen cwestiwn wedi'i deilwra"
+
+#. Content page main heading
+msgid "Interstitial Definition"
+msgstr "Diffiniad rhyngserol"
+
+#. Content page description
+msgctxt "Interstitial Definition"
+msgid "This questionnaire is going to ask you personal data"
+msgstr "Mae'r holiadur hwn yn mynd i ofyn data personol i chi"
+
+#. Definition title
+msgctxt "Interstitial Definition"
+msgid "Personal data"
+msgstr "Data personol"
+
+#. Definition description
+msgctxt "Interstitial Definition"
+msgid ""
+"Personal data means any information relating to an identified or "
+"identifiable individual"
+msgstr ""
+"Mae data personol yn golygu unrhyw wybodaeth syn ymwneud â gwybodaeth a nodwyd neu "
+"unigolyn adnabyddadwy"
 
 #. Question text
 msgid "Please enter a name"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-09-11 14:19+0100\n"
+"POT-Creation-Date: 2020-10-28 08:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,27 @@ msgstr ""
 
 #. Page title
 msgid "Custom question page title"
+msgstr ""
+
+#. Content page main heading
+msgid "Interstitial Definition"
+msgstr ""
+
+#. Content page description
+msgctxt "Interstitial Definition"
+msgid "This questionnaire is going to ask you personal data"
+msgstr ""
+
+#. Definition title
+msgctxt "Interstitial Definition"
+msgid "Personal data"
+msgstr ""
+
+#. Definition description
+msgctxt "Interstitial Definition"
+msgid ""
+"Personal data means any information relating to an identified or "
+"identifiable individual"
 msgstr ""
 
 #. Question text
