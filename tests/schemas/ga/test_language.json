@@ -36,6 +36,28 @@
                     "id": "language-group",
                     "blocks": [
                         {
+                            "id": "interstitial-definition",
+                            "content": {
+                                "title": "M\u00ecneachadh eadar-roinneil",
+                                "contents": [
+                                    {
+                                        "description": "Tha an ceisteachan seo a \u2019dol a dh\u2019 iarraidh d\u00e0ta pearsanta dhut"
+                                    },
+                                    {
+                                        "definition": {
+                                            "title": "D\u00e0ta pearsanta",
+                                            "contents": [
+                                                {
+                                                    "description": "Tha d\u00e0ta pearsanta a \u2019ciallachadh fiosrachadh sam bith co-cheangailte ri neach a chaidh ainmeachadh noneach fa-leth aithneachad"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            "type": "Interstitial"
+                        },
+                        {
                             "type": "Question",
                             "id": "name-block",
                             "page_title": "Teideal leathanach na ceiste saincheaptha",
