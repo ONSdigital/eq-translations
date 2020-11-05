@@ -329,10 +329,7 @@ def test_placeholder_translation(schema_with_placeholders):
                                 "arguments": {
                                     "delimiter": " ",
                                     "list_to_concatenate": {
-                                        "identifier": [
-                                            "first-name",
-                                            "last-name",
-                                        ],
+                                        "identifier": ["first-name", "last-name",],
                                         "source": "answers",
                                     },
                                 },
@@ -395,15 +392,11 @@ def test_variant_translation(schema_with_question_variants):
     catalog = Catalog()
 
     catalog.add(
-        "First name",
-        "WELSH - First name",
-        context="What is your name?",
+        "First name", "WELSH - First name", context="What is your name?",
     )
 
     catalog.add(
-        "First name",
-        "WELSH - First name - Proxy",
-        context="What is their name?",
+        "First name", "WELSH - First name - Proxy", context="What is their name?",
     )
 
     schema_translation.catalog = catalog
@@ -518,20 +511,14 @@ def test_checkbox_null_label():
     schema_translation = SchemaTranslation()
     catalog = Catalog(locale=Locale("cy"))
     catalog.add(
-        "Rugby",
-        "Rygbi",
+        "Rugby", "Rygbi",
     )
     schema_translation.catalog = catalog
     schema = SurveySchema(
         {
             "question": {
                 "answers": [
-                    {
-                        "label": None,
-                        "options": [
-                            {"label": "Rugby", "value": "Rugby"},
-                        ],
-                    }
+                    {"label": None, "options": [{"label": "Rugby", "value": "Rugby"},],}
                 ],
             }
         }
@@ -540,12 +527,7 @@ def test_checkbox_null_label():
     expected = {
         "question": {
             "answers": [
-                {
-                    "label": None,
-                    "options": [
-                        {"label": "Rygbi", "value": "Rugby"},
-                    ],
-                }
+                {"label": None, "options": [{"label": "Rygbi", "value": "Rugby"},],}
             ],
         },
         "language": "cy",
