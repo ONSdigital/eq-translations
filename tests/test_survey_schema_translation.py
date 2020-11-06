@@ -527,7 +527,7 @@ def test_checkbox_null_label():
     expected = {
         "question": {
             "answers": [
-                {"label": None, "options": [{"label": "Rygbi", "value": "Rugby"},],}
+                {"label": None, "options": [{"label": "Rygbi", "value": "Rugby"}]}
             ],
         },
         "language": "cy",
