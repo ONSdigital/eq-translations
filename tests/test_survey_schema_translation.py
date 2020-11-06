@@ -518,7 +518,7 @@ def test_checkbox_null_label():
         {
             "question": {
                 "answers": [
-                    {"label": None, "options": [{"label": "Rugby", "value": "Rugby"},],}
+                    {"label": None, "options": [{"label": "Rugby", "value": "Rugby"}]}
                 ],
             }
         }
