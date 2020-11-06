@@ -504,3 +504,32 @@ def test_locale_on_load_ulster_scots():
     translation.load("tests/schemas/test_language-eo.po")
 
     assert translation.language == "eo"
+
+
+def test_checkbox_null_label():
+
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add(
+        "Rugby", "Rygbi",
+    )
+    schema_translation.catalog = catalog
+    schema = SurveySchema(
+        {
+            "question": {
+                "answers": [
+                    {"label": None, "options": [{"label": "Rugby", "value": "Rugby"}]}
+                ],
+            }
+        }
+    )
+    translated = schema.translate(schema_translation)
+    expected = {
+        "question": {
+            "answers": [
+                {"label": None, "options": [{"label": "Rygbi", "value": "Rugby"}]}
+            ],
+        },
+        "language": "cy",
+    }
+    assert expected == translated.schema
