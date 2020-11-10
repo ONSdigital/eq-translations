@@ -256,6 +256,39 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "dropdown-mandatory",
+                            "question": {
+                                "type": "General",
+                                "id": "dropdown-mandatory-question",
+                                "title": "Which football team do you support?",
+                                "answers": [
+                                    {
+                                        "type": "Dropdown",
+                                        "id": "dropdown-mandatory-answer",
+                                        "mandatory": true,
+                                        "label": "Football team",
+                                        "placeholder": "Select an option",
+                                        "description": "Your favourite team from the Premier League.",
+                                        "options": [
+                                            {
+                                                "label": "Liverpool",
+                                                "value": "Liverpool"
+                                            },
+                                            {
+                                                "label": "Chelsea",
+                                                "value": "Chelsea"
+                                            },
+                                            {
+                                                "label": "Rugby is better!",
+                                                "value": "Rugby is better!"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
