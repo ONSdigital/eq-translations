@@ -142,7 +142,7 @@ msgctxt "Which football team do you support?"
 msgid "Football team"
 msgstr ""
 
-#. Placeholder text used for select field
+#. Dropdown field placeholder text
 msgctxt "Which football team do you support?"
 msgid "Select an option"
 msgstr ""
