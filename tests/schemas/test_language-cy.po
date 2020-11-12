@@ -93,6 +93,10 @@ msgstr[3] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (few)"
 msgstr[4] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (many)"
 msgstr[5] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (other)"
 
+#. Question text
+msgid "Which football team do you support?"
+msgstr "Pa dîm pêl-droed ydych chi'n ei gefnogi?"
+
 #. Question description
 msgctxt "Please enter a name"
 msgid "The full name of the person"
@@ -138,11 +142,27 @@ msgctxt "How many people live at your household?"
 msgid "Number of household residents"
 msgstr "Nifer o breswylwyr yn y cartref"
 
+#. Answer
+msgctxt "Which football team do you support?"
+msgid "Football team"
+msgstr "Tîm pêl-droed"
+
+#. Dropdown field placeholder text
+msgctxt "Which football team do you support?"
+msgid "Select an option"
+msgstr "Dewis opsiwn"
+
 #. Answer description
 #. For answer: Date of Birth
 msgctxt "What is {person_name_possessive} date of birth?"
 msgid "Enter your date of birth"
 msgstr "Rhowch eich dyddiad geni"
+
+#. Answer description
+#. For answer: Football team
+msgctxt "Which football team do you support?"
+msgid "Your favourite team from the Premier League."
+msgstr "Eich hoff dîm o'r Uwch Gynghrair."
 
 #. Answer option
 msgctxt "{number_of_people} people live here, is this correct?"
@@ -159,3 +179,18 @@ msgstr[5] "Ydy, mae {number_of_people} pherson yn byw yma (other)"
 msgctxt "{number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr "Na"
+
+#. Answer option
+msgctxt "Which football team do you support?"
+msgid "Liverpool"
+msgstr "Lerpwl"
+
+#. Answer option
+msgctxt "Which football team do you support?"
+msgid "Chelsea"
+msgstr "Chelsea"
+
+#. Answer option
+msgctxt "Which football team do you support?"
+msgid "Rugby is better!"
+msgstr "Mae rygbi'n well!"

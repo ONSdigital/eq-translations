@@ -48,7 +48,7 @@
                                             "title": "D\u00e0ta pearsanta",
                                             "contents": [
                                                 {
-                                                    "description": "Tha d\u00e0ta pearsanta a \u2019ciallachadh fiosrachadh sam bith co-cheangailte ri neach a chaidh ainmeachadh noneach fa-leth aithneachad"
+                                                    "description": "Tha d\u00e0ta pearsanta a \u2019ciallachadh fiosrachadh sam bith co-cheangailte ri neach a chaidh ainmeachadh noneach fa-leth aithneachadh"
                                                 }
                                             ]
                                         }
@@ -93,7 +93,7 @@
                             "question": {
                                 "description": [
                                     {
-                                        "text": "d\u00e1ta breithe {person_name_possessive} \u201c",
+                                        "text": "d\u00e1ta breithe {person_name_possessive}",
                                         "placeholders": [
                                             {
                                                 "placeholder": "person_name_possessive",
@@ -261,6 +261,39 @@
                                             {
                                                 "label": "N\u00edl",
                                                 "value": "No"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "dropdown-mandatory",
+                            "question": {
+                                "type": "General",
+                                "id": "dropdown-mandatory-question",
+                                "title": "C\u00e9n fhoireann peile a dtaca\u00edonn t\u00fa leis?",
+                                "answers": [
+                                    {
+                                        "type": "Dropdown",
+                                        "id": "dropdown-mandatory-answer",
+                                        "mandatory": true,
+                                        "label": "Foireann peile",
+                                        "placeholder": "Roghnaigh rogha",
+                                        "description": "An fhoireann is fearr leat \u00f3n Premier League.",
+                                        "options": [
+                                            {
+                                                "label": "Learpholl",
+                                                "value": "Liverpool"
+                                            },
+                                            {
+                                                "label": "Chelsea",
+                                                "value": "Chelsea"
+                                            },
+                                            {
+                                                "label": "Is fearr rugba\u00ed!",
+                                                "value": "Rugby is better!"
                                             }
                                         ]
                                     }

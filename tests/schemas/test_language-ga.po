@@ -70,7 +70,7 @@ msgid ""
 "identifiable individual"
 msgstr ""
 "Tha dàta pearsanta a ’ciallachadh fiosrachadh sam bith co-cheangailte ri neach a chaidh ainmeachadh no"
-"neach fa-leth aithneachadh
+"neach fa-leth aithneachadh"
 
 #. Question text
 msgid "Please enter a name"
@@ -94,6 +94,10 @@ msgstr[3] "Gaelic (few)"
 msgstr[4] "Gaelic (many)"
 msgstr[5] "Gaelic (other)"
 
+#. Question text
+msgid "Which football team do you support?"
+msgstr "Cén fhoireann peile a dtacaíonn tú leis?"
+
 #. Question description
 msgctxt "Please enter a name"
 msgid "The full name of the person"
@@ -102,7 +106,7 @@ msgstr "Ainm iomlán an duine"
 #. Question description
 msgctxt "What is {person_name_possessive} date of birth?"
 msgid "{person_name_possessive} date of birth"
-msgstr "dáta breithe {person_name_possessive} ""
+msgstr "dáta breithe {person_name_possessive}"
 
 #. Question description
 msgctxt "How many people live at your household?"
@@ -139,11 +143,27 @@ msgctxt "How many people live at your household?"
 msgid "Number of household residents"
 msgstr "Líon cónaitheoirí tí"
 
+#. Answer
+msgctxt "Which football team do you support?"
+msgid "Football team"
+msgstr "Foireann peile"
+
+#. Dropdown field placeholder text
+msgctxt "Which football team do you support?"
+msgid "Select an option"
+msgstr "Roghnaigh rogha"
+
 #. Answer description
 #. For answer: Date of Birth
 msgctxt "What is {person_name_possessive} date of birth?"
 msgid "Enter your date of birth"
 msgstr "Cuir isteach do dháta breithe"
+
+#. Answer description
+#. For answer: Football team
+msgctxt "Which football team do you support?"
+msgid "Your favourite team from the Premier League."
+msgstr "An fhoireann is fearr leat ón Premier League."
 
 #. Answer option
 msgctxt "{number_of_people} people live here, is this correct?"
@@ -160,3 +180,18 @@ msgstr[5] "Gaelic (other)"
 msgctxt "{number_of_people} people live here, is this correct?"
 msgid "No"
 msgstr "Níl"
+
+#. Answer option
+msgctxt "Which football team do you support?"
+msgid "Liverpool"
+msgstr "Learpholl"
+
+#. Answer option
+msgctxt "Which football team do you support?"
+msgid "Chelsea"
+msgstr "Chelsea"
+
+#. Answer option
+msgctxt "Which football team do you support?"
+msgid "Rugby is better!"
+msgstr "Is fearr rugbaí!"
