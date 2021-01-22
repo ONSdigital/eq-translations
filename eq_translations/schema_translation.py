@@ -9,6 +9,13 @@ class SchemaTranslation:
     def __init__(self, catalog=None):
         self.catalog = catalog or self.catalog
 
+    def load_from_io(self, file_io):
+        self.catalog = pofile.read_po(file_io)
+
+        # Babel doesn't support Ulster Scots, so we need to manually set it
+        if self.catalog.locale_identifier == "sco_ulster":
+            self.catalog.locale = Locale("eo")
+
     def load(self, translation_file_path):
         with open(translation_file_path, encoding="utf8") as translation_file:
             self.catalog = pofile.read_po(translation_file)

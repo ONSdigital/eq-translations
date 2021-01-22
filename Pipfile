@@ -10,6 +10,7 @@ tqdm = "*"
 requests = "*"
 termcolor = "*"
 jsonpath-rw = "*"
+flask = "*"
 
 [dev-packages]
 pylint = "*"
@@ -18,6 +19,7 @@ pylint-quotes = "*"
 black = "==19.10b0"
 pytest-cov = "*"
 typed-ast = "*"
+functions-framework = "*"
 
 [requires]
 python_version = "3.9"
