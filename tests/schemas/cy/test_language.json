@@ -26,6 +26,19 @@
         "title": "Teitl cyflwyno",
         "warning": "Rhybudd cyflwyno"
     },
+    "post_submission": {
+        "guidance": {
+            "contents": [
+                {
+                    "title": "Teitl y canllawiau ar \u00f4l cyflwyno",
+                    "description": "Disgrifiad canllaw ar \u00f4l cyflwyno.",
+                    "list": [
+                        "Eitem rhestr canllawiau \u00f4l-gyflwyno"
+                    ]
+                }
+            ]
+        }
+    },
     "sections": [
         {
             "id": "default-section",
