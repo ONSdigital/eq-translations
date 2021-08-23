@@ -17,6 +17,7 @@ EXTRACTABLE_STRINGS = [
     {
         "json_path": "$.post_submission.guidance.contents[*].list[*]",
         "description": "Post submission guidance list item",
+        "additional_context": ["ListHeading", "ListDescription"],
     },
     {"json_path": "$.sections[*].title", "description": "Section title"},
     {"json_path": "$..page_title", "description": "Page title"},

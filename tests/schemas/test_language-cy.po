@@ -45,6 +45,8 @@ msgid "Post submission guidance description."
 msgstr "Disgrifiad canllaw ar ôl cyflwyno."
 
 #. Post submission guidance list item
+#. For heading: Post submission guidance title
+#. For description: Post submission guidance description.
 msgid "Post submission guidance list item"
 msgstr "Eitem rhestr canllawiau ôl-gyflwyno"
 
