@@ -36,6 +36,20 @@ msgstr "Teitl cyflwyno"
 msgid "Submission warning"
 msgstr "Rhybudd cyflwyno"
 
+#. Post submission guidance heading
+msgid "Post submission guidance title"
+msgstr "Teitl y canllawiau ar ôl cyflwyno"
+
+#. Post submission guidance description
+msgid "Post submission guidance description."
+msgstr "Disgrifiad canllaw ar ôl cyflwyno."
+
+#. Post submission guidance list item
+#. For heading: Post submission guidance title
+#. For description: Post submission guidance description.
+msgid "Post submission guidance list item"
+msgstr "Eitem rhestr canllawiau ôl-gyflwyno"
+
 #. Section title
 msgid "Household details"
 msgstr "Manylion y cartref"

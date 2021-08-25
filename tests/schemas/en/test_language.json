@@ -26,6 +26,19 @@
         "title": "Submission title",
         "warning": "Submission warning"
     },
+    "post_submission": {
+        "guidance": {
+            "contents": [
+                {
+                    "title": "Post submission guidance title",
+                    "description": "Post submission guidance description.",
+                    "list": [
+                        "Post submission guidance list item"
+                    ]
+                }
+            ]
+        }
+    },
     "sections": [
         {
             "id": "default-section",

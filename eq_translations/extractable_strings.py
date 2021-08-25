@@ -6,6 +6,19 @@ EXTRACTABLE_STRINGS = [
     {"json_path": "$.submission.guidance", "description": "Submission guidance",},
     {"json_path": "$.submission.title", "description": "Submission title"},
     {"json_path": "$.submission.warning", "description": "Submission warning"},
+    {
+        "json_path": "$.post_submission.guidance.contents[*].title",
+        "description": "Post submission guidance heading",
+    },
+    {
+        "json_path": "$.post_submission.guidance.contents[*].description",
+        "description": "Post submission guidance description",
+    },
+    {
+        "json_path": "$.post_submission.guidance.contents[*].list[*]",
+        "description": "Post submission guidance list item",
+        "additional_context": ["ListHeading", "ListDescription"],
+    },
     {"json_path": "$.sections[*].title", "description": "Section title"},
     {"json_path": "$..page_title", "description": "Page title"},
     {
