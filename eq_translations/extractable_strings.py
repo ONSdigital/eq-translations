@@ -157,6 +157,11 @@ EXTRACTABLE_STRINGS = [
         "context": "Question",
     },
     {
+        "json_path": "$..answers[*].instruction",
+        "description": "Answer",
+        "context": "Question",
+    },
+    {
         "json_path": "$..answers[*].placeholder",
         "description": "Dropdown field placeholder text",
         "context": "Question",
