@@ -158,7 +158,7 @@ EXTRACTABLE_STRINGS = [
     },
     {
         "json_path": "$..answers[*].instruction",
-        "description": "Checkbox Answer Instruction",
+        "description": "Checkbox answer instruction",
         "context": "Question",
     },
     {

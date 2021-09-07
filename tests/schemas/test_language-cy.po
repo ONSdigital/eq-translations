@@ -170,7 +170,7 @@ msgctxt "What is your favorite day of the week?"
 msgid "Days of the Week"
 msgstr "Diwrnod yr wythnos"
 
-#. Checkbox Answer Instruction
+#. Checkbox answer instruction
 msgctxt "What is your favorite day of the week?"
 msgid "Select your answer"
 msgstr "Dewisiwch eich ateb"
