@@ -302,6 +302,38 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "instruction-and-label-checkbox",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "instruction-and-label-checkbox-answer",
+                                        "mandatory": false,
+                                        "instruction": "Select your answer",
+                                        "label": "Days of the Week",
+                                        "options": [
+                                            {
+                                                "label": "Monday",
+                                                "value": "Monday"
+                                            },
+                                            {
+                                                "label": "Saturday",
+                                                "value": "Saturday"
+                                            },
+                                            {
+                                                "label": "Sunday",
+                                                "value": "Sunday"
+                                            }
+                                        ],
+                                        "type": "Checkbox"
+                                    }
+                                ],
+                                "id": "instruction-and-label-question",
+                                "title": "What is your favorite day of the week?",
+                                "type": "General"
+                            }
                         }
                     ]
                 }
