@@ -111,6 +111,10 @@ msgstr[5] "Mae {number_of_people} pherson yn byw yma, ydy hyn yn gywir? (other)"
 msgid "Which football team do you support?"
 msgstr "Pa dîm pêl-droed ydych chi'n ei gefnogi?"
 
+#. Question text
+msgid "What is your favorite day of the week?"
+msgstr "Beth yw eich hoff diwrnod yr wythnos?"
+
 #. Question description
 msgctxt "Please enter a name"
 msgid "The full name of the person"
@@ -161,6 +165,16 @@ msgctxt "Which football team do you support?"
 msgid "Football team"
 msgstr "Tîm pêl-droed"
 
+#. Answer
+msgctxt "What is your favorite day of the week?"
+msgid "Days of the Week"
+msgstr "Diwrnod yr wythnos"
+
+#. Checkbox answer instruction
+msgctxt "What is your favorite day of the week?"
+msgid "Select your answer"
+msgstr "Dewisiwch eich ateb"
+
 #. Dropdown field placeholder text
 msgctxt "Which football team do you support?"
 msgid "Select an option"
@@ -208,3 +222,18 @@ msgstr "Chelsea"
 msgctxt "Which football team do you support?"
 msgid "Rugby is better!"
 msgstr "Mae rygbi'n well!"
+
+#. Answer option
+msgctxt "What is your favorite day of the week?"
+msgid "Monday"
+msgstr "Dydd Llun"
+
+#. Answer option
+msgctxt "What is your favorite day of the week?"
+msgid "Saturday"
+msgstr "Dydd Sadwrn"
+
+#. Answer option
+msgctxt "What is your favorite day of the week?"
+msgid "Sunday"
+msgstr "Dydd Sul"
