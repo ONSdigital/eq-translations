@@ -3,7 +3,7 @@ from eq_translations import __version__
 
 setup(
     name="eq_translations",
-    version=__version__,
+    version="4.6.1",
     description="Translations infrastructure for EQ Questionnaire Runner",
     url="http://github.com/ONSDigital/eq-translations",
     author="ONSDigital",
