@@ -1,6 +1,6 @@
 from setuptools import setup
-
-__version__ = "4.6.1"
+from eq_translations.version import __version__
+# __version__ = "4.6.1"
 
 setup(
     name="eq_translations",
