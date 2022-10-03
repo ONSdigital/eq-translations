@@ -1,11 +1,12 @@
 from setuptools import setup
-from eq_translations import __version__
+
+__version__ = "4.6.1"
 
 setup(
     name="eq_translations",
     version=__version__,
     description="Translations infrastructure for EQ Questionnaire Runner",
-    url="http://github.com/ONSDigital/eq-translations",
+    url="http://github.com/ONSdigital/eq-translations",
     author="ONSDigital",
     author_email="",
     license="MIT",

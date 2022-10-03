@@ -314,6 +314,38 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "type": "Question",
+                            "id": "instruction-and-label-checkbox",
+                            "question": {
+                                "answers": [
+                                    {
+                                        "id": "instruction-and-label-checkbox-answer",
+                                        "mandatory": false,
+                                        "instruction": "Dewisiwch eich ateb",
+                                        "label": "Diwrnod yr wythnos",
+                                        "options": [
+                                            {
+                                                "label": "Dydd Llun",
+                                                "value": "Monday"
+                                            },
+                                            {
+                                                "label": "Dydd Sadwrn",
+                                                "value": "Saturday"
+                                            },
+                                            {
+                                                "label": "Dydd Sul",
+                                                "value": "Sunday"
+                                            }
+                                        ],
+                                        "type": "Checkbox"
+                                    }
+                                ],
+                                "id": "instruction-and-label-question",
+                                "title": "Beth yw eich hoff diwrnod yr wythnos?",
+                                "type": "General"
+                            }
                         }
                     ]
                 }
