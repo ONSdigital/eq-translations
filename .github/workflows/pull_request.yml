@@ -44,7 +44,7 @@ jobs:
         with:
           path: ~/.local/share/virtualenvs/
           key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-virtualenvs-${{ hashFiles('Pipfile.lock') }}
-      - name: Setup shell
+      - name: Shell 
         run: pipenv shell
       - name: Install virtual environment
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
