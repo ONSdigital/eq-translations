@@ -1,6 +1,6 @@
 FROM python:3.10.0-slim-buster
 
-RUN pip install pipenv==2018.11.26
+RUN pip install pipenv==2022.9.24
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
