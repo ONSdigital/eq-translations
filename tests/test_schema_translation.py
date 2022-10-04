@@ -106,7 +106,8 @@ class TestGetTranslation(unittest.TestCase):
 
     def test_translate_context_message_mismatch(self):
         result = self.translator.get_translation(
-            message_id=self.messages[1]["original"], context="some-random-context",
+            message_id=self.messages[1]["original"],
+            context="some-random-context",
         )
 
         assert result is None
