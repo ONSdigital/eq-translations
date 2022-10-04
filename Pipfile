@@ -15,7 +15,7 @@ jsonpath-rw = "*"
 pylint = "*"
 pytest = "*"
 pylint-quotes = "*"
-black = "==19.10b0"
+black = "==22.8.0"
 pytest-cov = "*"
 typed-ast = "*"
 
