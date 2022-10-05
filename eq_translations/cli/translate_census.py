@@ -45,7 +45,7 @@ def main():
 
     print("Fetching translation file from Crowdin")
 
-    response = requests.get(download_url, stream=True)
+    response = requests.get(download_url, stream=True, timeout=10)
 
     if not response:
         print("Empty response from Crowdin")
