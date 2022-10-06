@@ -4,7 +4,7 @@ Scripts for translating eq-survey-runner schemas
 
 ## Setup
 
-We use Pyenv via git because its gives the latest python versions. 
+It is recommended to use [Pyenv](https://github.com/pyenv/pyenv-installer) via Git
 
 If you have installed pyenv via brew:
 ```
