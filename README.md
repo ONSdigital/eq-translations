@@ -6,14 +6,7 @@ Scripts for translating eq-survey-runner schemas
 
 It is recommended to use [Pyenv](https://github.com/pyenv/pyenv-installer) via Git
 
-If you have installed pyenv via brew:
-```
-brew uninstall pyenv
-```
-Check in your directory that /.pyenv is deleted
-
 Upgrade pip and install dependencies:
-
 ```
 curl https://pyenv.run | bash
 exec $SHELL
