@@ -28,7 +28,7 @@ def test_find_pointers_containing_root():
 
     pointers = list(find_pointers_containing(schema, "test"))
 
-    assert pointers == []
+    assert not pointers
 
 
 def test_find_pointers_containing_element():
