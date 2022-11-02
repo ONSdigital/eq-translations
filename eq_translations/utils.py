@@ -117,8 +117,6 @@ def get_plural_forms_for_language(language_code):
     mappings = {
         "en": ["one"],
         "cy": ["zero", "one", "two", "few", "many"],
-        "ga": ["one", "two", "few", "many"],
-        "eo": ["one"],
     }
 
     return mappings[language_code] + ["other"]
