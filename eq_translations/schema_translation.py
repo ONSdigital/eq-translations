@@ -27,7 +27,9 @@ class SchemaTranslation:
             return self.catalog.locale.language
 
     def get_translation(
-        self, message_id, context=None,
+        self,
+        message_id,
+        context=None,
     ):
         message = self.catalog.get(id=message_id, context=context)
 

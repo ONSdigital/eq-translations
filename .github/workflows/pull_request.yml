@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install Pipenv
-        run: pip install pipenv==2018.11.26
+        run: pip install pipenv==2022.9.24
       - name: Cache virtualenv
         id: cache-virtualenv
         uses: actions/cache@v1
@@ -37,7 +37,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install Pipenv
-        run: pip install pipenv==2018.11.26
+        run: pip install pipenv==2022.9.24
       - name: Cache virtualenv
         id: cache-virtualenv
         uses: actions/cache@v1
@@ -54,7 +54,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Tag
-        run: echo "TAG=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+        run: |
+          CLEAN_TAG=$(echo "${{ github.event.pull_request.head.ref }}" | tr / -)
+          echo "TAG=$CLEAN_TAG" >> $GITHUB_ENV
       - name: Build
         run: docker build -t onsdigital/eq-translations:$TAG .
       - name: Push

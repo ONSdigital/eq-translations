@@ -15,12 +15,12 @@ jsonpath-rw = "*"
 pylint = "*"
 pytest = "*"
 pylint-quotes = "*"
-black = "==19.10b0"
+black = "*"
 pytest-cov = "*"
 typed-ast = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
 
 [pipenv]
 allow_prereleases = false

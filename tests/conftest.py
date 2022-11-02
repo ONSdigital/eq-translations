@@ -179,7 +179,10 @@ def schema_with_placeholders():
                                 "arguments": {
                                     "delimiter": " ",
                                     "list_to_concatenate": {
-                                        "identifier": ["first-name", "last-name",],
+                                        "identifier": [
+                                            "first-name",
+                                            "last-name",
+                                        ],
                                         "source": "answers",
                                     },
                                 },

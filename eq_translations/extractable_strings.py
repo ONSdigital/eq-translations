@@ -3,7 +3,10 @@ EXTRACTABLE_STRINGS = [
     {"json_path": "$.legal_basis", "description": "Questionnaire legal basis"},
     {"json_path": "$.messages.*", "description": "Global answer error message"},
     {"json_path": "$.submission.button", "description": "Submission button"},
-    {"json_path": "$.submission.guidance", "description": "Submission guidance",},
+    {
+        "json_path": "$.submission.guidance",
+        "description": "Submission guidance",
+    },
     {"json_path": "$.submission.title", "description": "Submission title"},
     {"json_path": "$.submission.warning", "description": "Submission warning"},
     {

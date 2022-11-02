@@ -4,10 +4,12 @@ Scripts for translating eq-survey-runner schemas
 
 ## Setup
 
-Upgrade pip and install dependencies:
+It is recommended to use [Pyenv](https://github.com/pyenv/pyenv-installer) via Git
 
+Upgrade pip and install dependencies:
 ```
-brew install pyenv
+curl https://pyenv.run | bash
+exec $SHELL
 pyenv install
 pip install --upgrade pip setuptools pipenv
 pipenv install --dev

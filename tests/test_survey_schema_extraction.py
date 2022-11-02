@@ -244,7 +244,13 @@ def test_when_rule_list_property_not_extracted():
     schema = SurveySchema(
         {
             "content": {
-                "contents": [{"list": ["trainees on government schemes",],}],
+                "contents": [
+                    {
+                        "list": [
+                            "trainees on government schemes",
+                        ],
+                    }
+                ],
                 "title": "Content title",
             },
             "when": [{"condition": "greater than", "list": "household", "value": 5}],
