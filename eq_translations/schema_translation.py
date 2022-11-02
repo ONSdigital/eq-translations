@@ -1,4 +1,3 @@
-from babel import Locale
 from babel.messages import pofile
 
 
