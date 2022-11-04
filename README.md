@@ -86,6 +86,6 @@ Should be prefixed with the name of the schema to translate followed by `_transl
 
 When `gettext` is installed there are a number of command line utilities that can help with managing translations.
 
-To merge the translations from an already translated schema into another one, you can use `msgmerge`. For example `msgmerge household-cy.po individual.pot -o individual-cy.po` will merge matching Welsh translations from the household questionnaire into the individual questionnaire.
+To merge the translations from an already translated schema into another one, you can use `msgmerge`. For example `msgmerge <translated_schema>-cy.po <target_schema>.pot -o <target_schema>-cy.po` will merge matching Welsh translations from the translated schema into the not yet translated target schema.
 
-To add the content of translation files together, you can use `msgcat`. For example `msgcat individual-wls.pot individual-gb.pot -o individual.pot` will add unique messages from each input template file to create an output individual template for both versions.
+To add the content of translation files together, you can use `msgcat`. For example `msgcat <schema_name>.pot <schema_name>-gb.pot -o <schema_name>.pot` will add unique messages from each input template file to create an output template for both schema versions.
