@@ -79,7 +79,7 @@ make test
 Should be prefixed with the name of the schema to translate followed by `_translate_` followed by the [country code](https://en.wikipedia.org/wiki/ISO_3166-1) of the translations in a po format e.g.
 
 ```
-household_translate_cy.po
+<schema_name>_translate_cy.po
 ```
 
 ## Managing translations
