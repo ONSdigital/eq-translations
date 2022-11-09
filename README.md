@@ -40,7 +40,7 @@ The library exports a `eq_translations.SurveySchema` class and `eq_translations.
 
 `handle_compare_schemas(source_schema, target_schema)`
 
-The following scripts will also be available on your path once the package is installed: `extract_template`, `translate_census`, `translate_schema`, `compare_schemas`
+The following scripts will also be available on your path once the package is installed: `extract_template`, `translate_schema`, `compare_schemas`
 
 ## Usage without library
 
@@ -72,14 +72,6 @@ To run the tests:
 make test
 ```
 
-### Census Commands
-
-To translate the Census individual schema using current translations in Crowdin
-
-```
-pipenv run python -m eq_translations.cli.translate_census ../eq-survey-runner/data/en/census_individual_gb_eng.json out
-```
-
 ## Naming conventions
 
 ### Translation files
@@ -87,13 +79,13 @@ pipenv run python -m eq_translations.cli.translate_census ../eq-survey-runner/da
 Should be prefixed with the name of the schema to translate followed by `_translate_` followed by the [country code](https://en.wikipedia.org/wiki/ISO_3166-1) of the translations in a po format e.g.
 
 ```
-census_household_translate_cy.po
+<schema_name>_translate_cy.po
 ```
 
 ## Managing translations
 
 When `gettext` is installed there are a number of command line utilities that can help with managing translations.
 
-To merge the translations from an already translated schema into another one, you can use `msgmerge`. For example `msgmerge census_household-cy.po census_individual.pot -o census_individual-cy.po` will merge matching Welsh translations from the Census household questionnaire into the Census individual questionnaire.
+To merge the translations from an already translated schema into another one, you can use `msgmerge`. For example `msgmerge <translated_schema>-cy.po <target_schema>.pot -o <target_schema>-cy.po` will merge matching Welsh translations from the translated schema into the not yet translated target schema.
 
-To add the content of translation files together, you can use `msgcat`. For example `msgcat census_individual-wls.pot census_individual-gb.pot -o census_individual.pot` will add unique messages from each input template file to create an output Census individual template for both versions.
+To add the content of translation files together, you can use `msgcat`. For example `msgcat <schema_name>.pot <schema_name>-gb.pot -o <schema_name>.pot` will add unique messages from each input template file to create an output template for both schema versions.
