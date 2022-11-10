@@ -506,13 +506,6 @@ def test_locale_on_load_welsh():
     assert translation.language == "cy"
 
 
-def test_locale_on_load_ulster_scots():
-    translation = SchemaTranslation()
-    translation.load("tests/schemas/test_language-eo.po")
-
-    assert translation.language == "eo"
-
-
 def test_checkbox_null_label():
 
     schema_translation = SchemaTranslation()

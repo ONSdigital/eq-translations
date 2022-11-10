@@ -14,7 +14,6 @@ setup(
     entry_points={
         "console_scripts": [
             "extract_template=eq_translations.cli.extract_template:main",
-            "translate_census=eq_translations.cli.translate_census:main",
             "translate_schema=eq_translations.cli.translate_schema:main",
             "compare_schemas=eq_translations.cli.compare_schemas:main",
         ]
