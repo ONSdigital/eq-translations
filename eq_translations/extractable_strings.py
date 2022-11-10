@@ -239,6 +239,71 @@ EXTRACTABLE_STRINGS = [
         "context": "Question",
         "additional_context": ["ListHeading", "ListDescription"],
     },
+    {
+        "json_path": "$..primary_content[*].title",
+        "description": "Introduction primary content",
+        "context": "PrimaryContent",
+    },
+    {
+        "json_path": "$..primary_content[*].contents[*].list[*]",
+        "description": "Introduction primary content list item",
+        "context": "PrimaryContent",
+        "additional_context": ["ListHeading", "ListDescription"],
+    },
+    {
+        "json_path": "$..primary_content[*].contents[*].description",
+        "description": "Introduction primary content description",
+        "context": "PrimaryContent",
+    },
+    {
+        "json_path": "$..primary_content[*].contents[*].guidance.contents[*].title",
+        "description": "Introduction primary content guidance title",
+        "context": "PrimaryContent",
+    },
+    {
+        "json_path": "$..primary_content[*].contents[*].guidance.contents[*].description",
+        "description": "Introduction primary content guidance description",
+        "context": "PrimaryContent",
+    },
+    {
+        "json_path": "$..preview_content.title",
+        "description": "Introduction preview content title",
+        "context": "PreviewContent",
+    },
+    {
+        "json_path": "$..preview_content.contents[*].description",
+        "description": "Introduction preview content description",
+        "context": "PreviewContent",
+    },
+    {
+        "json_path": "$..preview_content.questions[*].question",
+        "description": "Introduction preview content question title",
+        "context": "PreviewContent",
+    },
+    {
+        "json_path": "$..preview_content.questions[*].contents[*].description",
+        "description": "Introduction preview question content description",
+        "context": "PreviewContent",
+        "additional_context": ["PreviewQuestionListHeading"],
+    },
+    {
+        "json_path": "$..preview_content.questions[*].contents[*].list[*]",
+        "description": "Introduction preview question list item",
+        "context": "PreviewContent",
+        "additional_context": ["PreviewQuestionListHeading"],
+    },
+    {
+        "json_path": "$..secondary_content[*].contents[*].title",
+        "description": "Introduction secondary content contents title",
+    },
+    {
+        "json_path": "$..secondary_content[*].contents[*].list[*]",
+        "description": "Introduction secondary content contents list item",
+    },
+    {
+        "json_path": "$..secondary_content[*].contents[*].description",
+        "description": "Introduction secondary content contents description",
+    },
 ]
 
 CONTEXT_DEFINITIONS = {
@@ -271,5 +336,20 @@ CONTEXT_DEFINITIONS = {
         "parent_schema_property": "contents",
         "property": "description",
         "text": "For description: {context}",
+    },
+    "PrimaryContent": {
+        "parent_schema_property": "primary_content",
+        "property": "title",
+        "text": "{context}",
+    },
+    "PreviewContent": {
+        "parent_schema_property": "preview_content",
+        "property": "title",
+        "text": "{context}",
+    },
+    "PreviewQuestionListHeading": {
+        "parent_schema_property": "questions",
+        "property": "question",
+        "text": "For question: {context}",
     },
 }
