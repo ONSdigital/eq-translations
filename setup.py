@@ -1,10 +1,28 @@
+import ast
+import os.path
+
 from setuptools import setup
 
-__version__ = "4.7.0"
+try:
+    from eq_translations import __version__ as version
+except ImportError:
+    version = str(
+        ast.literal_eval(
+            open(
+                os.path.join(
+                    os.path.dirname(__file__), "eq_translations", "__init__.py"
+                ),
+                "r",
+            )
+            .read()
+            .split("=")[-1]
+            .strip()
+        )
+    )
 
 setup(
     name="eq_translations",
-    version=__version__,
+    version=version,
     description="Translations infrastructure for EQ Questionnaire Runner",
     url="http://github.com/ONSdigital/eq-translations",
     author="ONSDigital",
