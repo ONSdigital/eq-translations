@@ -799,7 +799,6 @@ def test_introduction():
             pointer="/primary_content/0/title/text",
             description="Introduction primary content",
             value="You are completing this for ESSENTIAL ENTERPRISE LTD.",
-            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
         )
         in translatable_items
     )
@@ -838,7 +837,6 @@ def test_introduction():
             pointer="/preview_content/title",
             description="Introduction preview content title",
             value="Information you need",
-            context="Information you need",
         )
         in translatable_items
     )
