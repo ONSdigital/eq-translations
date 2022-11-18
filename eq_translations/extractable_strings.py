@@ -241,46 +241,46 @@ EXTRACTABLE_STRINGS = [
     },
     {
         "json_path": "$..primary_content[*].title",
-        "description": "Introduction primary content",
+        "description": "Introduction main title",
     },
     {
         "json_path": "$..primary_content[*].contents[*].list[*]",
-        "description": "Introduction primary content list item",
+        "description": "Introduction main list item",
         "context": "PrimaryContent",
         "additional_context": ["ListHeading", "ListDescription"],
     },
     {
         "json_path": "$..primary_content[*].contents[*].description",
-        "description": "Introduction primary content description",
+        "description": "Introduction main description",
         "context": "PrimaryContent",
     },
     {
         "json_path": "$..primary_content[*].contents[*].guidance.contents[*].title",
-        "description": "Introduction primary content guidance title",
+        "description": "Introduction main guidance title",
         "context": "PrimaryContent",
     },
     {
         "json_path": "$..primary_content[*].contents[*].guidance.contents[*].description",
-        "description": "Introduction primary content guidance description",
+        "description": "Introduction main guidance description",
         "context": "PrimaryContent",
     },
     {
         "json_path": "$..preview_content.title",
-        "description": "Introduction preview content title",
+        "description": "Introduction preview title",
     },
     {
         "json_path": "$..preview_content.contents[*].description",
-        "description": "Introduction preview content description",
+        "description": "Introduction preview description",
         "context": "PreviewContent",
     },
     {
         "json_path": "$..preview_content.questions[*].question",
-        "description": "Introduction preview content question title",
+        "description": "Introduction preview question title",
         "context": "PreviewContent",
     },
     {
         "json_path": "$..preview_content.questions[*].contents[*].description",
-        "description": "Introduction preview question content description",
+        "description": "Introduction preview question description",
         "context": "PreviewContent",
         "additional_context": ["PreviewQuestionListHeading"],
     },
@@ -292,15 +292,15 @@ EXTRACTABLE_STRINGS = [
     },
     {
         "json_path": "$..secondary_content[*].contents[*].title",
-        "description": "Introduction secondary content contents title",
+        "description": "Introduction additional title",
     },
     {
         "json_path": "$..secondary_content[*].contents[*].list[*]",
-        "description": "Introduction secondary content contents list item",
+        "description": "Introduction additional list item",
     },
     {
         "json_path": "$..secondary_content[*].contents[*].description",
-        "description": "Introduction secondary content contents description",
+        "description": "Introduction additional description",
     },
 ]
 

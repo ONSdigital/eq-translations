@@ -797,7 +797,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/primary_content/0/title/text",
-            description="Introduction primary content",
+            description="Introduction main title",
             value="You are completing this for ESSENTIAL ENTERPRISE LTD.",
         )
         in translatable_items
@@ -806,7 +806,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/primary_content/1/contents/0/list/0",
-            description="Introduction primary content list item",
+            description="Introduction main list item",
             value="On average it takes 10 minutes to complete this survey once you have collected the information.",
         )
         in translatable_items
@@ -815,7 +815,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/primary_content/0/contents/0/description/text",
-            description="Introduction primary content description",
+            description="Introduction main description",
             value="If the company details or structure have changed contact us on 0300 1234 931 or email",
             context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
         )
@@ -825,7 +825,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/primary_content/1/contents/1/description",
-            description="Introduction primary content description",
+            description="Introduction main description",
             value="<strong>If you have closed for all, or some, of the period</strong>: select yes, you can provide fig"
             "ures and enter retail turnover.",
         )
@@ -835,7 +835,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/preview_content/title",
-            description="Introduction preview content title",
+            description="Introduction preview title",
             value="Information you need",
         )
         in translatable_items
@@ -844,7 +844,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/preview_content/contents/0/description",
-            description="Introduction preview content description",
+            description="Introduction preview description",
             value="<a href=''>View the survey information before you start the survey</a>",
             context="Information you need",
         )
@@ -854,7 +854,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/preview_content/questions/0/question",
-            description="Introduction preview content question title",
+            description="Introduction preview question title",
             value="Total retail turnover",
             context="Information you need",
         )
@@ -864,7 +864,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/preview_content/questions/0/contents/0/description",
-            description="Introduction preview question content description",
+            description="Introduction preview question description",
             value="<strong>Include:</strong>",
             context="Information you need",
             additional_context=["For question: Total retail turnover"],
@@ -886,7 +886,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/secondary_content/0/contents/0/title",
-            description="Introduction secondary content contents title",
+            description="Introduction additional title",
             value="How we use your data",
         )
         in translatable_items
@@ -895,7 +895,7 @@ def test_introduction():
     assert (
         TranslatableItem(
             pointer="/secondary_content/0/contents/1/list/0",
-            description="Introduction secondary content contents list item",
+            description="Introduction additional list item",
             value="You cannot appeal your selection. Your business was selected to give us a comprehensive view of the "
             "UK economy.",
         )
