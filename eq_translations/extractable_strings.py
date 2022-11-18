@@ -267,7 +267,6 @@ EXTRACTABLE_STRINGS = [
     {
         "json_path": "$..preview_content.title",
         "description": "Introduction preview content title",
-        "context": "PreviewContent",
     },
     {
         "json_path": "$..preview_content.contents[*].description",
