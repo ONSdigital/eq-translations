@@ -780,14 +780,12 @@ def test_introduction():
                 "id": "secondary-content",
                 "contents": [
                     {
-                        "title": {"text": "How we use your data"},
-                    },
-                    {"description": {"text": "Introduction example description"}},
-                    {
+                        "title": "How we use your data",
+                        "description": "Introduction example description",
                         "list": [
                             "You cannot appeal your selection. Your business was selected to give us a comprehensive vi"
                             "ew of the UK economy."
-                        ]
+                        ],
                     },
                 ],
             }
@@ -888,7 +886,7 @@ def test_introduction():
 
     assert (
         TranslatableItem(
-            pointer="/secondary_content/0/contents/0/title/text",
+            pointer="/secondary_content/0/contents/0/title",
             description="Introduction additional title",
             value="How we use your data",
         )
@@ -897,10 +895,22 @@ def test_introduction():
 
     assert (
         TranslatableItem(
-            pointer="/secondary_content/0/contents/2/list/0",
+            pointer="/secondary_content/0/contents/0/list/0",
             description="Introduction additional list item",
             value="You cannot appeal your selection. Your business was selected to give us a comprehensive view of the "
-            "UK economy.",
+                  "UK economy.",
+            context='For heading: How we use your data',
+            additional_context=['For description: Introduction example description']
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/secondary_content/0/contents/0/description",
+            description="Introduction additional description",
+            value="Introduction example description",
+            context='For heading: How we use your data',
         )
         in translatable_items
     )

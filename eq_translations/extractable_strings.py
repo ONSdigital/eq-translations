@@ -295,10 +295,6 @@ EXTRACTABLE_STRINGS = [
         "description": "Introduction additional title",
     },
     {
-        "json_path": "$..secondary_content[*].title",
-        "description": "Introduction additional title",
-    },
-    {
         "json_path": "$..secondary_content[*].contents[*].list[*]",
         "description": "Introduction additional list item",
         "context": "ListHeading",
@@ -306,11 +302,6 @@ EXTRACTABLE_STRINGS = [
     },
     {
         "json_path": "$..secondary_content[*].contents[*].description",
-        "description": "Introduction additional description",
-        "context": "ListHeading",
-    },
-    {
-        "json_path": "$..secondary_content[*].description",
         "description": "Introduction additional description",
         "context": "ListHeading",
     },
