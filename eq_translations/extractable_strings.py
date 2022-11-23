@@ -297,13 +297,13 @@ EXTRACTABLE_STRINGS = [
     {
         "json_path": "$..secondary_content[*].contents[*].list[*]",
         "description": "Introduction additional list item",
-        "context": "ListHeading",
-        "additional_context": ["ListDescription"],
+        "context": "SecondaryListHeading",
+        "additional_context": ["SecondaryListDescription"],
     },
     {
         "json_path": "$..secondary_content[*].contents[*].description",
         "description": "Introduction additional description",
-        "context": "ListHeading",
+        "context": "SecondaryListHeading",
     },
 ]
 
@@ -352,5 +352,15 @@ CONTEXT_DEFINITIONS = {
         "parent_schema_property": "questions",
         "property": "question",
         "text": "For question: {context}",
+    },
+    "SecondaryListHeading": {
+        "parent_schema_property": "secondary_content",
+        "property": "title",
+        "text": "For heading: {context}",
+    },
+    "SecondaryListDescription": {
+        "parent_schema_property": "secondary_content",
+        "property": "description",
+        "text": "For description: {context}",
     },
 }
