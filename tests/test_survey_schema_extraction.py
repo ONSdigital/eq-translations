@@ -778,11 +778,11 @@ def test_introduction():
         "secondary_content": [
             {
                 "id": "secondary-content",
-                "title": {
-                    "text": "How we use your data",
-                },
-                "description": {"text": "Introduction example description"},
                 "contents": [
+                    {
+                        "title": {"text": "How we use your data"},
+                    },
+                    {"description": {"text": "Introduction example description"}},
                     {
                         "list": [
                             "You cannot appeal your selection. Your business was selected to give us a comprehensive vi"
@@ -888,7 +888,7 @@ def test_introduction():
 
     assert (
         TranslatableItem(
-            pointer="/secondary_content/0/title/text",
+            pointer="/secondary_content/0/contents/0/title/text",
             description="Introduction additional title",
             value="How we use your data",
         )
@@ -897,12 +897,10 @@ def test_introduction():
 
     assert (
         TranslatableItem(
-            pointer="/secondary_content/0/contents/0/list/0",
+            pointer="/secondary_content/0/contents/2/list/0",
             description="Introduction additional list item",
             value="You cannot appeal your selection. Your business was selected to give us a comprehensive view of the "
-            "UK economy.",
-            context="For heading: How we use your data",
-            additional_context=["For description: Introduction example description"],
+                  "UK economy.",
         )
         in translatable_items
     )
