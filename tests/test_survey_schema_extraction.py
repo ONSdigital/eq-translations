@@ -900,7 +900,7 @@ def test_introduction():
             value="You cannot appeal your selection. Your business was selected to give us a comprehensive view of the "
             "UK economy.",
             context="For heading: How we use your data",
-            additional_context=["For description: Introduction example description"]
+            additional_context=["For description: Introduction example description"],
         )
         in translatable_items
     )
