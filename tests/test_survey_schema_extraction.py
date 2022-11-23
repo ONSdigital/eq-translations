@@ -900,7 +900,7 @@ def test_introduction():
             pointer="/secondary_content/0/contents/2/list/0",
             description="Introduction additional list item",
             value="You cannot appeal your selection. Your business was selected to give us a comprehensive view of the "
-                  "UK economy.",
+            "UK economy.",
         )
         in translatable_items
     )
