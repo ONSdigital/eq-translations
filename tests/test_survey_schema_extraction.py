@@ -781,11 +781,8 @@ def test_introduction():
                 "title": {
                     "text": "How we use your data",
                 },
-                "description": {
-                    "text": "Introduction example description"
-                },
+                "description": {"text": "Introduction example description"},
                 "contents": [
-
                     {
                         "list": [
                             "You cannot appeal your selection. Your business was selected to give us a comprehensive vi"
