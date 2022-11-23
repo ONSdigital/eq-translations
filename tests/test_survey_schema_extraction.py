@@ -888,7 +888,7 @@ def test_introduction():
 
     assert (
         TranslatableItem(
-            pointer="/secondary_content/0/contents/0/title",
+            pointer="/secondary_content/0/title/text",
             description="Introduction additional title",
             value="How we use your data",
         )
