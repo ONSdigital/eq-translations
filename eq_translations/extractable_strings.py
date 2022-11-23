@@ -297,10 +297,13 @@ EXTRACTABLE_STRINGS = [
     {
         "json_path": "$..secondary_content[*].contents[*].list[*]",
         "description": "Introduction additional list item",
+        "context": "ListHeading",
+        "additional_context": ["ListDescription"],
     },
     {
         "json_path": "$..secondary_content[*].contents[*].description",
         "description": "Introduction additional description",
+        "context": "ListHeading",
     },
 ]
 
