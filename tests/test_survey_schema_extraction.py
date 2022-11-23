@@ -898,9 +898,9 @@ def test_introduction():
             pointer="/secondary_content/0/contents/0/list/0",
             description="Introduction additional list item",
             value="You cannot appeal your selection. Your business was selected to give us a comprehensive view of the "
-                  "UK economy.",
-            context='For heading: How we use your data',
-            additional_context=['For description: Introduction example description']
+            "UK economy.",
+            context="For heading: How we use your data",
+            additional_context=["For description: Introduction example description"]
         )
         in translatable_items
     )
@@ -910,7 +910,7 @@ def test_introduction():
             pointer="/secondary_content/0/contents/0/description",
             description="Introduction additional description",
             value="Introduction example description",
-            context='For heading: How we use your data',
+            context="For heading: How we use your data",
         )
         in translatable_items
     )
