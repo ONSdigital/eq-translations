@@ -3,4 +3,4 @@ from .survey_schema import SurveySchema
 
 __all__ = ("SurveySchema", "SchemaTranslation")
 
-__version__ = "4.7.0"
+__version__ = "4.8.0"
