@@ -720,3 +720,241 @@ def test_all_pointers_resolve_to_correct_instance():
             assert isinstance(translatable_item.value, dict)
         else:
             assert isinstance(translatable_item.value, str)
+
+
+def test_introduction():
+    introduction_block = {
+        "id": "introduction-block",
+        "type": "Introduction",
+        "primary_content": [
+            {
+                "id": "primary",
+                "title": {
+                    "text": "You are completing this for ESSENTIAL ENTERPRISE LTD."
+                },
+                "contents": [
+                    {
+                        "description": {
+                            "text": "If the company details or structure have changed contact us on 0300 1234 931 or em"
+                            "ail"
+                        }
+                    },
+                    {
+                        "guidance": {
+                            "contents": [
+                                {"title": "Employees"},
+                                {"description": "Include:"},
+                                {
+                                    "list": [
+                                        "all employees in Great Britain (England, Scotland and Wales)",
+                                    ]
+                                },
+                                {"description": "<strong>Exclude:</strong>"},
+                            ]
+                        },
+                    },
+                ],
+            },
+            {
+                "id": "description",
+                "contents": [
+                    {
+                        "list": [
+                            "On average it takes 10 minutes to complete this survey once you have collected the informa"
+                            "tion."
+                        ]
+                    },
+                    {
+                        "description": "<strong>If you have closed for all, or some, of the period</strong>: select yes"
+                        ", you can provide figures and enter retail turnover."
+                    },
+                ],
+            },
+        ],
+        "preview_content": {
+            "id": "preview",
+            "title": "Information you need",
+            "contents": [
+                {
+                    "description": "<a href=''>View the survey information before you start the survey</a>"
+                }
+            ],
+            "questions": [
+                {
+                    "question": "Total retail turnover",
+                    "contents": [
+                        {"description": "<strong>Include:</strong>"},
+                        {"list": ["VAT"]},
+                    ],
+                }
+            ],
+        },
+        "secondary_content": [
+            {
+                "id": "secondary-content",
+                "contents": [
+                    {
+                        "title": "How we use your data",
+                        "description": "Introduction example description",
+                        "list": [
+                            "You cannot appeal your selection. Your business was selected to give us a comprehensive vi"
+                            "ew of the UK economy."
+                        ],
+                    },
+                ],
+            }
+        ],
+    }
+
+    schema = SurveySchema(introduction_block)
+    translatable_items = list(schema.translatable_items)
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/title/text",
+            description="Introduction main title",
+            value="You are completing this for ESSENTIAL ENTERPRISE LTD.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/1/contents/0/list/0",
+            description="Introduction main list item",
+            value="On average it takes 10 minutes to complete this survey once you have collected the information.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/contents/0/description/text",
+            description="Introduction main description",
+            value="If the company details or structure have changed contact us on 0300 1234 931 or email",
+            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/1/contents/1/description",
+            description="Introduction main description",
+            value="<strong>If you have closed for all, or some, of the period</strong>: select yes, you can provide fig"
+            "ures and enter retail turnover.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/contents/1/guidance/contents/0/title",
+            description="Introduction main guidance title",
+            value="Employees",
+            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/contents/1/guidance/contents/1/description",
+            description="Introduction main guidance description",
+            value="Include:",
+            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/contents/1/guidance/contents/2/list/0",
+            description="Introduction main guidance list",
+            value="all employees in Great Britain (England, Scotland and Wales)",
+            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/preview_content/title",
+            description="Introduction preview title",
+            value="Information you need",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/preview_content/contents/0/description",
+            description="Introduction preview description",
+            value="<a href=''>View the survey information before you start the survey</a>",
+            context="Information you need",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/preview_content/questions/0/question",
+            description="Introduction preview question title",
+            value="Total retail turnover",
+            context="Information you need",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/preview_content/questions/0/contents/0/description",
+            description="Introduction preview question description",
+            value="<strong>Include:</strong>",
+            context="Information you need",
+            additional_context=["For question: Total retail turnover"],
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/preview_content/questions/0/contents/1/list/0",
+            description="Introduction preview question list item",
+            value="VAT",
+            context="Information you need",
+            additional_context=["For question: Total retail turnover"],
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/secondary_content/0/contents/0/title",
+            description="Introduction additional title",
+            value="How we use your data",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/secondary_content/0/contents/0/list/0",
+            description="Introduction additional list item",
+            value="You cannot appeal your selection. Your business was selected to give us a comprehensive view of the "
+            "UK economy.",
+            context="For heading: How we use your data",
+            additional_context=["For description: Introduction example description"],
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/secondary_content/0/contents/0/description",
+            description="Introduction additional description",
+            value="Introduction example description",
+            context="For heading: How we use your data",
+        )
+        in translatable_items
+    )
