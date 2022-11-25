@@ -738,7 +738,21 @@ def test_introduction():
                             "text": "If the company details or structure have changed contact us on 0300 1234 931 or em"
                             "ail"
                         }
-                    }
+                    },
+                    {
+                        "guidance": {
+                            "contents": [
+                                {"title": "Employees"},
+                                {"description": "Include:"},
+                                {
+                                    "list": [
+                                        "all employees in Great Britain (England, Scotland and Wales)",
+                                    ]
+                                },
+                                {"description": "<strong>Exclude:</strong>"},
+                            ]
+                        },
+                    },
                 ],
             },
             {
@@ -829,6 +843,36 @@ def test_introduction():
             description="Introduction main description",
             value="<strong>If you have closed for all, or some, of the period</strong>: select yes, you can provide fig"
             "ures and enter retail turnover.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/contents/1/guidance/contents/0/title",
+            description="Introduction main guidance title",
+            value="Employees",
+            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/contents/1/guidance/contents/1/description",
+            description="Introduction main guidance description",
+            value="Include:",
+            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
+        )
+        in translatable_items
+    )
+
+    assert (
+        TranslatableItem(
+            pointer="/primary_content/0/contents/1/guidance/contents/2/list/0",
+            description="Introduction main guidance list",
+            value="all employees in Great Britain (England, Scotland and Wales)",
+            context="You are completing this for ESSENTIAL ENTERPRISE LTD.",
         )
         in translatable_items
     )

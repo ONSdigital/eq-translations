@@ -263,6 +263,13 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..primary_content[*].contents[*].guidance.contents[*].description",
         "description": "Introduction main guidance description",
         "context": "PrimaryContent",
+        "additional_context": ["ListHeading"],
+    },
+    {
+        "json_path": "$..primary_content[*].contents[*].guidance.contents[*].list[*]",
+        "description": "Introduction main guidance list",
+        "context": "PrimaryContent",
+        "additional_context": ["ListHeading"],
     },
     {
         "json_path": "$..preview_content.title",
