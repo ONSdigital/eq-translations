@@ -701,12 +701,12 @@ def test_summary_without_placeholder_extraction():
         in translatable_items
     )
     assert (
-            TranslatableItem(
-                pointer="/summary/item_label",
-                description="List collector item label",
-                value="List item label",
-            )
-            in translatable_items
+        TranslatableItem(
+            pointer="/summary/item_label",
+            description="List collector item label",
+            value="List item label",
+        )
+        in translatable_items
     )
 
 
