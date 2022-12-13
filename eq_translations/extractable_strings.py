@@ -44,6 +44,10 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$.sections[*].summary.items[*].empty_list_text",
         "description": "Section summary empty list text",
     },
+    {
+        "json_path": "$.sections[*].summary.items[*].item_label",
+        "description": "Label for the item title on a list summary",
+    },
     {"json_path": "$..groups[*].title", "description": "Group title"},
     {"json_path": "$..blocks[*].title", "description": "Block title"},
     {"json_path": "$..summary.title", "description": "List collector summary heading"},
@@ -58,6 +62,10 @@ EXTRACTABLE_STRINGS = [
     {
         "json_path": "$..summary.add_link_text",
         "description": "List collector add link text",
+    },
+    {
+        "json_path": "$..summary.item_label",
+        "description": "List collector item label",
     },
     {
         "json_path": "$..add_block.cancel_text",
