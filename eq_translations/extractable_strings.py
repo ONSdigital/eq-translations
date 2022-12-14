@@ -46,7 +46,7 @@ EXTRACTABLE_STRINGS = [
     },
     {
         "json_path": "$.sections[*].summary.items[*].item_label",
-        "description": "Label for the item title on a list summary",
+        "description": "Label for the item title on a section summary",
     },
     {"json_path": "$..groups[*].title", "description": "Group title"},
     {"json_path": "$..blocks[*].title", "description": "Block title"},
