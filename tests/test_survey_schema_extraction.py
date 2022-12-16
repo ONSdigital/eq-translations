@@ -661,6 +661,7 @@ def test_summary_without_placeholder_extraction():
             "item_title": "A list item",
             "empty_list_text": "An empty title text",
             "add_link_text": "An add link text",
+            "item_label": "List item label",
         }
     }
 
@@ -696,6 +697,14 @@ def test_summary_without_placeholder_extraction():
             pointer="/summary/add_link_text",
             description="List collector add link text",
             value="An add link text",
+        )
+        in translatable_items
+    )
+    assert (
+        TranslatableItem(
+            pointer="/summary/item_label",
+            description="List collector item label",
+            value="List item label",
         )
         in translatable_items
     )
