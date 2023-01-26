@@ -1,5 +1,0 @@
-[console_scripts]
-compare_schemas = eq_translations.cli.compare_schemas:main
-extract_template = eq_translations.cli.extract_template:main
-translate_schema = eq_translations.cli.translate_schema:main
-

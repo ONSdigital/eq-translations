@@ -1,6 +1,0 @@
-babel
-jsonpointer
-jsonpath-rw
-tqdm
-requests
-termcolor
