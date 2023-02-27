@@ -17,9 +17,9 @@ pipenv install --dev
 
 ## Python Package Usage
 
-`eq_translations` is packaged as a python package, though it is not currently published on pypi. 
+`eq_translations` is packaged as a python package, though it is not currently published on pypi.
 
-To install, replace `BRANCHNAME` with an appropriate tag or branch (or master) and run#:
+To install, replace `BRANCHNAME` with an appropriate tag or branch and run:
 
 ```
 pipenv install -e git+https://github.com/ONSDigital/eq-translations.git@BRANCHNAME#egg=eq_translations
