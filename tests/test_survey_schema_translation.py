@@ -32,7 +32,7 @@ def test_translate():
                         "title": "Who are you answering for??",
                         "definition": {
                             "title": "Enter the name of a person",
-                            "content": "The full name of the person"
+                            "content": "The full name of the person",
                         },
                         "description": "",
                         "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
@@ -84,7 +84,7 @@ def test_translate():
                     "title": "Who are you answering for??",
                     "definition": {
                         "title": "Enter the name of a person",
-                        "content": "The full name of the person"
+                        "content": "The full name of the person",
                     },
                     "description": "",
                     "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
@@ -139,7 +139,7 @@ def test_get_catalog():
                     "title": "Please confirm the number of people who live at this household",
                     "definition": {
                         "title": "Enter the name of a person",
-                        "content": "The full name of the person"
+                        "content": "The full name of the person",
                     },
                     "description": "",
                     "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
