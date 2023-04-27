@@ -243,7 +243,9 @@ def test_get_catalog():
         in actual_items
     )
     assert schema_data["sections"][0]["question"]["definition"]["title"] in actual_items
-    assert schema_data["sections"][0]["question"]["definition"]["content"] in actual_items
+    assert (
+        schema_data["sections"][0]["question"]["definition"]["content"] in actual_items
+    )
     assert schema_data["sections"][0]["question"]["instruction"] in actual_items
 
     singular = schema_data["sections"][0]["question"]["answers"][0]["options"][0][
