@@ -30,6 +30,10 @@ def test_translate():
                 {
                     "question": {
                         "title": "Who are you answering for??",
+                        "definition": {
+                            "title": "Enter the name of a person",
+                            "content": "The full name of the person"
+                        },
                         "description": "",
                         "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                         "answers": [
@@ -78,6 +82,10 @@ def test_translate():
             {
                 "question": {
                     "title": "Who are you answering for??",
+                    "definition": {
+                        "title": "Enter the name of a person",
+                        "content": "The full name of the person"
+                    },
                     "description": "",
                     "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                     "answers": [
@@ -129,6 +137,10 @@ def test_get_catalog():
             {
                 "question": {
                     "title": "Please confirm the number of people who live at this household",
+                    "definition": {
+                        "title": "Enter the name of a person",
+                        "content": "The full name of the person"
+                    },
                     "description": "",
                     "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                     "answers": [
@@ -230,6 +242,7 @@ def test_get_catalog():
         ]
         in actual_items
     )
+    assert schema_data["sections"][0]["question"]["definition"] in actual_items
     assert schema_data["sections"][0]["question"]["instruction"] in actual_items
 
     singular = schema_data["sections"][0]["question"]["answers"][0]["options"][0][
