@@ -76,8 +76,12 @@
                             "page_title": "Teitl tudalen cwestiwn wedi\u2019i deilwra",
                             "question": {
                                 "definition": {
-                                    "title": "Rhowch enw person",
-                                    "contents": ["Enw llawn y person"]
+                                    "contents": [
+                                        {
+                                            "title": "Rhowch enw person",
+                                            "description": "Enw llawn y person"
+                                        }
+                                    ]
                                 },
                                 "instruction": [
                                     "Rhowch enw person"
