@@ -34,7 +34,7 @@ def test_translate():
                             "contents": [
                                 {
                                     "title": "Enter the name of a person",
-                                    "content": "The full name of the person"
+                                    "content": "The full name of the person",
                                 }
                             ]
                         },
@@ -90,7 +90,7 @@ def test_translate():
                         "contents": [
                             {
                                 "title": "Enter the name of a person",
-                                "content": "The full name of the person"
+                                "content": "The full name of the person",
                             }
                         ]
                     },
@@ -149,11 +149,10 @@ def test_get_catalog():
                         "contents": [
                             {
                                 "title": "Enter the name of a person",
-                                "description": "The full name of the person"
+                                "description": "The full name of the person",
                             }
                         ]
                     },
-                    
                     "description": "",
                     "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
                     "answers": [
