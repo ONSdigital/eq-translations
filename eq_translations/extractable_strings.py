@@ -142,8 +142,8 @@ EXTRACTABLE_STRINGS = [
         "context": "Question",
     },
     {
-        "json_path": "$..question.definition.content",
-        "description": "Question definition heading",
+        "json_path": "$..question.definition.contents",
+        "description": "Question definition description",
         "context": "Question",
     },
     {
