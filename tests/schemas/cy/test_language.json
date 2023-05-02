@@ -77,7 +77,7 @@
                             "question": {
                                 "definition": {
                                     "title": "Rhowch enw person",
-                                    "contents": "Enw llawn y person"
+                                    "contents": ["Enw llawn y person"]
                                 },
                                 "instruction": [
                                     "Rhowch enw person"
