@@ -156,7 +156,7 @@ def test_get_catalog():
                                     "Last name",
                                 ],
                             }
-                        ]
+                        ],
                     },
                     "description": "",
                     "instruction": "Tell respondent to turn to <strong>Showcard 1</strong>",
@@ -259,10 +259,7 @@ def test_get_catalog():
         ]
         in actual_items
     )
-    assert (
-        schema_data["sections"][0]["question"]["definition"]["title"]
-        in actual_items
-    )
+    assert schema_data["sections"][0]["question"]["definition"]["title"] in actual_items
     assert (
         schema_data["sections"][0]["question"]["definition"]["contents"][0]["title"]
         in actual_items
