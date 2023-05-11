@@ -146,10 +146,15 @@ def test_get_catalog():
                 "question": {
                     "title": "Please confirm the number of people who live at this household",
                     "definition": {
+                        "title": "Enter the name of a person",
                         "contents": [
                             {
                                 "title": "Enter the name of a person",
                                 "description": "The full name of the person",
+                                "list": [
+                                    "First name",
+                                    "Last name",
+                                ],
                             }
                         ]
                     },
@@ -252,6 +257,10 @@ def test_get_catalog():
         schema_data["sections"][0]["question"]["answers"][0]["guidance"]["contents"][0][
             "description"
         ]
+        in actual_items
+    )
+    assert (
+        schema_data["sections"][0]["question"]["definition"]["title"]
         in actual_items
     )
     assert (
