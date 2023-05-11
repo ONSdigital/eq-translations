@@ -265,9 +265,7 @@ def test_get_catalog():
         in actual_items
     )
     assert (
-        schema_data["sections"][0]["question"]["definition"]["contents"][0][
-            "list"
-        ][0]
+        schema_data["sections"][0]["question"]["definition"]["contents"][0]["list"][0]
         in actual_items
     )
     assert schema_data["sections"][0]["question"]["instruction"] in actual_items
