@@ -117,22 +117,22 @@ EXTRACTABLE_STRINGS = [
     },
     {
         "json_path": "$..question.definitions[*].title",
-        "description": "Question definition link",
+        "description": "Question definition (array type) link",
         "context": "Question",
     },
     {
         "json_path": "$..question.definitions[*].contents[*].title",
-        "description": "Question definition heading",
+        "description": "Question definition (array type) heading",
         "context": "Question",
     },
     {
         "json_path": "$..question.definitions[*].contents[*].description",
-        "description": "Question definition description",
+        "description": "Question definition (array type) description",
         "context": "Question",
     },
     {
         "json_path": "$..question.definitions[*].contents[*].list[*]",
-        "description": "Question definition list item",
+        "description": "Question definition (array type) list item",
         "context": "Question",
         "additional_context": ["ListHeading", "ListDescription"],
     },
@@ -143,7 +143,7 @@ EXTRACTABLE_STRINGS = [
     },
     {
         "json_path": "$..question.definition.contents[*].title",
-        "description": "Question definition heading",
+        "description": "Question definition contents heading",
         "context": "Question",
     },
     {
