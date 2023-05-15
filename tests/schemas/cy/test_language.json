@@ -75,6 +75,14 @@
                             "id": "name-block",
                             "page_title": "Teitl tudalen cwestiwn wedi\u2019i deilwra",
                             "question": {
+                                "definition": {
+                                    "contents": [
+                                        {
+                                            "title": "Rhowch enw person",
+                                            "description": "Enw llawn y person"
+                                        }
+                                    ]
+                                },
                                 "instruction": [
                                     "Rhowch enw person"
                                 ],

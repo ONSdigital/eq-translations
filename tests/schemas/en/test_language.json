@@ -75,6 +75,14 @@
                             "id": "name-block",
                             "page_title": "Custom question page title",
                             "question": {
+                                "definition": {
+                                    "contents": [
+                                        {
+                                            "title": "Enter the name of a person",
+                                            "content": "The full name of the person"
+                                        }
+                                    ]
+                                },
                                 "instruction": ["Enter the name of a person"],
                                 "description": ["The full name of the person"],
                                 "id": "name-question",
