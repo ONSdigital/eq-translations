@@ -551,7 +551,6 @@ def test_locale_on_load_welsh():
 
 
 def test_checkbox_null_label():
-
     schema_translation = SchemaTranslation()
     catalog = Catalog(locale=Locale("cy"))
     catalog.add(
