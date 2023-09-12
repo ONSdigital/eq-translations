@@ -33,7 +33,6 @@ def test_compare_source_schema():
 
 
 def test_compare_target_schema_missing_pointer():
-
     source_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
 
     target_schema = {
@@ -60,7 +59,6 @@ def test_compare_target_schema_missing_pointer():
 
 
 def test_compare_target_schema_no_missing_pointer():
-
     source_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}
 
     target_schema = {"a": {"test": [{"item": {}}, {"item": {}}]}}

@@ -2,7 +2,6 @@ from babel.messages import pofile
 
 
 class SchemaTranslation:
-
     catalog = []
 
     def __init__(self, catalog=None):

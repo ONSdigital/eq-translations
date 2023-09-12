@@ -18,9 +18,11 @@ pylint-quotes = "*"
 black = "*"
 pytest-cov = "*"
 typed-ast = "*"
+wrapt = "*"
+dill = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"
 
 [pipenv]
 allow_prereleases = false
