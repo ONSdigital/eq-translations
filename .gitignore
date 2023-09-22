@@ -24,4 +24,5 @@ tests/output/
 .po/
 
 /htmlcov
+/node_modules
 .coverage

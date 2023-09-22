@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Union, Optional, List
 
-
 # pylint: disable=unsubscriptable-object
 @dataclass
 class TranslatableItem:
