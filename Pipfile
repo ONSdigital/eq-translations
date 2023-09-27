@@ -18,8 +18,6 @@ pylint-quotes = "*"
 black = "*"
 pytest-cov = "*"
 typed-ast = "*"
-wrapt = "*"
-dill = "*"
 
 [requires]
 python_version = "3.11"
