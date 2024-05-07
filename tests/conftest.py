@@ -191,7 +191,7 @@ def schema_with_placeholders():
                         ],
                     }
                 ],
-                "text": "During term time, where does <em>{person_name}</em> usually live?",
+                "text": "During term time, where does <strong>{person_name}</strong> usually live?",
             },
             "answers": [
                 {

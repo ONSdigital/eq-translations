@@ -10,8 +10,8 @@ For some translatable strings, we create a message context (`msgctxt`) that cont
 ## Decision
 
 - Remove the current message context `Answer for: {question_text}`.
-- Use a new `Question: {question_text}` message context for all translatable properties within a question other than title. This allows any text within a question to vary based on the question. 
-- Add a new `Type: {property_type}` comment for every string extracted based on the values in the table below e.g. `Type: Question definition list item`. This helps a translator understand what they are being asked to translate. 
+- Use a new `Question: {question_text}` message context for all translatable properties within a question other than title. This allows any text within a question to vary based on the question.
+- Add a new `Type: {property_type}` comment for every string extracted based on the values in the table below e.g. `Type: Question definition list item`. This helps a translator understand what they are being asked to translate.
 
   | JSON Path | Type | Notes |
   |-----------|------|-------|
@@ -76,7 +76,7 @@ For a detail answer "Enter main language":
 ```
 #. Type: Detail answer label
 #. For answer option: Other, including British Sign Language
-msgctxt "Question: What is <em>{person_name_possessive}</em> main language?"
+msgctxt "Question: What is <strong>{person_name_possessive}</strong> main language?"
 msgid "Enter main language"
 msgstr ""
 ```
