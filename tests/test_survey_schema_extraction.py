@@ -493,31 +493,31 @@ def test_relationship_playback():
         "question": {
             "id": "relationship-question",
             "type": "General",
-            "title": "Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
+            "title": "Thinking of {first_person_name}, {second_person_name} is their <strong>...</strong>",
             "answers": [
                 {
                     "id": "relationship-answer",
                     "mandatory": True,
                     "type": "Relationship",
-                    "playback": "{second_person_name} is {first_person_name_possessive} <em>…</em>",
+                    "playback": "{second_person_name} is {first_person_name_possessive} <strong>…</strong>",
                     "options": [
                         {
                             "label": "Husband or Wife",
                             "value": "Husband or Wife",
-                            "title": "Thinking of {first_person_name}, {second_person_name} is their <em>husband or wife</em>",
-                            "playback": "{second_person_name} is {first_person_name_possessive} <em>husband or wife</em>",
+                            "title": "Thinking of {first_person_name}, {second_person_name} is their <strong>husband or wife</strong>",
+                            "playback": "{second_person_name} is {first_person_name_possessive} <strong>husband or wife</strong>",
                         },
                         {
                             "label": "Legally registered civil partner",
                             "value": "Legally registered civil partner",
-                            "title": "Thinking of {first_person_name}, {second_person_name} is their <em>legally registered civil partner</em>",
-                            "playback": "{second_person_name} is {first_person_name_possessive} <em>legally registered civil partner</em>",
+                            "title": "Thinking of {first_person_name}, {second_person_name} is their <strong>legally registered civil partner</strong>",
+                            "playback": "{second_person_name} is {first_person_name_possessive} <strong>legally registered civil partner</strong>",
                         },
                         {
                             "label": "Son or daughter",
                             "value": "Son or daughter",
-                            "title": "Thinking of {first_person_name}, {second_person_name} is their <em>son or daughter</em>",
-                            "playback": "{second_person_name} is {first_person_name_possessive} <em>son or daughter</em>",
+                            "title": "Thinking of {first_person_name}, {second_person_name} is their <strong>son or daughter</strong>",
+                            "playback": "{second_person_name} is {first_person_name_possessive} <strong>son or daughter</strong>",
                         },
                     ],
                 }
@@ -532,8 +532,8 @@ def test_relationship_playback():
         TranslatableItem(
             pointer="/question/answers/0/playback",
             description="Relationships playback template",
-            value="{second_person_name} is {first_person_name_possessive} <em>…</em>",
-            context="Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
+            value="{second_person_name} is {first_person_name_possessive} <strong>…</strong>",
+            context="Thinking of {first_person_name}, {second_person_name} is their <strong>...</strong>",
         )
         in translatable_items
     )
@@ -542,8 +542,8 @@ def test_relationship_playback():
         TranslatableItem(
             pointer="/question/answers/0/options/0/playback",
             description="Relationships answer option playback text",
-            value="{second_person_name} is {first_person_name_possessive} <em>husband or wife</em>",
-            context="Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
+            value="{second_person_name} is {first_person_name_possessive} <strong>husband or wife</strong>",
+            context="Thinking of {first_person_name}, {second_person_name} is their <strong>...</strong>",
         )
         in translatable_items
     )
@@ -552,8 +552,8 @@ def test_relationship_playback():
         TranslatableItem(
             pointer="/question/answers/0/options/1/playback",
             description="Relationships answer option playback text",
-            value="{second_person_name} is {first_person_name_possessive} <em>legally registered civil partner</em>",
-            context="Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
+            value="{second_person_name} is {first_person_name_possessive} <strong>legally registered civil partner</strong>",
+            context="Thinking of {first_person_name}, {second_person_name} is their <strong>...</strong>",
         )
         in translatable_items
     )
@@ -562,8 +562,8 @@ def test_relationship_playback():
         TranslatableItem(
             pointer="/question/answers/0/options/2/playback",
             description="Relationships answer option playback text",
-            value="{second_person_name} is {first_person_name_possessive} <em>son or daughter</em>",
-            context="Thinking of {first_person_name}, {second_person_name} is their <em>...</em>",
+            value="{second_person_name} is {first_person_name_possessive} <strong>son or daughter</strong>",
+            context="Thinking of {first_person_name}, {second_person_name} is their <strong>...</strong>",
         )
         in translatable_items
     )

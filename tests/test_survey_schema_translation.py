@@ -295,7 +295,7 @@ def test_get_placeholder_pointers(schema_with_placeholders):
             pointer="/question/answers/0/options/0/label/text",
             description="Answer option",
             value="{address}",
-            context="During term time, where does <em>{person_name}</em> usually live?",
+            context="During term time, where does <strong>{person_name}</strong> usually live?",
         )
         in translatable_items
     )
@@ -305,7 +305,7 @@ def test_get_placeholder_pointers(schema_with_placeholders):
             pointer="/question/answers/0/options/1/label/text",
             description="Answer option",
             value="The address in {country}",
-            context="During term time, where does <em>{person_name}</em> usually live?",
+            context="During term time, where does <strong>{person_name}</strong> usually live?",
         )
         in translatable_items
     )
@@ -314,7 +314,7 @@ def test_get_placeholder_pointers(schema_with_placeholders):
         TranslatableItem(
             pointer="/question/title/text",
             description="Question text",
-            value="During term time, where does <em>{person_name}</em> usually live?",
+            value="During term time, where does <strong>{person_name}</strong> usually live?",
         )
         in translatable_items
     )
@@ -325,11 +325,11 @@ def test_placeholder_catalog_context(schema_with_placeholders):
 
     message = schema.catalog.get(
         id="{address}",
-        context="During term time, where does <em>{person_name}</em> usually live?",
+        context="During term time, where does <strong>{person_name}</strong> usually live?",
     )
     assert (
         message.context
-        == "During term time, where does <em>{person_name}</em> usually live?"
+        == "During term time, where does <strong>{person_name}</strong> usually live?"
     )
 
 
@@ -339,20 +339,20 @@ def test_placeholder_translation(schema_with_placeholders):
     catalog = Catalog(locale=Locale("cy"))
 
     catalog.add(
-        id="During term time, where does <em>{person_name}</em> usually live?",
-        string="WELSH - During term time, where does <em>{person_name}</em> usually live?",
+        id="During term time, where does <strong>{person_name}</strong> usually live?",
+        string="WELSH - During term time, where does <strong>{person_name}</strong> usually live?",
     )
 
     catalog.add(
         id="{address}",
         string="WELSH - {address}",
-        context="During term time, where does <em>{person_name}</em> usually live?",
+        context="During term time, where does <strong>{person_name}</strong> usually live?",
     )
 
     catalog.add(
         id="The address in {country}",
         string="WELSH - The address in {country}",
-        context="During term time, where does <em>{person_name}</em> usually live?",
+        context="During term time, where does <strong>{person_name}</strong> usually live?",
     )
 
     schema_translation.catalog = catalog
@@ -385,7 +385,7 @@ def test_placeholder_translation(schema_with_placeholders):
                         ],
                     }
                 ],
-                "text": "WELSH - During term time, where does <em>{person_name}</em> usually live?",
+                "text": "WELSH - During term time, where does <strong>{person_name}</strong> usually live?",
             },
             "answers": [
                 {
