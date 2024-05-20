@@ -577,3 +577,134 @@ def test_checkbox_null_label():
         "language": "cy",
     }
     assert expected == translated.schema
+
+def test_content_variants_translate():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add(
+        "You are 16 or older",
+        "WELSH - You are 16 or older",
+    )
+
+    catalog.add(
+        "You are 16 or younger",
+        "WELSH - You are 16 or younger",
+    )
+
+    catalog.add(
+        "According to your answer",
+        "WELSH - According to your answer",
+        context="You are 16 or older",
+    )
+
+    catalog.add(
+        "According to your answer",
+        "WELSH - According to your answer",
+        context="You are 16 or younger",
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "type": "Interstitial",
+                    "id": "age-display-block",
+                    "content_variants": [
+                        {
+                            "content": {
+                                "title": "You are 16 or older",
+                                "contents": [
+                                    {
+                                        "description": "According to your answer"
+                                    }
+                                ]
+                            },
+                            "when": {
+                                ">": [
+                                    {
+                                        "source": "answers",
+                                        "identifier": "age-answer"
+                                    },
+                                    16
+                                ]
+                            }
+                        },
+                        {
+                            "content": {
+                                "title": "You are 16 or younger",
+                                "contents": [
+                                    {
+                                        "description": "According to your answer"
+                                    }
+                                ]
+                            },
+                            "when": {
+                                "<=": [
+                                    {
+                                        "source": "answers",
+                                        "identifier": "age-answer"
+                                    },
+                                    16
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "type": "Interstitial",
+                "id": "age-display-block",
+                "content_variants": [
+                    {
+                        "content": {
+                            "title": "WELSH - You are 16 or older",
+                            "contents": [
+                                {
+                                    "description": "WELSH - According to your answer"
+                                }
+                            ]
+                        },
+                        "when": {
+                            ">": [
+                                {
+                                    "source": "answers",
+                                    "identifier": "age-answer"
+                                },
+                                16
+                            ]
+                        }
+                    },
+                    {
+                        "content": {
+                            "title": "WELSH - You are 16 or younger",
+                            "contents": [
+                                {
+                                    "description": "WELSH - According to your answer"
+                                }
+                            ]
+                        },
+                        "when": {
+                            "<=": [
+                                {
+                                    "source": "answers",
+                                    "identifier": "age-answer"
+                                },
+                                16
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "language": "cy",
+    }
+
+    assert expected == translated.schema

@@ -99,6 +99,16 @@ EXTRACTABLE_STRINGS = [
         "description": "Definition description",
         "context": "Content",
     },
+    {
+        "json_path": "$..content_variants[*].content.title",
+        "description": "Content page heading",
+        "context": "Content",
+    },
+    {
+        "json_path": "$..content_variants[*].content.contents[*].description",
+        "description": "Content page description",
+        "context": "Content",
+    },
     {"json_path": "$..question.title", "description": "Question text"},
     {
         "json_path": "$..question.description[*]",
