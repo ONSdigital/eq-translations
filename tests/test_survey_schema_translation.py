@@ -13,13 +13,13 @@ def test_translate():
     catalog.add(
         "Answering for this person",
         "WELSH - Answering for this person",
-        context="Who are you answering for??",
+        context="Who are you answering for?",
     )
 
     catalog.add(
         "Answering myself",
         "WELSH - Answering myself",
-        context="Who are you answering for??",
+        context="Who are you answering for?",
     )
 
     schema_translation.catalog = catalog
@@ -29,7 +29,7 @@ def test_translate():
             "blocks": [
                 {
                     "question": {
-                        "title": "Who are you answering for??",
+                        "title": "Who are you answering for?",
                         "definition": {
                             "contents": [
                                 {
@@ -85,7 +85,7 @@ def test_translate():
         "blocks": [
             {
                 "question": {
-                    "title": "Who are you answering for??",
+                    "title": "Who are you answering for?",
                     "definition": {
                         "contents": [
                             {
