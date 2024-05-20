@@ -578,6 +578,549 @@ def test_checkbox_null_label():
     }
     assert expected == translated.schema
 
+def test_list_collector_repeating_blocks_translation():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+
+    catalog.add(
+        "Companies or UK branches",
+        "WELSH - Companies or UK branches",
+    )
+
+    catalog.add(
+        "Do you need to add any other UK companies or branches that undertake general insurance business?",
+        "WELSH - Do you need to add any other UK companies or branches that undertake general insurance business?",
+    )
+
+    catalog.add(
+        "Yes",
+        "WELSH - Yes",
+        context="Do you need to add any other UK companies or branches that undertake general insurance business?",
+    )
+
+    catalog.add(
+        "No",
+        "WELSH - No",
+        context="Do you need to add any other UK companies or branches that undertake general insurance business?",
+    )
+
+    catalog.add(
+        "What is the name and registration number of the company?",
+        "WELSH - What is the name and registration number of the company?",
+    )
+
+    catalog.add(
+        "Give details about {company_name}",
+        "WELSH - Give details about {company_name}",
+    )
+
+    catalog.add(
+        "Give details about how {company_name} has been trading over the past {date_difference}.",
+        "WELSH - Give details about how {company_name} has been trading over the past {date_difference}.",
+    )
+
+    catalog.add(
+        "Are you sure you want to remove this company or UK branch?",
+        "WELSH - Are you sure you want to remove this company or UK branch?",
+    )
+
+    catalog.add(
+        "Has this company been trading in the EU? (Not mandatory)",
+        "WELSH - Has this company been trading in the EU? (Not mandatory)",
+    )
+
+    catalog.add(
+        "Has this company been trading in the UK? (Mandatory)",
+        "WELSH - Has this company been trading in the UK? (Mandatory)",
+    )
+
+    catalog.add(
+        "{company_name}",
+        "WELSH - {company_name}",
+    )
+
+    catalog.add(
+        "Name of UK company or branch (Mandatory)",
+        "WELSH - Name of UK company or branch (Mandatory)",
+        context="What is the name and registration number of the company?"
+    )
+
+    catalog.add(
+        "Yes",
+        "WELSH - Yes",
+        context="Are you sure you want to remove this company or UK branch?"
+    )
+
+    catalog.add(
+        "No",
+        "WELSH - No",
+        context="Are you sure you want to remove this company or UK branch?"
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "id": "any-other-companies-or-branches",
+                    "type": "ListCollector",
+                    "for_list": "companies",
+                    "question": {
+                        "id": "any-other-companies-or-branches-question",
+                        "type": "General",
+                        "title": "Do you need to add any other UK companies or branches that undertake general insurance business?",
+                        "answers": [
+                            {
+                                "id": "any-other-companies-or-branches-answer",
+                                "mandatory": True,
+                                "type": "Radio",
+                                "options": [
+                                    {
+                                        "label": "Yes",
+                                        "value": "Yes",
+                                        "action": {
+                                            "type": "RedirectToListAddBlock"
+                                        }
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": "No"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "add_block": {
+                        "id": "add-company",
+                        "type": "ListAddQuestion",
+                        "question": {
+                            "id": "add-question-companies",
+                            "type": "General",
+                            "title": "What is the name and registration number of the company?",
+                            "answers": [
+                                {
+                                    "id": "company-or-branch-name",
+                                    "label": "Name of UK company or branch (Mandatory)",
+                                    "mandatory": True,
+                                    "type": "TextField"
+                                }
+                            ]
+                        }
+                    },
+                    "repeating_blocks": [
+                        {
+                            "id": "companies-repeating-block-1",
+                            "type": "ListRepeatingQuestion",
+                            "question": {
+                                "id": "companies-repeating-block-1-question",
+                                "type": "General",
+                                "title": {
+                                    "text": "Give details about {company_name}",
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "company_name",
+                                            "value": {
+                                                "source": "answers",
+                                                "identifier": "company-or-branch-name"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "answers": [
+                                    {
+                                        "id": "registration-number",
+                                        "label": "Registration number (Mandatory)",
+                                        "mandatory": True,
+                                        "type": "Number",
+                                        "maximum": {
+                                            "value": 999,
+                                            "exclusive": False
+                                        },
+                                        "decimal_places": 0
+                                    },
+                                    {
+                                        "id": "registration-date",
+                                        "label": "Date of Registration (Mandatory)",
+                                        "mandatory": True,
+                                        "type": "Date",
+                                        "maximum": {
+                                            "value": "now"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": "companies-repeating-block-2",
+                            "type": "ListRepeatingQuestion",
+                            "question": {
+                                "id": "companies-repeating-block-2-question",
+                                "type": "General",
+                                "title": {
+                                    "text": "Give details about how {company_name} has been trading over the past {date_difference}.",
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "company_name",
+                                            "value": {
+                                                "source": "answers",
+                                                "identifier": "company-or-branch-name"
+                                            }
+                                        },
+                                        {
+                                            "placeholder": "date_difference",
+                                            "transforms": [
+                                                {
+                                                    "transform": "calculate_date_difference",
+                                                    "arguments": {
+                                                        "first_date": {
+                                                            "source": "answers",
+                                                            "identifier": "registration-date"
+                                                        },
+                                                        "second_date": {
+                                                            "value": "now"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "answers": [
+                                    {
+                                        "type": "Radio",
+                                        "label": "Has this company been trading in the UK? (Mandatory)",
+                                        "id": "authorised-trader-uk-radio",
+                                        "mandatory": True,
+                                        "options": [
+                                            {
+                                                "label": "Yes",
+                                                "value": "Yes"
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": "No"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "Radio",
+                                        "label": "Has this company been trading in the EU? (Not mandatory)",
+                                        "id": "authorised-trader-eu-radio",
+                                        "mandatory": False,
+                                        "options": [
+                                            {
+                                                "label": "Yes",
+                                                "value": "Yes"
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": "No"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "edit_block": {
+                        "id": "edit-company",
+                        "type": "ListEditQuestion",
+                        "question": {
+                            "id": "edit-question-companies",
+                            "type": "General",
+                            "title": "What is the name and registration number of the company?",
+                            "answers": [
+                                {
+                                    "id": "company-or-branch-name",
+                                    "label": "Name of UK company or branch (Mandatory)",
+                                    "mandatory": True,
+                                    "type": "TextField"
+                                }
+                            ]
+                        }
+                    },
+                    "remove_block": {
+                        "id": "remove-company",
+                        "type": "ListRemoveQuestion",
+                        "question": {
+                            "id": "remove-question-companies",
+                            "type": "General",
+                            "title": "Are you sure you want to remove this company or UK branch?",
+                            "answers": [
+                                {
+                                    "id": "remove-confirmation-company",
+                                    "mandatory": True,
+                                    "type": "Radio",
+                                    "options": [
+                                        {
+                                            "label": "Yes",
+                                            "value": "Yes",
+                                            "action": {
+                                                "type": "RemoveListItemAndAnswers"
+                                            }
+                                        },
+                                        {
+                                            "label": "No",
+                                            "value": "No"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "summary": {
+                        "title": "Companies or UK branches",
+                        "item_title": {
+                            "text": "{company_name}",
+                            "placeholders": [
+                                {
+                                    "placeholder": "company_name",
+                                    "value": {
+                                        "source": "answers",
+                                        "identifier": "company-or-branch-name"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "id": "any-other-companies-or-branches",
+                "type": "ListCollector",
+                "for_list": "companies",
+                "question": {
+                    "id": "any-other-companies-or-branches-question",
+                    "type": "General",
+                    "title": "WELSH - Do you need to add any other UK companies or branches that undertake general insurance business?",
+                    "answers": [
+                        {
+                            "id": "any-other-companies-or-branches-answer",
+                            "mandatory": True,
+                            "type": "Radio",
+                            "options": [
+                                {
+                                    "label": "WELSH - Yes",
+                                    "value": "Yes",
+                                    "action": {
+                                        "type": "RedirectToListAddBlock"
+                                    }
+                                },
+                                {
+                                    "label": "WELSH - No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "add_block": {
+                    "id": "add-company",
+                    "type": "ListAddQuestion",
+                    "question": {
+                        "id": "add-question-companies",
+                        "type": "General",
+                        "title": "WELSH - What is the name and registration number of the company?",
+                        "answers": [
+                            {
+                                "id": "company-or-branch-name",
+                                "label": "WELSH - Name of UK company or branch (Mandatory)",
+                                "mandatory": True,
+                                "type": "TextField"
+                            }
+                        ]
+                    }
+                },
+                "repeating_blocks": [
+                    {
+                        "id": "companies-repeating-block-1",
+                        "type": "ListRepeatingQuestion",
+                        "question": {
+                            "id": "companies-repeating-block-1-question",
+                            "type": "General",
+                            "title": {
+                                "text": "WELSH - Give details about {company_name}",
+                                "placeholders": [
+                                    {
+                                        "placeholder": "company_name",
+                                        "value": {
+                                            "source": "answers",
+                                            "identifier": "company-or-branch-name"
+                                        }
+                                    }
+                                ]
+                            },
+                            "answers": [
+                                {
+                                    "id": "registration-number",
+                                    "label": "WELSH - Registration number (Mandatory)",
+                                    "mandatory": True,
+                                    "type": "Number",
+                                    "maximum": {
+                                        "value": 999,
+                                        "exclusive": False
+                                    },
+                                    "decimal_places": 0
+                                },
+                                {
+                                    "id": "registration-date",
+                                    "label": "WELSH - Date of Registration (Mandatory)",
+                                    "mandatory": True,
+                                    "type": "Date",
+                                    "maximum": {
+                                        "value": "now"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "companies-repeating-block-2",
+                        "type": "ListRepeatingQuestion",
+                        "question": {
+                            "id": "companies-repeating-block-2-question",
+                            "type": "General",
+                            "title": {
+                                "text": "WELSH - Give details about how {company_name} has been trading over the past {date_difference}.",
+                                "placeholders": [
+                                    {
+                                        "placeholder": "company_name",
+                                        "value": {
+                                            "source": "answers",
+                                            "identifier": "company-or-branch-name"
+                                        }
+                                    },
+                                    {
+                                        "placeholder": "date_difference",
+                                        "transforms": [
+                                            {
+                                                "transform": "calculate_date_difference",
+                                                "arguments": {
+                                                    "first_date": {
+                                                        "source": "answers",
+                                                        "identifier": "registration-date"
+                                                    },
+                                                    "second_date": {
+                                                        "value": "now"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "answers": [
+                                {
+                                    "type": "Radio",
+                                    "label": "WELSH - Has this company been trading in the UK? (Mandatory)",
+                                    "id": "authorised-trader-uk-radio",
+                                    "mandatory": True,
+                                    "options": [
+                                        {
+                                            "label": "WELSH - Yes",
+                                            "value": "Yes"
+                                        },
+                                        {
+                                            "label": "WELSH - No",
+                                            "value": "No"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Radio",
+                                    "label": "WELSH - Has this company been trading in the EU? (Not mandatory)",
+                                    "id": "authorised-trader-eu-radio",
+                                    "mandatory": False,
+                                    "options": [
+                                        {
+                                            "label": "WELSH - Yes",
+                                            "value": "Yes"
+                                        },
+                                        {
+                                            "label": "WELSH - No",
+                                            "value": "No"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "edit_block": {
+                    "id": "edit-company",
+                    "type": "ListEditQuestion",
+                    "question": {
+                        "id": "edit-question-companies",
+                        "type": "General",
+                        "title": "WELSH - What is the name and registration number of the company?",
+                        "answers": [
+                            {
+                                "id": "company-or-branch-name",
+                                "label": "WELSH - Name of UK company or branch (Mandatory)",
+                                "mandatory": True,
+                                "type": "TextField"
+                            }
+                        ]
+                    }
+                },
+                "remove_block": {
+                    "id": "remove-company",
+                    "type": "ListRemoveQuestion",
+                    "question": {
+                        "id": "remove-question-companies",
+                        "type": "General",
+                        "title": "WELSH - Are you sure you want to remove this company or UK branch?",
+                        "answers": [
+                            {
+                                "id": "remove-confirmation-company",
+                                "mandatory": True,
+                                "type": "Radio",
+                                "options": [
+                                    {
+                                        "label": "WELSH - Yes",
+                                        "value": "Yes",
+                                        "action": {
+                                            "type": "RemoveListItemAndAnswers"
+                                        }
+                                    },
+                                    {
+                                        "label": "WELSH - No",
+                                        "value": "No"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "summary": {
+                    "title": "WELSH - Companies or UK branches",
+                    "item_title": {
+                        "text": "WELSH - {company_name}",
+                        "placeholders": [
+                            {
+                                "placeholder": "company_name",
+                                "value": {
+                                    "source": "answers",
+                                    "identifier": "company-or-branch-name"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+        ],
+        "language": "cy",
+    }
+
+    assert expected == translated.schema
+
 def test_content_variants_translate():
     schema_translation = SchemaTranslation()
     catalog = Catalog(locale=Locale("cy"))
