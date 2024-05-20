@@ -657,6 +657,42 @@ def test_list_collector_repeating_blocks_translation():
         context="Are you sure you want to remove this company or UK branch?"
     )
 
+    catalog.add(
+        "Date of Registration (Mandatory)",
+        "WELSH - Date of Registration (Mandatory)",
+        context="Give details about {company_name}"
+    )
+
+    catalog.add(
+        "Registration number (Mandatory)",
+        "WELSH - Registration number (Mandatory)",
+        context="Give details about {company_name}"
+    )
+
+    catalog.add(
+        "Has this company been trading in the UK? (Mandatory)",
+        "WELSH - Has this company been trading in the UK? (Mandatory)",
+        context="Give details about how {company_name} has been trading over the past {date_difference}."
+    )
+
+    catalog.add(
+        "Has this company been trading in the EU? (Not mandatory)",
+        "WELSH - Has this company been trading in the EU? (Not mandatory)",
+        context="Give details about how {company_name} has been trading over the past {date_difference}."
+    )
+
+    catalog.add(
+        "Yes",
+        "WELSH - Yes",
+        context="Give details about how {company_name} has been trading over the past {date_difference}."
+    )
+
+    catalog.add(
+        "No",
+        "WELSH - No",
+        context="Give details about how {company_name} has been trading over the past {date_difference}."
+    )
+
     schema_translation.catalog = catalog
 
     schema = SurveySchema(
