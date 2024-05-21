@@ -578,6 +578,7 @@ def test_checkbox_null_label():
     }
     assert expected == translated.schema
 
+
 def test_list_collector_repeating_blocks_translation():
     schema_translation = SchemaTranslation()
     catalog = Catalog(locale=Locale("cy"))
@@ -632,43 +633,43 @@ def test_list_collector_repeating_blocks_translation():
     catalog.add(
         "Name of UK company or branch (Mandatory)",
         "WELSH - Name of UK company or branch (Mandatory)",
-        context="What is the name and registration number of the company?"
+        context="What is the name and registration number of the company?",
     )
 
     catalog.add(
         "Yes",
         "WELSH - Yes",
-        context="Are you sure you want to remove this company or UK branch?"
+        context="Are you sure you want to remove this company or UK branch?",
     )
 
     catalog.add(
         "No",
         "WELSH - No",
-        context="Are you sure you want to remove this company or UK branch?"
+        context="Are you sure you want to remove this company or UK branch?",
     )
 
     catalog.add(
         "Registration number (Mandatory)",
         "WELSH - Registration number (Mandatory)",
-        context="Give details about {company_name}"
+        context="Give details about {company_name}",
     )
 
     catalog.add(
         "Has this company been trading in the UK? (Mandatory)",
         "WELSH - Has this company been trading in the UK? (Mandatory)",
-        context="Give details about how {company_name} has been trading over the past {date_difference}."
+        context="Give details about how {company_name} has been trading over the past {date_difference}.",
     )
 
     catalog.add(
         "Yes",
         "WELSH - Yes",
-        context="Give details about how {company_name} has been trading over the past {date_difference}."
+        context="Give details about how {company_name} has been trading over the past {date_difference}.",
     )
 
     catalog.add(
         "No",
         "WELSH - No",
-        context="Give details about how {company_name} has been trading over the past {date_difference}."
+        context="Give details about how {company_name} has been trading over the past {date_difference}.",
     )
 
     schema_translation.catalog = catalog
@@ -689,17 +690,12 @@ def test_list_collector_repeating_blocks_translation():
                                     {
                                         "label": "Yes",
                                         "value": "Yes",
-                                        "action": {
-                                            "type": "RedirectToListAddBlock"
-                                        }
+                                        "action": {"type": "RedirectToListAddBlock"},
                                     },
-                                    {
-                                        "label": "No",
-                                        "value": "No"
-                                    }
-                                ]
+                                    {"label": "No", "value": "No"},
+                                ],
                             }
-                        ]
+                        ],
                     },
                     "add_block": {
                         "type": "ListAddQuestion",
@@ -710,10 +706,10 @@ def test_list_collector_repeating_blocks_translation():
                                 {
                                     "label": "Name of UK company or branch (Mandatory)",
                                     "mandatory": True,
-                                    "type": "TextField"
+                                    "type": "TextField",
                                 }
-                            ]
-                        }
+                            ],
+                        },
                     },
                     "repeating_blocks": [
                         {
@@ -727,24 +723,21 @@ def test_list_collector_repeating_blocks_translation():
                                             "placeholder": "company_name",
                                             "value": {
                                                 "source": "answers",
-                                                "identifier": "company-or-branch-name"
-                                            }
+                                                "identifier": "company-or-branch-name",
+                                            },
                                         }
-                                    ]
+                                    ],
                                 },
                                 "answers": [
                                     {
                                         "label": "Registration number (Mandatory)",
                                         "mandatory": True,
                                         "type": "Number",
-                                        "maximum": {
-                                            "value": 999,
-                                            "exclusive": False
-                                        },
-                                        "decimal_places": 0
+                                        "maximum": {"value": 999, "exclusive": False},
+                                        "decimal_places": 0,
                                     }
-                                ]
-                            }
+                                ],
+                            },
                         },
                         {
                             "type": "ListRepeatingQuestion",
@@ -757,8 +750,8 @@ def test_list_collector_repeating_blocks_translation():
                                             "placeholder": "company_name",
                                             "value": {
                                                 "source": "answers",
-                                                "identifier": "company-or-branch-name"
-                                            }
+                                                "identifier": "company-or-branch-name",
+                                            },
                                         },
                                         {
                                             "placeholder": "date_difference",
@@ -768,16 +761,14 @@ def test_list_collector_repeating_blocks_translation():
                                                     "arguments": {
                                                         "first_date": {
                                                             "source": "answers",
-                                                            "identifier": "registration-date"
+                                                            "identifier": "registration-date",
                                                         },
-                                                        "second_date": {
-                                                            "value": "now"
-                                                        }
-                                                    }
+                                                        "second_date": {"value": "now"},
+                                                    },
                                                 }
-                                            ]
-                                        }
-                                    ]
+                                            ],
+                                        },
+                                    ],
                                 },
                                 "answers": [
                                     {
@@ -785,19 +776,13 @@ def test_list_collector_repeating_blocks_translation():
                                         "label": "Has this company been trading in the UK? (Mandatory)",
                                         "mandatory": True,
                                         "options": [
-                                            {
-                                                "label": "Yes",
-                                                "value": "Yes"
-                                            },
-                                            {
-                                                "label": "No",
-                                                "value": "No"
-                                            }
-                                        ]
+                                            {"label": "Yes", "value": "Yes"},
+                                            {"label": "No", "value": "No"},
+                                        ],
                                     }
-                                ]
-                            }
-                        }
+                                ],
+                            },
+                        },
                     ],
                     "edit_block": {
                         "type": "ListEditQuestion",
@@ -808,10 +793,10 @@ def test_list_collector_repeating_blocks_translation():
                                 {
                                     "label": "Name of UK company or branch (Mandatory)",
                                     "mandatory": True,
-                                    "type": "TextField"
+                                    "type": "TextField",
                                 }
-                            ]
-                        }
+                            ],
+                        },
                     },
                     "remove_block": {
                         "type": "ListRemoveQuestion",
@@ -827,16 +812,13 @@ def test_list_collector_repeating_blocks_translation():
                                             "value": "Yes",
                                             "action": {
                                                 "type": "RemoveListItemAndAnswers"
-                                            }
+                                            },
                                         },
-                                        {
-                                            "label": "No",
-                                            "value": "No"
-                                        }
-                                    ]
+                                        {"label": "No", "value": "No"},
+                                    ],
                                 }
-                            ]
-                        }
+                            ],
+                        },
                     },
                 },
             ]
@@ -859,17 +841,12 @@ def test_list_collector_repeating_blocks_translation():
                                 {
                                     "label": "WELSH - Yes",
                                     "value": "Yes",
-                                    "action": {
-                                        "type": "RedirectToListAddBlock"
-                                    }
+                                    "action": {"type": "RedirectToListAddBlock"},
                                 },
-                                {
-                                    "label": "WELSH - No",
-                                    "value": "No"
-                                }
-                            ]
+                                {"label": "WELSH - No", "value": "No"},
+                            ],
                         }
-                    ]
+                    ],
                 },
                 "add_block": {
                     "type": "ListAddQuestion",
@@ -880,10 +857,10 @@ def test_list_collector_repeating_blocks_translation():
                             {
                                 "label": "WELSH - Name of UK company or branch (Mandatory)",
                                 "mandatory": True,
-                                "type": "TextField"
+                                "type": "TextField",
                             }
-                        ]
-                    }
+                        ],
+                    },
                 },
                 "repeating_blocks": [
                     {
@@ -897,24 +874,21 @@ def test_list_collector_repeating_blocks_translation():
                                         "placeholder": "company_name",
                                         "value": {
                                             "source": "answers",
-                                            "identifier": "company-or-branch-name"
-                                        }
+                                            "identifier": "company-or-branch-name",
+                                        },
                                     }
-                                ]
+                                ],
                             },
                             "answers": [
                                 {
                                     "label": "WELSH - Registration number (Mandatory)",
                                     "mandatory": True,
                                     "type": "Number",
-                                    "maximum": {
-                                        "value": 999,
-                                        "exclusive": False
-                                    },
-                                    "decimal_places": 0
+                                    "maximum": {"value": 999, "exclusive": False},
+                                    "decimal_places": 0,
                                 }
-                            ]
-                        }
+                            ],
+                        },
                     },
                     {
                         "type": "ListRepeatingQuestion",
@@ -927,8 +901,8 @@ def test_list_collector_repeating_blocks_translation():
                                         "placeholder": "company_name",
                                         "value": {
                                             "source": "answers",
-                                            "identifier": "company-or-branch-name"
-                                        }
+                                            "identifier": "company-or-branch-name",
+                                        },
                                     },
                                     {
                                         "placeholder": "date_difference",
@@ -938,16 +912,14 @@ def test_list_collector_repeating_blocks_translation():
                                                 "arguments": {
                                                     "first_date": {
                                                         "source": "answers",
-                                                        "identifier": "registration-date"
+                                                        "identifier": "registration-date",
                                                     },
-                                                    "second_date": {
-                                                        "value": "now"
-                                                    }
-                                                }
+                                                    "second_date": {"value": "now"},
+                                                },
                                             }
-                                        ]
-                                    }
-                                ]
+                                        ],
+                                    },
+                                ],
                             },
                             "answers": [
                                 {
@@ -955,19 +927,13 @@ def test_list_collector_repeating_blocks_translation():
                                     "label": "WELSH - Has this company been trading in the UK? (Mandatory)",
                                     "mandatory": True,
                                     "options": [
-                                        {
-                                            "label": "WELSH - Yes",
-                                            "value": "Yes"
-                                        },
-                                        {
-                                            "label": "WELSH - No",
-                                            "value": "No"
-                                        }
-                                    ]
+                                        {"label": "WELSH - Yes", "value": "Yes"},
+                                        {"label": "WELSH - No", "value": "No"},
+                                    ],
                                 }
-                            ]
-                        }
-                    }
+                            ],
+                        },
+                    },
                 ],
                 "edit_block": {
                     "type": "ListEditQuestion",
@@ -978,10 +944,10 @@ def test_list_collector_repeating_blocks_translation():
                             {
                                 "label": "WELSH - Name of UK company or branch (Mandatory)",
                                 "mandatory": True,
-                                "type": "TextField"
+                                "type": "TextField",
                             }
-                        ]
-                    }
+                        ],
+                    },
                 },
                 "remove_block": {
                     "type": "ListRemoveQuestion",
@@ -995,25 +961,21 @@ def test_list_collector_repeating_blocks_translation():
                                     {
                                         "label": "WELSH - Yes",
                                         "value": "Yes",
-                                        "action": {
-                                            "type": "RemoveListItemAndAnswers"
-                                        }
+                                        "action": {"type": "RemoveListItemAndAnswers"},
                                     },
-                                    {
-                                        "label": "WELSH - No",
-                                        "value": "No"
-                                    }
-                                ]
+                                    {"label": "WELSH - No", "value": "No"},
+                                ],
                             }
-                        ]
-                    }
-                }
+                        ],
+                    },
+                },
             },
         ],
         "language": "cy",
     }
 
     assert expected == translated.schema
+
 
 def test_content_variants_translate():
     schema_translation = SchemaTranslation()
@@ -1041,22 +1003,17 @@ def test_content_variants_translate():
                             "content": {
                                 "title": "You are 16 or older",
                                 "contents": [
-                                    {
-                                        "description": "According to your answer"
-                                    }
-                                ]
+                                    {"description": "According to your answer"}
+                                ],
                             },
                             "when": {
                                 ">": [
-                                    {
-                                        "source": "answers",
-                                        "identifier": "age-answer"
-                                    },
-                                    16
+                                    {"source": "answers", "identifier": "age-answer"},
+                                    16,
                                 ]
-                            }
+                            },
                         }
-                    ]
+                    ],
                 }
             ]
         }
@@ -1072,22 +1029,14 @@ def test_content_variants_translate():
                         "content": {
                             "title": "WELSH - You are 16 or older",
                             "contents": [
-                                {
-                                    "description": "WELSH - According to your answer"
-                                }
-                            ]
+                                {"description": "WELSH - According to your answer"}
+                            ],
                         },
                         "when": {
-                            ">": [
-                                {
-                                    "source": "answers",
-                                    "identifier": "age-answer"
-                                },
-                                16
-                            ]
-                        }
+                            ">": [{"source": "answers", "identifier": "age-answer"}, 16]
+                        },
                     }
-                ]
+                ],
             }
         ],
         "language": "cy",
