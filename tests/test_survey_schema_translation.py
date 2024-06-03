@@ -1,3 +1,4 @@
+# pylint: disable=too-many-lines
 from babel import Locale
 from babel.messages import Catalog
 
@@ -1216,8 +1217,8 @@ def test_list_collector_content_translate():
     )
 
     catalog.add(
-        "You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees.",
-        "WELSH - You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees.",
+        "Press continue to proceed to the next section where you can add any additional employees.",
+        "WELSH - Press continue to proceed to the next section where you can add any additional employees.",
         context="Employees",
     )
 
@@ -1257,7 +1258,7 @@ def test_list_collector_content_translate():
                                 }
                             },
                             {
-                                "description": "You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees."
+                                "description": "Press continue to proceed to the next section where you can add any additional employees."
                             }
                         ]
                     },
@@ -1319,7 +1320,7 @@ def test_list_collector_content_translate():
                             }
                         },
                         {
-                            "description": "WELSH - You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees."
+                            "description": "WELSH - Press continue to proceed to the next section where you can add any additional employees."
                         }
                     ]
                 },
