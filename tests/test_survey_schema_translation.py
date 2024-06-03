@@ -1043,3 +1043,320 @@ def test_content_variants_translate():
     }
 
     assert expected == translated.schema
+
+def test_list_collector_content_variants_translate():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add(
+        "You are 16 or older",
+        "WELSH - You are 16 or older",
+    )
+
+    catalog.add(
+        "According to your answer",
+        "WELSH - According to your answer",
+        context="You are 16 or older",
+    )
+
+    catalog.add(
+        "Employees",
+        "WELSH - Employees",
+    )
+
+    catalog.add(
+        "employees",
+        "WELSH - employees",
+    )
+
+    catalog.add(
+        "{employee_name}",
+        "WELSH - {employee_name}",
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "id": "list-collector-employees",
+                    "type": "ListCollectorContent",
+                    "page_title": "Employees",
+                    "for_list": "employees",
+                    "content_variants": [
+                        {
+                            "content": {
+                                "title": "You are 16 or older",
+                                "contents": [
+                                    {"description": "According to your answer"}
+                                ],
+                            },
+                            "when": {
+                                ">": [
+                                    {"source": "answers", "identifier": "age-answer"},
+                                    16,
+                                ]
+                            },
+                        },
+                    ],
+                    "summary": {
+                        "title": "employees",
+                        "item_title": {
+                            "text": "{employee_name}",
+                            "placeholders": [
+                                {
+                                    "placeholder": "employee_name",
+                                    "transforms": [
+                                        {
+                                            "arguments": {
+                                                "delimiter": " ",
+                                                "list_to_concatenate": [
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": ["personal_details", "forename"]
+                                                    },
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": ["personal_details", "surname"]
+                                                    }
+                                                ]
+                                            },
+                                            "transform": "concatenate_list"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "id": "list-collector-employees",
+                "type": "ListCollectorContent",
+                "page_title": "WELSH - Employees",
+                "for_list": "employees",
+                "content_variants": [
+                    {
+                        "content": {
+                            "title": "WELSH - You are 16 or older",
+                            "contents": [
+                                {"description": "WELSH - According to your answer"}
+                            ],
+                        },
+                        "when": {
+                            ">": [
+                                {"source": "answers", "identifier": "age-answer"},
+                                16,
+                            ]
+                        },
+                    },
+                ],
+                "summary": {
+                    "title": "WELSH - employees",
+                    "item_title": {
+                        "text": "WELSH - {employee_name}",
+                        "placeholders": [
+                            {
+                                "placeholder": "employee_name",
+                                "transforms": [
+                                    {
+                                        "arguments": {
+                                            "delimiter": " ",
+                                            "list_to_concatenate": [
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": ["personal_details", "forename"]
+                                                },
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": ["personal_details", "surname"]
+                                                }
+                                            ]
+                                        },
+                                        "transform": "concatenate_list"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "language": "cy",
+    }
+
+    assert expected == translated.schema
+
+def test_list_collector_content_translate():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add(
+        "Employees",
+        "WELSH - Employees",
+    )
+
+    catalog.add(
+        "employees",
+        "WELSH - employees",
+    )
+
+    catalog.add(
+        "{employee_name}",
+        "WELSH - {employee_name}",
+    )
+
+    catalog.add(
+        "You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees.",
+        "WELSH - You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees.",
+        context="Employees",
+    )
+
+    catalog.add(
+        "Company employees",
+        "WELSH - Company employees",
+        context="Employees",
+    )
+
+    catalog.add(
+        "List of previously reported employees.",
+        "WELSH - List of previously reported employees.",
+        context="Employees",
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "id": "list-collector-employees",
+                    "type": "ListCollectorContent",
+                    "page_title": "Employees",
+                    "for_list": "employees",
+                    "content": {
+                        "title": "Employees",
+                        "contents": [
+                            {
+                                "definition": {
+                                    "title": "Company employees",
+                                    "contents": [
+                                        {
+                                            "description": "List of previously reported employees."
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "description": "You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees."
+                            }
+                        ]
+                    },
+                    "summary": {
+                        "title": "employees",
+                        "item_title": {
+                            "text": "{employee_name}",
+                            "placeholders": [
+                                {
+                                    "placeholder": "employee_name",
+                                    "transforms": [
+                                        {
+                                            "arguments": {
+                                                "delimiter": " ",
+                                                "list_to_concatenate": [
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": ["personal_details", "forename"]
+                                                    },
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": ["personal_details", "surname"]
+                                                    }
+                                                ]
+                                            },
+                                            "transform": "concatenate_list"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "id": "list-collector-employees",
+                "type": "ListCollectorContent",
+                "page_title": "WELSH - Employees",
+                "for_list": "employees",
+                "content": {
+                    "title": "WELSH - Employees",
+                    "contents": [
+                        {
+                            "definition": {
+                                "title": "WELSH - Company employees",
+                                "contents": [
+                                    {
+                                        "description": "WELSH - List of previously reported employees."
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "description": "WELSH - You have previously reported on the above employees. Press continue to proceed to the next section where you can add any additional employees."
+                        }
+                    ]
+                },
+                "summary": {
+                    "title": "WELSH - employees",
+                    "item_title": {
+                        "text": "WELSH - {employee_name}",
+                        "placeholders": [
+                            {
+                                "placeholder": "employee_name",
+                                "transforms": [
+                                    {
+                                        "arguments": {
+                                            "delimiter": " ",
+                                            "list_to_concatenate": [
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": ["personal_details", "forename"]
+                                                },
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": ["personal_details", "surname"]
+                                                }
+                                            ]
+                                        },
+                                        "transform": "concatenate_list"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "language": "cy",
+    }
+
+    assert expected == translated.schema
