@@ -1045,6 +1045,7 @@ def test_content_variants_translate():
 
     assert expected == translated.schema
 
+
 def test_list_collector_content_variants_translate():
     schema_translation = SchemaTranslation()
     catalog = Catalog(locale=Locale("cy"))
@@ -1115,22 +1116,28 @@ def test_list_collector_content_variants_translate():
                                                     {
                                                         "source": "supplementary_data",
                                                         "identifier": "employees",
-                                                        "selectors": ["personal_details", "forename"]
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "forename",
+                                                        ],
                                                     },
                                                     {
                                                         "source": "supplementary_data",
                                                         "identifier": "employees",
-                                                        "selectors": ["personal_details", "surname"]
-                                                    }
-                                                ]
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "surname",
+                                                        ],
+                                                    },
+                                                ],
                                             },
-                                            "transform": "concatenate_list"
+                                            "transform": "concatenate_list",
                                         }
-                                    ]
+                                    ],
                                 }
-                            ]
-                        }
-                    }
+                            ],
+                        },
+                    },
                 }
             ]
         }
@@ -1175,28 +1182,35 @@ def test_list_collector_content_variants_translate():
                                                 {
                                                     "source": "supplementary_data",
                                                     "identifier": "employees",
-                                                    "selectors": ["personal_details", "forename"]
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "forename",
+                                                    ],
                                                 },
                                                 {
                                                     "source": "supplementary_data",
                                                     "identifier": "employees",
-                                                    "selectors": ["personal_details", "surname"]
-                                                }
-                                            ]
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "surname",
+                                                    ],
+                                                },
+                                            ],
                                         },
-                                        "transform": "concatenate_list"
+                                        "transform": "concatenate_list",
                                     }
-                                ]
+                                ],
                             }
-                        ]
-                    }
-                }
+                        ],
+                    },
+                },
             }
         ],
         "language": "cy",
     }
 
     assert expected == translated.schema
+
 
 def test_list_collector_content_translate():
     schema_translation = SchemaTranslation()
@@ -1254,13 +1268,13 @@ def test_list_collector_content_translate():
                                         {
                                             "description": "List of previously reported employees."
                                         }
-                                    ]
+                                    ],
                                 }
                             },
                             {
                                 "description": "Press continue to proceed to the next section where you can add any additional employees."
-                            }
-                        ]
+                            },
+                        ],
                     },
                     "summary": {
                         "title": "employees",
@@ -1277,22 +1291,28 @@ def test_list_collector_content_translate():
                                                     {
                                                         "source": "supplementary_data",
                                                         "identifier": "employees",
-                                                        "selectors": ["personal_details", "forename"]
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "forename",
+                                                        ],
                                                     },
                                                     {
                                                         "source": "supplementary_data",
                                                         "identifier": "employees",
-                                                        "selectors": ["personal_details", "surname"]
-                                                    }
-                                                ]
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "surname",
+                                                        ],
+                                                    },
+                                                ],
                                             },
-                                            "transform": "concatenate_list"
+                                            "transform": "concatenate_list",
                                         }
-                                    ]
+                                    ],
                                 }
-                            ]
-                        }
-                    }
+                            ],
+                        },
+                    },
                 }
             ]
         }
@@ -1316,13 +1336,13 @@ def test_list_collector_content_translate():
                                     {
                                         "description": "WELSH - List of previously reported employees."
                                     }
-                                ]
+                                ],
                             }
                         },
                         {
                             "description": "WELSH - Press continue to proceed to the next section where you can add any additional employees."
-                        }
-                    ]
+                        },
+                    ],
                 },
                 "summary": {
                     "title": "WELSH - employees",
@@ -1339,22 +1359,28 @@ def test_list_collector_content_translate():
                                                 {
                                                     "source": "supplementary_data",
                                                     "identifier": "employees",
-                                                    "selectors": ["personal_details", "forename"]
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "forename",
+                                                    ],
                                                 },
                                                 {
                                                     "source": "supplementary_data",
                                                     "identifier": "employees",
-                                                    "selectors": ["personal_details", "surname"]
-                                                }
-                                            ]
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "surname",
+                                                    ],
+                                                },
+                                            ],
                                         },
-                                        "transform": "concatenate_list"
+                                        "transform": "concatenate_list",
                                     }
-                                ]
+                                ],
                             }
-                        ]
-                    }
-                }
+                        ],
+                    },
+                },
             }
         ],
         "language": "cy",
