@@ -1,3 +1,4 @@
+# pylint: disable=too-many-lines
 from babel import Locale
 from babel.messages import Catalog
 
@@ -13,13 +14,13 @@ def test_translate():
     catalog.add(
         "Answering for this person",
         "WELSH - Answering for this person",
-        context="Who are you answering for??",
+        context="Who are you answering for?",
     )
 
     catalog.add(
         "Answering myself",
         "WELSH - Answering myself",
-        context="Who are you answering for??",
+        context="Who are you answering for?",
     )
 
     schema_translation.catalog = catalog
@@ -29,7 +30,7 @@ def test_translate():
             "blocks": [
                 {
                     "question": {
-                        "title": "Who are you answering for??",
+                        "title": "Who are you answering for?",
                         "definition": {
                             "contents": [
                                 {
@@ -85,7 +86,7 @@ def test_translate():
         "blocks": [
             {
                 "question": {
-                    "title": "Who are you answering for??",
+                    "title": "Who are you answering for?",
                     "definition": {
                         "contents": [
                             {
@@ -576,4 +577,813 @@ def test_checkbox_null_label():
         },
         "language": "cy",
     }
+    assert expected == translated.schema
+
+
+def test_list_collector_repeating_blocks_translation():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+
+    catalog.add(
+        "Companies or UK branches",
+        "WELSH - Companies or UK branches",
+    )
+
+    catalog.add(
+        "Do you need to add any other UK companies or branches that undertake general insurance business?",
+        "WELSH - Do you need to add any other UK companies or branches that undertake general insurance business?",
+    )
+
+    catalog.add(
+        "Yes",
+        "WELSH - Yes",
+        context="Do you need to add any other UK companies or branches that undertake general insurance business?",
+    )
+
+    catalog.add(
+        "No",
+        "WELSH - No",
+        context="Do you need to add any other UK companies or branches that undertake general insurance business?",
+    )
+
+    catalog.add(
+        "What is the name and registration number of the company?",
+        "WELSH - What is the name and registration number of the company?",
+    )
+
+    catalog.add(
+        "Give details about {company_name}",
+        "WELSH - Give details about {company_name}",
+    )
+
+    catalog.add(
+        "Give details about how {company_name} has been trading over the past {date_difference}.",
+        "WELSH - Give details about how {company_name} has been trading over the past {date_difference}.",
+    )
+
+    catalog.add(
+        "Are you sure you want to remove this company or UK branch?",
+        "WELSH - Are you sure you want to remove this company or UK branch?",
+    )
+
+    catalog.add(
+        "{company_name}",
+        "WELSH - {company_name}",
+    )
+
+    catalog.add(
+        "Name of UK company or branch (Mandatory)",
+        "WELSH - Name of UK company or branch (Mandatory)",
+        context="What is the name and registration number of the company?",
+    )
+
+    catalog.add(
+        "Yes",
+        "WELSH - Yes",
+        context="Are you sure you want to remove this company or UK branch?",
+    )
+
+    catalog.add(
+        "No",
+        "WELSH - No",
+        context="Are you sure you want to remove this company or UK branch?",
+    )
+
+    catalog.add(
+        "Registration number (Mandatory)",
+        "WELSH - Registration number (Mandatory)",
+        context="Give details about {company_name}",
+    )
+
+    catalog.add(
+        "Has this company been trading in the UK? (Mandatory)",
+        "WELSH - Has this company been trading in the UK? (Mandatory)",
+        context="Give details about how {company_name} has been trading over the past {date_difference}.",
+    )
+
+    catalog.add(
+        "Yes",
+        "WELSH - Yes",
+        context="Give details about how {company_name} has been trading over the past {date_difference}.",
+    )
+
+    catalog.add(
+        "No",
+        "WELSH - No",
+        context="Give details about how {company_name} has been trading over the past {date_difference}.",
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "type": "ListCollector",
+                    "for_list": "companies",
+                    "question": {
+                        "type": "General",
+                        "title": "Do you need to add any other UK companies or branches that undertake general insurance business?",
+                        "answers": [
+                            {
+                                "type": "Radio",
+                                "options": [
+                                    {
+                                        "label": "Yes",
+                                        "value": "Yes",
+                                        "action": {"type": "RedirectToListAddBlock"},
+                                    },
+                                    {"label": "No", "value": "No"},
+                                ],
+                            }
+                        ],
+                    },
+                    "add_block": {
+                        "type": "ListAddQuestion",
+                        "question": {
+                            "type": "General",
+                            "title": "What is the name and registration number of the company?",
+                            "answers": [
+                                {
+                                    "label": "Name of UK company or branch (Mandatory)",
+                                    "mandatory": True,
+                                    "type": "TextField",
+                                }
+                            ],
+                        },
+                    },
+                    "repeating_blocks": [
+                        {
+                            "type": "ListRepeatingQuestion",
+                            "question": {
+                                "type": "General",
+                                "title": {
+                                    "text": "Give details about {company_name}",
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "company_name",
+                                            "value": {
+                                                "source": "answers",
+                                                "identifier": "company-or-branch-name",
+                                            },
+                                        }
+                                    ],
+                                },
+                                "answers": [
+                                    {
+                                        "label": "Registration number (Mandatory)",
+                                        "mandatory": True,
+                                        "type": "Number",
+                                        "maximum": {"value": 999, "exclusive": False},
+                                        "decimal_places": 0,
+                                    }
+                                ],
+                            },
+                        },
+                        {
+                            "type": "ListRepeatingQuestion",
+                            "question": {
+                                "type": "General",
+                                "title": {
+                                    "text": "Give details about how {company_name} has been trading over the past {date_difference}.",
+                                    "placeholders": [
+                                        {
+                                            "placeholder": "company_name",
+                                            "value": {
+                                                "source": "answers",
+                                                "identifier": "company-or-branch-name",
+                                            },
+                                        },
+                                        {
+                                            "placeholder": "date_difference",
+                                            "transforms": [
+                                                {
+                                                    "transform": "calculate_date_difference",
+                                                    "arguments": {
+                                                        "first_date": {
+                                                            "source": "answers",
+                                                            "identifier": "registration-date",
+                                                        },
+                                                        "second_date": {"value": "now"},
+                                                    },
+                                                }
+                                            ],
+                                        },
+                                    ],
+                                },
+                                "answers": [
+                                    {
+                                        "type": "Radio",
+                                        "label": "Has this company been trading in the UK? (Mandatory)",
+                                        "mandatory": True,
+                                        "options": [
+                                            {"label": "Yes", "value": "Yes"},
+                                            {"label": "No", "value": "No"},
+                                        ],
+                                    }
+                                ],
+                            },
+                        },
+                    ],
+                    "edit_block": {
+                        "type": "ListEditQuestion",
+                        "question": {
+                            "type": "General",
+                            "title": "What is the name and registration number of the company?",
+                            "answers": [
+                                {
+                                    "label": "Name of UK company or branch (Mandatory)",
+                                    "mandatory": True,
+                                    "type": "TextField",
+                                }
+                            ],
+                        },
+                    },
+                    "remove_block": {
+                        "type": "ListRemoveQuestion",
+                        "question": {
+                            "type": "General",
+                            "title": "Are you sure you want to remove this company or UK branch?",
+                            "answers": [
+                                {
+                                    "type": "Radio",
+                                    "options": [
+                                        {
+                                            "label": "Yes",
+                                            "value": "Yes",
+                                            "action": {
+                                                "type": "RemoveListItemAndAnswers"
+                                            },
+                                        },
+                                        {"label": "No", "value": "No"},
+                                    ],
+                                }
+                            ],
+                        },
+                    },
+                },
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "type": "ListCollector",
+                "for_list": "companies",
+                "question": {
+                    "type": "General",
+                    "title": "WELSH - Do you need to add any other UK companies or branches that undertake general insurance business?",
+                    "answers": [
+                        {
+                            "type": "Radio",
+                            "options": [
+                                {
+                                    "label": "WELSH - Yes",
+                                    "value": "Yes",
+                                    "action": {"type": "RedirectToListAddBlock"},
+                                },
+                                {"label": "WELSH - No", "value": "No"},
+                            ],
+                        }
+                    ],
+                },
+                "add_block": {
+                    "type": "ListAddQuestion",
+                    "question": {
+                        "type": "General",
+                        "title": "WELSH - What is the name and registration number of the company?",
+                        "answers": [
+                            {
+                                "label": "WELSH - Name of UK company or branch (Mandatory)",
+                                "mandatory": True,
+                                "type": "TextField",
+                            }
+                        ],
+                    },
+                },
+                "repeating_blocks": [
+                    {
+                        "type": "ListRepeatingQuestion",
+                        "question": {
+                            "type": "General",
+                            "title": {
+                                "text": "WELSH - Give details about {company_name}",
+                                "placeholders": [
+                                    {
+                                        "placeholder": "company_name",
+                                        "value": {
+                                            "source": "answers",
+                                            "identifier": "company-or-branch-name",
+                                        },
+                                    }
+                                ],
+                            },
+                            "answers": [
+                                {
+                                    "label": "WELSH - Registration number (Mandatory)",
+                                    "mandatory": True,
+                                    "type": "Number",
+                                    "maximum": {"value": 999, "exclusive": False},
+                                    "decimal_places": 0,
+                                }
+                            ],
+                        },
+                    },
+                    {
+                        "type": "ListRepeatingQuestion",
+                        "question": {
+                            "type": "General",
+                            "title": {
+                                "text": "WELSH - Give details about how {company_name} has been trading over the past {date_difference}.",
+                                "placeholders": [
+                                    {
+                                        "placeholder": "company_name",
+                                        "value": {
+                                            "source": "answers",
+                                            "identifier": "company-or-branch-name",
+                                        },
+                                    },
+                                    {
+                                        "placeholder": "date_difference",
+                                        "transforms": [
+                                            {
+                                                "transform": "calculate_date_difference",
+                                                "arguments": {
+                                                    "first_date": {
+                                                        "source": "answers",
+                                                        "identifier": "registration-date",
+                                                    },
+                                                    "second_date": {"value": "now"},
+                                                },
+                                            }
+                                        ],
+                                    },
+                                ],
+                            },
+                            "answers": [
+                                {
+                                    "type": "Radio",
+                                    "label": "WELSH - Has this company been trading in the UK? (Mandatory)",
+                                    "mandatory": True,
+                                    "options": [
+                                        {"label": "WELSH - Yes", "value": "Yes"},
+                                        {"label": "WELSH - No", "value": "No"},
+                                    ],
+                                }
+                            ],
+                        },
+                    },
+                ],
+                "edit_block": {
+                    "type": "ListEditQuestion",
+                    "question": {
+                        "type": "General",
+                        "title": "WELSH - What is the name and registration number of the company?",
+                        "answers": [
+                            {
+                                "label": "WELSH - Name of UK company or branch (Mandatory)",
+                                "mandatory": True,
+                                "type": "TextField",
+                            }
+                        ],
+                    },
+                },
+                "remove_block": {
+                    "type": "ListRemoveQuestion",
+                    "question": {
+                        "type": "General",
+                        "title": "WELSH - Are you sure you want to remove this company or UK branch?",
+                        "answers": [
+                            {
+                                "type": "Radio",
+                                "options": [
+                                    {
+                                        "label": "WELSH - Yes",
+                                        "value": "Yes",
+                                        "action": {"type": "RemoveListItemAndAnswers"},
+                                    },
+                                    {"label": "WELSH - No", "value": "No"},
+                                ],
+                            }
+                        ],
+                    },
+                },
+            },
+        ],
+        "language": "cy",
+    }
+
+    assert expected == translated.schema
+
+
+def test_content_variants_translate():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add(
+        "You are 16 or older",
+        "WELSH - You are 16 or older",
+    )
+
+    catalog.add(
+        "According to your answer",
+        "WELSH - According to your answer",
+        context="You are 16 or older",
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "type": "Interstitial",
+                    "content_variants": [
+                        {
+                            "content": {
+                                "title": "You are 16 or older",
+                                "contents": [
+                                    {"description": "According to your answer"}
+                                ],
+                            },
+                            "when": {
+                                ">": [
+                                    {"source": "answers", "identifier": "age-answer"},
+                                    16,
+                                ]
+                            },
+                        }
+                    ],
+                }
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "type": "Interstitial",
+                "content_variants": [
+                    {
+                        "content": {
+                            "title": "WELSH - You are 16 or older",
+                            "contents": [
+                                {"description": "WELSH - According to your answer"}
+                            ],
+                        },
+                        "when": {
+                            ">": [{"source": "answers", "identifier": "age-answer"}, 16]
+                        },
+                    }
+                ],
+            }
+        ],
+        "language": "cy",
+    }
+
+    assert expected == translated.schema
+
+
+def test_list_collector_content_variants_translate():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add(
+        "You are 16 or older",
+        "WELSH - You are 16 or older",
+    )
+
+    catalog.add(
+        "According to your answer",
+        "WELSH - According to your answer",
+        context="You are 16 or older",
+    )
+
+    catalog.add(
+        "Employees",
+        "WELSH - Employees",
+    )
+
+    catalog.add(
+        "employees",
+        "WELSH - employees",
+    )
+
+    catalog.add(
+        "{employee_name}",
+        "WELSH - {employee_name}",
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "id": "list-collector-employees",
+                    "type": "ListCollectorContent",
+                    "page_title": "Employees",
+                    "for_list": "employees",
+                    "content_variants": [
+                        {
+                            "content": {
+                                "title": "You are 16 or older",
+                                "contents": [
+                                    {"description": "According to your answer"}
+                                ],
+                            },
+                            "when": {
+                                ">": [
+                                    {"source": "answers", "identifier": "age-answer"},
+                                    16,
+                                ]
+                            },
+                        },
+                    ],
+                    "summary": {
+                        "title": "employees",
+                        "item_title": {
+                            "text": "{employee_name}",
+                            "placeholders": [
+                                {
+                                    "placeholder": "employee_name",
+                                    "transforms": [
+                                        {
+                                            "arguments": {
+                                                "delimiter": " ",
+                                                "list_to_concatenate": [
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "forename",
+                                                        ],
+                                                    },
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "surname",
+                                                        ],
+                                                    },
+                                                ],
+                                            },
+                                            "transform": "concatenate_list",
+                                        }
+                                    ],
+                                }
+                            ],
+                        },
+                    },
+                }
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "id": "list-collector-employees",
+                "type": "ListCollectorContent",
+                "page_title": "WELSH - Employees",
+                "for_list": "employees",
+                "content_variants": [
+                    {
+                        "content": {
+                            "title": "WELSH - You are 16 or older",
+                            "contents": [
+                                {"description": "WELSH - According to your answer"}
+                            ],
+                        },
+                        "when": {
+                            ">": [
+                                {"source": "answers", "identifier": "age-answer"},
+                                16,
+                            ]
+                        },
+                    },
+                ],
+                "summary": {
+                    "title": "WELSH - employees",
+                    "item_title": {
+                        "text": "WELSH - {employee_name}",
+                        "placeholders": [
+                            {
+                                "placeholder": "employee_name",
+                                "transforms": [
+                                    {
+                                        "arguments": {
+                                            "delimiter": " ",
+                                            "list_to_concatenate": [
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "forename",
+                                                    ],
+                                                },
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "surname",
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                        "transform": "concatenate_list",
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                },
+            }
+        ],
+        "language": "cy",
+    }
+
+    assert expected == translated.schema
+
+
+def test_list_collector_content_translate():
+    schema_translation = SchemaTranslation()
+    catalog = Catalog(locale=Locale("cy"))
+    catalog.add(
+        "Employees",
+        "WELSH - Employees",
+    )
+
+    catalog.add(
+        "employees",
+        "WELSH - employees",
+    )
+
+    catalog.add(
+        "{employee_name}",
+        "WELSH - {employee_name}",
+    )
+
+    catalog.add(
+        "Press continue to proceed to the next section where you can add any additional employees.",
+        "WELSH - Press continue to proceed to the next section where you can add any additional employees.",
+        context="Employees",
+    )
+
+    catalog.add(
+        "Company employees",
+        "WELSH - Company employees",
+        context="Employees",
+    )
+
+    catalog.add(
+        "List of previously reported employees.",
+        "WELSH - List of previously reported employees.",
+        context="Employees",
+    )
+
+    schema_translation.catalog = catalog
+
+    schema = SurveySchema(
+        {
+            "blocks": [
+                {
+                    "id": "list-collector-employees",
+                    "type": "ListCollectorContent",
+                    "page_title": "Employees",
+                    "for_list": "employees",
+                    "content": {
+                        "title": "Employees",
+                        "contents": [
+                            {
+                                "definition": {
+                                    "title": "Company employees",
+                                    "contents": [
+                                        {
+                                            "description": "List of previously reported employees."
+                                        }
+                                    ],
+                                }
+                            },
+                            {
+                                "description": "Press continue to proceed to the next section where you can add any additional employees."
+                            },
+                        ],
+                    },
+                    "summary": {
+                        "title": "employees",
+                        "item_title": {
+                            "text": "{employee_name}",
+                            "placeholders": [
+                                {
+                                    "placeholder": "employee_name",
+                                    "transforms": [
+                                        {
+                                            "arguments": {
+                                                "delimiter": " ",
+                                                "list_to_concatenate": [
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "forename",
+                                                        ],
+                                                    },
+                                                    {
+                                                        "source": "supplementary_data",
+                                                        "identifier": "employees",
+                                                        "selectors": [
+                                                            "personal_details",
+                                                            "surname",
+                                                        ],
+                                                    },
+                                                ],
+                                            },
+                                            "transform": "concatenate_list",
+                                        }
+                                    ],
+                                }
+                            ],
+                        },
+                    },
+                }
+            ]
+        }
+    )
+    translated = schema.translate(schema_translation)
+
+    expected = {
+        "blocks": [
+            {
+                "id": "list-collector-employees",
+                "type": "ListCollectorContent",
+                "page_title": "WELSH - Employees",
+                "for_list": "employees",
+                "content": {
+                    "title": "WELSH - Employees",
+                    "contents": [
+                        {
+                            "definition": {
+                                "title": "WELSH - Company employees",
+                                "contents": [
+                                    {
+                                        "description": "WELSH - List of previously reported employees."
+                                    }
+                                ],
+                            }
+                        },
+                        {
+                            "description": "WELSH - Press continue to proceed to the next section where you can add any additional employees."
+                        },
+                    ],
+                },
+                "summary": {
+                    "title": "WELSH - employees",
+                    "item_title": {
+                        "text": "WELSH - {employee_name}",
+                        "placeholders": [
+                            {
+                                "placeholder": "employee_name",
+                                "transforms": [
+                                    {
+                                        "arguments": {
+                                            "delimiter": " ",
+                                            "list_to_concatenate": [
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "forename",
+                                                    ],
+                                                },
+                                                {
+                                                    "source": "supplementary_data",
+                                                    "identifier": "employees",
+                                                    "selectors": [
+                                                        "personal_details",
+                                                        "surname",
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                        "transform": "concatenate_list",
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                },
+            }
+        ],
+        "language": "cy",
+    }
+
     assert expected == translated.schema

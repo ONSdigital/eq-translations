@@ -71,6 +71,10 @@ EXTRACTABLE_STRINGS = [
         "json_path": "$..add_block.cancel_text",
         "description": "List collector add block cancel link",
     },
+    {
+        "json_path": "$..repeating_blocks[*].question.title.text",
+        "description": "Repeating block question",
+    },
     {"json_path": "$..content.title", "description": "Content page main heading"},
     {"json_path": "$..content.instruction[*]", "description": "Content instruction"},
     {
@@ -97,6 +101,16 @@ EXTRACTABLE_STRINGS = [
     {
         "json_path": "$..content.contents[*].definition.contents[*].description",
         "description": "Definition description",
+        "context": "Content",
+    },
+    {
+        "json_path": "$..content_variants[*].content.title",
+        "description": "Content page heading",
+        "context": "Content",
+    },
+    {
+        "json_path": "$..content_variants[*].content.contents[*].description",
+        "description": "Content page description",
         "context": "Content",
     },
     {"json_path": "$..question.title", "description": "Question text"},
