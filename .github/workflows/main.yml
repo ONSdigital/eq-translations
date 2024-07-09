@@ -9,7 +9,7 @@ jobs:
   docker-push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build
         run: docker build -t onsdigital/eq-translations:latest .
       - name: Push
