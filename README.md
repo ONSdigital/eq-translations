@@ -11,8 +11,21 @@ Upgrade pip and install dependencies:
 curl https://pyenv.run | bash
 exec $SHELL
 pyenv install
-pip install --upgrade pip setuptools pipenv
-pipenv install --dev
+pip install --upgrade pip setuptools
+```
+
+## Install poetry, poetry dotenv plugin and install dependencies:
+
+``` shell
+curl -sSL https://install.python-poetry.org | python3 - --version 1.8.2
+poetry self add poetry-plugin-dotenv
+poetry install
+```
+
+We use [poetry-plugin-up](https://github.com/MousaZeidBaker/poetry-plugin-up) to update dependencies in the `pyproject.toml` file:
+
+```shell
+poetry self add poetry-plugin-up
 ```
 
 ## Python Package Usage
@@ -22,7 +35,7 @@ pipenv install --dev
 To install, replace `BRANCHNAME` with an appropriate tag or branch and run:
 
 ```
-pipenv install -e git+https://github.com/ONSDigital/eq-translations.git@BRANCHNAME#egg=eq_translations
+poetry install -e git+https://github.com/ONSDigital/eq-translations.git@BRANCHNAME#egg=eq_translations
 ```
 
 You can also install it locally running the following from the root directory:
@@ -49,7 +62,7 @@ To use this package without installing it as a python package, the following com
 Extract translatable text from an eQ schema with
 
 ```
-pipenv run python -m eq_translations.cli.extract_template <schema_file> <output_directory>
+poetry run python -m eq_translations.cli.extract_template <schema_file> <output_directory>
 ```
 This will output the translatable text to an POT file.
 
@@ -57,13 +70,13 @@ This will output the translatable text to an POT file.
 After the text has been translated, create a new translated schema with:
 
 ```
-pipenv run python -m eq_translations.cli.translate_schema <schema_file> <translation_path> <output_directory>
+poetry run python -m eq_translations.cli.translate_schema <schema_file> <translation_path> <output_directory>
 ```
 
 To compare two schemas for differences in structure:
 
 ```
-pipenv run python -m eq_translations.cli.compare_schemas <path_to_source_schema> <path_to_target_schema>
+poetry run python -m eq_translations.cli.compare_schemas <path_to_source_schema> <path_to_target_schema>
 ```
 
 To run the tests:

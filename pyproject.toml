@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "eq-translations"
+version = "1.0.0"
+description = "ONS Digital eQ Translations App"
+authors = ["ONSDigital"]
+
+[tool.poetry.dependencies]
+babel = "*"
+jsonpointer = "*"
+tqdm = "*"
+requests = "*"
+termcolor = "*"
+jsonpath-rw = "*"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "*"
+pytest = "*"
+pylint-quotes = "*"
+black = "*"
+pytest-cov = "*"
+typed-ast = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
