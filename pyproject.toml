@@ -14,7 +14,7 @@ termcolor = "*"
 jsonpath-rw = "*"
 
 [tool.poetry.group.dev.dependencies]
-pylint = "*"
+pylint = "^2.17.7"
 pytest = "*"
 pylint-quotes = "*"
 black = "*"
