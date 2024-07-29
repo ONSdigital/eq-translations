@@ -5,6 +5,7 @@ description = "ONS Digital eQ Translations App"
 authors = ["ONSDigital"]
 
 [tool.poetry.dependencies]
+python = "^3.11"
 babel = "*"
 jsonpointer = "*"
 tqdm = "*"
