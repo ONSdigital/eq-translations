@@ -1,13 +1,13 @@
 FROM python:3.11.0-slim-buster
 
-RUN pip install "poetry==1.8.3"
-
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
 COPY pyproject.toml pyproject.toml
 COPY poetry.lock poetry.lock
 
-RUN poetry install
+RUN pip install "poetry==1.8.3" && \
+    poetry config virtualenvs.create false && \
+    poetry install
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
 COPY . /usr/src/app
