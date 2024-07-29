@@ -1,5 +1,5 @@
 build:
-	poetry install --dev
+	poetry install
 
 lint:
 	poetry run pylint eq_translations ./tests
