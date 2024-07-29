@@ -6,7 +6,7 @@ authors = ["ONSDigital"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-babel = "*"
+babel = "==2.14.0"  # Temporarily pinned - problem for translations found in v2.15.0, see: https://github.com/ONSdigital/eq-questionnaire-runner/pull/1384
 jsonpointer = "*"
 tqdm = "*"
 requests = "*"
