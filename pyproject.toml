@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "eq-translations"
+version = "1.0.0"
+description = "ONS Digital eQ Translations App"
+authors = ["ONSDigital"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+babel = "==2.14.0"  # Temporarily pinned - problem for translations found in v2.15.0, see: https://github.com/ONSdigital/eq-questionnaire-runner/pull/1384
+jsonpointer = "*"
+tqdm = "*"
+requests = "*"
+termcolor = "*"
+jsonpath-rw = "*"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.17.7"
+pytest = "*"
+pylint-quotes = "*"
+black = "*"
+pytest-cov = "*"
+typed-ast = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

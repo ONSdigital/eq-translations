@@ -1,13 +1,13 @@
 FROM python:3.11.0-slim-buster
 
-RUN pip install pipenv==2023.7.23
+COPY pyproject.toml pyproject.toml
+COPY poetry.lock poetry.lock
+
+RUN pip install "poetry==1.8.3" && \
+    poetry config virtualenvs.create false && \
+    poetry install
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-COPY Pipfile Pipfile
-COPY Pipfile.lock Pipfile.lock
-
-RUN pipenv install
 
 COPY . /usr/src/app
