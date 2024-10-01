@@ -1,0 +1,16 @@
+[flake8]
+exclude = tests/*
+max-line-length = 160
+inline-quotes = double
+multiline-quotes = double
+docstring-quotes = double
+avoid-escape = True
+ignore =
+    # Multiple statements of a function definition should be on their own separate lines
+    E704,
+
+    # Line breaks should occur after the binary operator to keep all variable names aligned
+    W503,
+
+    # Colons should not have any space before them
+    E203,

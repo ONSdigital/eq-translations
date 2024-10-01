@@ -77,14 +77,14 @@ limit-inference-results=100
 
 # List of plugins (as comma separated values of python module names) to load,
 # usually to register additional checkers.
-load-plugins=pylint.extensions.mccabe,pylint_quotes
+load-plugins=pylint.extensions.mccabe
 
 # Pickle collected data for later comparisons.
 persistent=yes
 
 # Minimum Python version to use for version dependent checks. Will default to
 # the version used to run pylint.
-py-version=3.10
+py-version=3.12
 
 # Discover python modules and packages in the file system subtree.
 recursive=no
@@ -617,15 +617,3 @@ variable-naming-style=snake_case
 # naming-style. If left empty, variable names will be checked with the set
 # naming style.
 variable-rgx=[a-z_][a-z0-9_]{2,30}$
-
-
-[STRING_QUOTES]
-
-# The quote character for triple-quoted docstrings.
-docstring-quote=double
-
-# The quote character for string literals.
-string-quote=double-avoid-escape
-
-# The quote character for triple-quoted strings (non-docstring).
-triple-quote=double
