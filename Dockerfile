@@ -4,7 +4,7 @@ COPY pyproject.toml pyproject.toml
 COPY poetry.lock poetry.lock
 
 RUN pip install \
-    "poetry==1.8.3" && \
+    "poetry==2.1.2" && \
     poetry config virtualenvs.create false && \
     poetry install --only main
 
