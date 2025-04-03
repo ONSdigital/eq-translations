@@ -1,7 +1,6 @@
 FROM python:3.12-slim
 
-COPY pyproject.toml pyproject.toml
-COPY poetry.lock poetry.lock
+COPY . ./
 
 RUN pip install \
     "poetry==2.1.2" && \
