@@ -2,7 +2,7 @@ import copy
 import json
 
 from babel.messages import Catalog
-from jsonpath_rw import parse
+from jsonpath_ng import parse
 from jsonpointer import set_pointer
 from termcolor import colored
 
