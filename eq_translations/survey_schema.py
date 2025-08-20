@@ -113,8 +113,6 @@ class SurveySchema:
         translatable_items = list(self.translatable_items)
 
         for translatable_item in translatable_items:
-            if not translatable_item.value:
-                continue
 
             message_id = get_message_id(translatable_item.value)
             auto_comments = [translatable_item.description]
