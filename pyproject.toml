@@ -11,7 +11,7 @@ jsonpointer = "*"
 tqdm = "*"
 requests = "*"
 termcolor = "*"
-jsonpath-rw = "*"
+jsonpath-ng = "*"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "*"

@@ -39,7 +39,7 @@ setup(
     install_requires=[
         "babel",
         "jsonpointer",
-        "jsonpath-rw",
+        "jsonpath-ng",
         "tqdm",
         "requests",
         "termcolor",
