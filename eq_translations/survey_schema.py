@@ -70,7 +70,9 @@ class SurveySchema:
         Resolves the given schema_object to a json pointer and value
         :return: json pointer, string value
         """
-        json_pointer = json_path_to_json_pointer(json_path)
+        json_pointer = (
+            json_path_to_json_pointer(json_path).replace("(", "").replace(")", "")
+        )
         if isinstance(schema_object, dict):
             plural_forms = schema_object.get("text_plural", {}).get("forms")
             if plural_forms:
@@ -145,6 +147,11 @@ class SurveySchema:
         for translatable_item in translatable_items:
             if not translatable_item.value:
                 continue
+
+            if translatable_item.pointer:
+                translatable_item.pointer = translatable_item.pointer.replace(
+                    "(", ""
+                ).replace(")", "")
 
             message_id = get_message_id(translatable_item.value)
             context = translatable_item.context

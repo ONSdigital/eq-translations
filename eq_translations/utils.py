@@ -61,6 +61,7 @@ def get_parent_schema_object(input_data, json_pointer, parent_property):
     :param parent_property: the parent property to search for
     :return: schema object identified by parent_property
     """
+    json_pointer = json_pointer.replace("(", "").replace(")", "")
     pointer_parts = json_pointer.split("/")
     pointer_index = pointer_parts.index(parent_property)
     parent_pointer = "/".join(pointer_parts[: pointer_index + 1])
