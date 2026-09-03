@@ -4,20 +4,67 @@ Scripts for translating eq-survey-runner schemas
 
 ## Setup
 
-It is recommended to use [Pyenv](https://github.com/pyenv/pyenv-installer) via Git
+### Pre-Requisites
 
-Upgrade pip and install dependencies:
+The following must be installed and working before you start:
+- Miniconda: Python and system package management (install from Self Service)
+
+Verify each is available:
+
+```shell
+conda --version
 ```
-curl https://pyenv.run | bash
-exec $SHELL
-pyenv install
-pip install --upgrade pip setuptools
+
+If `conda` reports `command not found` after installing from Self Service, the installer did not
+write the conda block into `~/.zshrc`. Confirm the install is present and wire it in:
+
+```shell
+ls -d /opt/miniconda3
+/opt/miniconda3/bin/conda init zsh
 ```
+
+Open a new terminal tab and re-check `conda --version`.
+
+### Conda environment
+
+Python version is pinned in the committed `environment.yml`, matching
+`.python-version` as closely as conda-forge availability allows:
+
+If `.python-version` change, update `environment.yml` to match.
+
+Create and activate the environment:
+
+```shell
+conda env create -f environment.yml
+conda activate eq-translations
+```
+
+Version can be changed by editing `environment.yml` and running:
+
+```shell
+conda env update -f environment.yml --prune
+```
+
+### Poetry
+
+Poetry must install into the conda environment rather than creating its own virtualenv. Set this
+on the environment so no configuration file is left in the repository:
+
+```shell
+conda env config vars set POETRY_VIRTUALENVS_CREATE=false
+conda deactivate && conda activate eq-translations
+```
+
+Confirm it took effect: this must print `false`:
+
+```shell
+echo $POETRY_VIRTUALENVS_CREATE
+```
+
 
 ## Install poetry, poetry dotenv plugin and install dependencies:
 
 ``` shell
-curl -sSL https://install.python-poetry.org | python3 - --version 2.1.2
 poetry self add poetry-plugin-dotenv
 poetry install
 ```
