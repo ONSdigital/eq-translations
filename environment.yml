@@ -5,3 +5,5 @@ dependencies:
   - python=3.14.6
   - poetry=2.4.2
   - pip
+variables:
+  POETRY_VIRTUALENVS_CREATE: "false"
